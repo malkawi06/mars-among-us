@@ -1,0 +1,146 @@
+@import 'tailwindcss';
+
+/* `dark:` utilities follow the .dark class on <html> (toggled in the navbar). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Theme tokens. Components use the Tailwind names below (bg-surface, text-muted, border-border, ...)
+ * so they work in both themes without `dark:` variants. Change colors here, not in components.
+ */
+:root {
+  color-scheme: light;
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --surface-2: #f0efec;
+  --fg: #0b0b0b;
+  --fg-2: #52514e;
+  --muted: #6b6a65;
+  --border: #e1e0d9;
+  --accent: #256abf;
+  --accent-fg: #ffffff;
+  --danger: #c22f2f;
+  --warning: #8a5a00;
+
+  /* Chart palette (colorblind-checked; use in order) and chrome. */
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --chart-grid: #e1e0d9;
+  --chart-axis: #c3c2b7;
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: #0b0d12;
+  --surface: #141821;
+  --surface-2: #1c2130;
+  --fg: #f5f5f4;
+  --fg-2: #c3c2b7;
+  --muted: #9a988f;
+  --border: #262b38;
+  --accent: #6da7ec;
+  --accent-fg: #0b0d12;
+  --danger: #f07a7a;
+  --warning: #f5b94a;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --chart-grid: #232836;
+  --chart-axis: #383d4a;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-fg antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+}
+
+/* ---- Leaflet theming ---------------------------------------------------- */
+
+.leaflet-container {
+  font: inherit;
+  background: var(--surface-2);
+}
+
+/* Dim the bright OpenStreetMap basemap in dark mode. Satellite overlays are not affected. */
+.dark .basemap-osm {
+  filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.85) saturate(0.6);
+}
+
+.leaflet-bar a,
+.leaflet-control-layers,
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+  background: var(--surface) !important;
+  color: var(--fg) !important;
+  border-color: var(--border) !important;
+}
+
+.leaflet-control-scale-line {
+  text-shadow: none;
+}
+
+.leaflet-bar a:hover {
+  background: var(--surface-2) !important;
+}
+
+.leaflet-control-attribution a {
+  color: var(--accent) !important;
+}
+
+.dark .leaflet-control-layers-toggle {
+  filter: invert(1);
+}
+
+/* ---- Home hero backdrop --------------------------------------------------- */
+
+.hero-sky {
+  background-image:
+    radial-gradient(
+      60% 70% at 85% 0%,
+      color-mix(in oklab, var(--accent) 22%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      40% 50% at 0% 100%,
+      color-mix(in oklab, var(--series-2) 14%, transparent),
+      transparent 70%
+    );
+}
+
+.dark .hero-sky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(1px 1px at 25px 35px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 90px 140px, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 160px 60px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 210px 190px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 275px 100px, #fff 50%, transparent 51%);
+  background-size: 300px 220px;
+}
