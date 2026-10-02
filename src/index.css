@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/space-grotesk';
 
 /* `dark:` utilities follow the .dark class on <html> (toggled in the navbar). */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -16,8 +17,10 @@
   --fg-2: #52514e;
   --muted: #6b6a65;
   --border: #e1e0d9;
-  --accent: #256abf;
+  /* Mars orange for actions; Earth blue marks the Earth side of a comparison. */
+  --accent: #b93d0c;
   --accent-fg: #ffffff;
+  --earth: #2563c7;
   --danger: #c22f2f;
   --warning: #8a5a00;
 
@@ -40,8 +43,9 @@
   --fg-2: #c3c2b7;
   --muted: #9a988f;
   --border: #262b38;
-  --accent: #6da7ec;
+  --accent: #f28a4f;
   --accent-fg: #0b0d12;
+  --earth: #7cb3f0;
   --danger: #f07a7a;
   --warning: #f5b94a;
 
@@ -64,6 +68,7 @@
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-fg: var(--accent-fg);
+  --color-earth: var(--earth);
   --color-danger: var(--danger);
   --color-warning: var(--warning);
 }
@@ -71,6 +76,12 @@
 @layer base {
   body {
     @apply bg-bg text-fg antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   }
 
   :focus-visible {
@@ -126,7 +137,7 @@
     ),
     radial-gradient(
       40% 50% at 0% 100%,
-      color-mix(in oklab, var(--series-2) 14%, transparent),
+      color-mix(in oklab, var(--earth) 14%, transparent),
       transparent 70%
     );
 }

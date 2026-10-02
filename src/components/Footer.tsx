@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import { site } from '../config/site'
 
 export function Footer() {
@@ -14,10 +15,18 @@ export function Footer() {
         <div>
           <p className="font-medium text-fg-2">{site.footer.tagline}</p>
           <p className="mt-1">
-            {site.team.name} · {site.footer.disclaimer}
+            {site.team.name && `${site.team.name} · `}
+            {site.footer.disclaimer}
           </p>
         </div>
         <ul className="flex flex-wrap gap-x-4 gap-y-1">
+          {site.footer.more.map((item) => (
+            <li key={item.to}>
+              <Link to={item.to} className="hover:text-fg">
+                {item.label}
+              </Link>
+            </li>
+          ))}
           {links.map((link) => (
             <li key={link.label}>
               <a href={link.href} target="_blank" rel="noreferrer" className="hover:text-fg">

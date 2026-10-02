@@ -3,45 +3,62 @@ import { Link } from 'react-router'
 import { AnalogMap } from '../components/AnalogMap'
 import { AnalogSiteDetails } from '../components/AnalogSiteDetails'
 import { Card } from '../components/Card'
+import { CompareImages } from '../components/CompareImages'
 import { ConfidenceBadge } from '../components/ConfidenceBadge'
 import { ErrorState } from '../components/ErrorState'
 import { LoadingState } from '../components/LoadingState'
 import { PageHeader } from '../components/PageHeader'
 import { site as siteConfig } from '../config/site'
-import { analogsFor } from '../data/analogs'
+import { analogsFor, LANDFORM_NAMES, type LandformCode } from '../data/analogs'
 import { useAsync } from '../hooks/useAsync'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { classifyLandform, loadLandformModel, type LandformPrediction } from '../lib/landformModel'
 
 const LOW_CONFIDENCE = 0.5
+const SAMPLES_URL = `${import.meta.env.BASE_URL}samples/`
+
+/** One entry of public/samples/index.json (written by the last cell of the Kaggle notebook). */
+interface Sample {
+  file: string
+  landform: LandformCode
+}
 
 export default function Analyze() {
   const { analyze: page } = siteConfig
   usePageTitle(page.title)
 
   const [imageUrl, setImageUrl] = useState<string>()
+  /** The dataset's label when the image is one of the samples. */
+  const [knownLandform, setKnownLandform] = useState<LandformCode>()
   const [selectedId, setSelectedId] = useState<string>()
+  const [dragging, setDragging] = useState(false)
   const { data, error, loading, reload } = useAsync(imageUrl ?? null, () => classify(imageUrl!))
+  const { data: samples } = useAsync('samples', loadSamples)
 
   // Start downloading the model while the user picks an image. Errors surface on analysis.
   useEffect(() => {
     loadLandformModel().catch(() => {})
   }, [])
 
-  const pickFile = (file: File | undefined) => {
-    if (!file?.type.startsWith('image/')) return
-    if (imageUrl) URL.revokeObjectURL(imageUrl)
-    setImageUrl(URL.createObjectURL(file))
+  const showImage = (url: string, landform?: LandformCode) => {
+    if (imageUrl?.startsWith('blob:')) URL.revokeObjectURL(imageUrl)
+    setImageUrl(url)
+    setKnownLandform(landform)
     setSelectedId(undefined)
+  }
+  const pickFile = (file: File | undefined) => {
+    if (file?.type.startsWith('image/')) showImage(URL.createObjectURL(file))
   }
   const onDrop = (event: DragEvent) => {
     event.preventDefault()
+    setDragging(false)
     pickFile(event.dataTransfer.files[0])
   }
 
   const top = data?.[0]
   const analogs = top ? analogsFor(top.code) : []
   const selected = analogs.find(({ site }) => site.id === selectedId)?.site
+  const pictured = analogs.find(({ site }) => site.image)?.site
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
@@ -51,8 +68,12 @@ export default function Analyze() {
         <div className="space-y-4 lg:col-span-2">
           <label
             onDragOver={(event) => event.preventDefault()}
+            onDragEnter={() => setDragging(true)}
+            onDragLeave={() => setDragging(false)}
             onDrop={onDrop}
-            className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border bg-surface p-6 text-center hover:border-accent"
+            className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed p-6 text-center transition-colors hover:border-accent ${
+              dragging ? 'border-accent bg-accent/10' : 'border-border bg-surface'
+            }`}
           >
             {imageUrl ? (
               <img src={imageUrl} alt="Uploaded Mars image" className="max-h-72 rounded-lg" />
@@ -75,7 +96,40 @@ export default function Analyze() {
           {error && (
             <ErrorState title="Could not analyze the image" error={error} onRetry={reload} />
           )}
-          {data && <Predictions predictions={data} lowConfidenceNote={page.lowConfidence} />}
+          {data && (
+            <Predictions
+              predictions={data}
+              knownLandform={knownLandform}
+              lowConfidenceNote={page.lowConfidence}
+            />
+          )}
+          {samples && samples.length > 0 && (
+            <Card title={page.samplesTitle} subtitle={page.samplesNote}>
+              <ul className="grid grid-cols-5 gap-2">
+                {samples.map((sample) => (
+                  <li key={sample.file}>
+                    <button
+                      type="button"
+                      onClick={() => showImage(SAMPLES_URL + sample.file, sample.landform)}
+                      title={LANDFORM_NAMES[sample.landform]}
+                      className={`block w-full overflow-hidden rounded-lg border-2 transition-colors hover:border-accent ${
+                        imageUrl === SAMPLES_URL + sample.file
+                          ? 'border-accent'
+                          : 'border-transparent'
+                      }`}
+                    >
+                      <img
+                        src={SAMPLES_URL + sample.file}
+                        alt={`Sample: ${LANDFORM_NAMES[sample.landform]}`}
+                        loading="lazy"
+                        className="aspect-square w-full object-cover"
+                      />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          )}
         </div>
 
         <div className="space-y-4 lg:col-span-3">
@@ -84,6 +138,18 @@ export default function Analyze() {
               <h2 className="text-xl font-semibold">
                 Places on Earth with {top.name.toLowerCase()} like this
               </h2>
+              {imageUrl && pictured?.image && (
+                <CompareImages
+                  className="max-w-md"
+                  mars={{ src: imageUrl, label: 'Your image' }}
+                  earth={{
+                    src: pictured.image.url,
+                    label: pictured.name,
+                    credit: pictured.image.credit,
+                    page: pictured.image.page,
+                  }}
+                />
+              )}
               <AnalogMap
                 sites={analogs.map(({ site }) => site)}
                 selectedId={selectedId}
@@ -118,10 +184,18 @@ export default function Analyze() {
             </>
           ) : (
             <Card title="How it works">
-              <ol className="list-decimal space-y-1 pl-5 text-fg-2">
-                <li>The image is analyzed in your browser. It is never uploaded.</li>
-                <li>The model names the Mars landform (crater, dunes, channel, …).</li>
-                <li>We show sourced places on Earth with the same landform.</li>
+              <ol className="space-y-4">
+                {siteConfig.home.steps.map((step, i) => (
+                  <li key={step.title} className="flex gap-3">
+                    <span className="grid size-7 shrink-0 place-items-center rounded-full bg-accent/15 text-sm font-semibold text-accent">
+                      {i + 1}
+                    </span>
+                    <span>
+                      <span className="block font-medium">{step.title}</span>
+                      <span className="block text-sm text-fg-2">{step.body}</span>
+                    </span>
+                  </li>
+                ))}
               </ol>
             </Card>
           )}
@@ -133,9 +207,11 @@ export default function Analyze() {
 
 function Predictions({
   predictions,
+  knownLandform,
   lowConfidenceNote,
 }: {
   predictions: LandformPrediction[]
+  knownLandform?: LandformCode
   lowConfidenceNote: string
 }) {
   const [top] = predictions
@@ -150,13 +226,20 @@ function Predictions({
             </div>
             <div className="mt-1 h-2 rounded-full bg-surface-2">
               <div
-                className="h-2 rounded-full bg-[var(--series-1)]"
+                className="h-2 rounded-full bg-accent"
                 style={{ width: `${p.probability * 100}%` }}
               />
             </div>
           </li>
         ))}
       </ul>
+      {knownLandform && (
+        <p className="mt-4 text-sm text-fg-2">
+          Scientists labelled this sample{' '}
+          <span className="font-medium text-fg">{LANDFORM_NAMES[knownLandform]}</span>
+          {knownLandform === top.code ? ': the model got it right.' : '.'}
+        </p>
+      )}
       {top.probability < LOW_CONFIDENCE && (
         <p className="mt-4 rounded-lg border border-warning/40 bg-warning/10 p-3 text-sm text-fg-2">
           {lowConfidenceNote}
@@ -164,6 +247,13 @@ function Predictions({
       )}
     </Card>
   )
+}
+
+async function loadSamples(): Promise<Sample[]> {
+  const response = await fetch(`${SAMPLES_URL}index.json`)
+  // No samples uploaded yet: the host answers with index.html or a 404. Hide the gallery.
+  if (!response.ok || !response.headers.get('content-type')?.includes('json')) return []
+  return response.json()
 }
 
 async function classify(url: string): Promise<LandformPrediction[]> {

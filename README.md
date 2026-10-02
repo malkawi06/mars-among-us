@@ -198,6 +198,8 @@ If an API blocks browser requests (CORS), proxy it the way `/api/donki` is proxi
 
 Until the file is there, the page explains that the model is missing.
 
+**Sample images (optional):** the notebook's last cell exports one test image per landform as `samples.zip`. Upload everything inside it to `public/samples/` and the Analyze page shows a "Try one of these" gallery. It stays hidden until `public/samples/index.json` exists.
+
 ## Useful NASA data sources
 
 | Source                                                                                                                                                  | What it's good for                                                                                                                                       | Access                                                 |
