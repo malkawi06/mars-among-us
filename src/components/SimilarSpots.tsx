@@ -1,14 +1,9 @@
 import type { AnalogSite } from '../data/analogs'
 import { EARTH_SITES } from '../data/compare'
-import { EARTH_URL, topSpots, type EarthScan, type Spot } from '../lib/earthScan'
+import { CLEAR, EARTH_URL, percent, strength, topSpots, type EarthScan } from '../lib/earthScan'
 import type { LandformPrediction } from '../lib/landformModel'
 import { Card } from './Card'
-
-/** Spots at or above this probability are drawn as clear matches; below it as weak ones. */
-const CLEAR = 0.4
-
-const percent = (value: number) => `${Math.round(value * 100)}%`
-const strength = (p: number) => (p >= 0.6 ? 'strong' : p >= CLEAR ? 'moderate' : 'weak')
+import { SpotImages } from './SpotImages'
 
 /**
  * The uploaded image next to a satellite image of an Earth analog site, with the areas where the
@@ -32,84 +27,36 @@ export function SimilarSpots({
   /** True when the site was chosen because its image looks most like the upload. */
   autoPicked: boolean
 }) {
-  const image = scan?.images[site.id]
-  const spots = scan && image ? topSpots(scan, site.id, landform.code) : []
+  const image = scan?.earthImages[site.id]
+  const spots = scan && image ? topSpots(scan.sites[site.id], scan.classes, landform.code) : []
   const climate = EARTH_SITES.find((s) => s.id === site.id)
   const name = landform.name.toLowerCase()
   const best = spots[0]
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">
-        <figure className="min-w-0">
-          <img
-            src={userImage}
-            alt="Your image"
-            className="aspect-square w-full rounded-xl border-2 border-earth object-cover"
-          />
-          <figcaption className="mt-2 text-sm font-medium">
-            Your image: {landform.name} ({percent(landform.probability)})
-          </figcaption>
-        </figure>
-        <figure className="min-w-0">
-          {image ? (
-            <div className="relative overflow-hidden rounded-xl border border-border">
-              <img
-                src={EARTH_URL + image.file}
-                alt={`Satellite image of ${site.name}`}
-                className="aspect-square w-full object-cover"
-              />
-              {spots.map((spot, i) => (
-                <SpotBox
-                  key={`${spot.x}-${spot.y}`}
-                  spot={spot}
-                  number={i + 1}
-                  imageSize={image.size}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="grid aspect-square place-items-center rounded-xl border border-dashed border-border p-4 text-center text-sm text-muted">
-              {scan === undefined ? 'Loading…' : 'No satellite image of this site in this build.'}
-            </div>
-          )}
-          <figcaption className="mt-2 text-sm font-medium">Earth: {site.name}</figcaption>
-        </figure>
-      </div>
-
-      {image && spots.length > 0 && (
-        <div>
-          <h3 className="text-sm font-semibold">Side by side, enlarged</h3>
-          <ul className="mt-2 grid grid-cols-4 gap-2">
-            <li>
-              <img
-                src={userImage}
-                alt=""
-                className="aspect-square w-full rounded-lg border-2 border-earth object-cover"
-              />
-              <p className="mt-1 text-xs text-fg-2">Your image</p>
-            </li>
-            {spots.map((spot, i) => (
-              <li key={`${spot.x}-${spot.y}`}>
-                <div
-                  role="img"
-                  aria-label={`Area ${i + 1}, enlarged`}
-                  className={`aspect-square w-full rounded-lg border-2 ${spot.probability >= CLEAR ? 'border-accent' : 'border-dashed border-muted'}`}
-                  style={cropStyle(EARTH_URL + image.file, spot, image.size)}
-                />
-                <p className="mt-1 text-xs text-fg-2">
-                  Area {i + 1}: {percent(spot.probability)} {name} ({strength(spot.probability)})
-                </p>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-2 text-xs text-muted">
-            Satellite image about {((image.size * image.metersPerPixel) / 1000).toFixed(1)} km
-            across; each area about {(scan!.windowMeters / 1000).toFixed(1)} km. Sentinel-2
-            cloudless 2024 by EOX IT Services GmbH (contains modified Copernicus Sentinel data
-            2024).
-          </p>
-        </div>
+      {image ? (
+        <SpotImages
+          left={{
+            src: userImage,
+            caption: `Your image: ${landform.name} (${percent(landform.probability)})`,
+            highlight: true,
+          }}
+          right={{
+            src: EARTH_URL + image.file,
+            caption: `Earth: ${site.name}`,
+            size: image.size,
+            spots,
+          }}
+          landformName={name}
+          note={`Satellite image about ${((image.size * image.metersPerPixel) / 1000).toFixed(1)} km across; each area about ${(scan!.windowMeters / 1000).toFixed(1)} km. Sentinel-2 cloudless 2024 by EOX IT Services GmbH (contains modified Copernicus Sentinel data 2024).`}
+        />
+      ) : (
+        <p className="rounded-xl border border-dashed border-border p-4 text-sm text-muted">
+          {scan === undefined
+            ? 'Loading satellite images…'
+            : 'No satellite image of this site in this build.'}
+        </p>
       )}
 
       <Card title={`Why ${site.name} matches your image`}>
@@ -178,36 +125,4 @@ export function SimilarSpots({
       </Card>
     </div>
   )
-}
-
-function SpotBox({ spot, number, imageSize }: { spot: Spot; number: number; imageSize: number }) {
-  const clear = spot.probability >= CLEAR
-  return (
-    <span
-      className={`absolute border-2 shadow-[0_0_0_1px_rgba(0,0,0,0.6)] ${clear ? 'border-accent' : 'border-dashed border-white/70'}`}
-      style={{
-        left: `${(spot.x / imageSize) * 100}%`,
-        top: `${(spot.y / imageSize) * 100}%`,
-        width: `${(spot.size / imageSize) * 100}%`,
-        height: `${(spot.size / imageSize) * 100}%`,
-      }}
-    >
-      <span
-        className={`absolute -top-px -left-px px-1.5 text-xs font-semibold ${clear ? 'bg-accent text-accent-fg' : 'bg-black/70 text-white'}`}
-      >
-        {number} · {percent(spot.probability)}
-      </span>
-    </span>
-  )
-}
-
-/** Shows one square of an image, scaled to fill the element. */
-function cropStyle(url: string, spot: Spot, imageSize: number) {
-  const scale = imageSize / spot.size
-  const range = imageSize - spot.size
-  return {
-    backgroundImage: `url(${url})`,
-    backgroundSize: `${scale * 100}%`,
-    backgroundPosition: `${range ? (spot.x / range) * 100 : 0}% ${range ? (spot.y / range) * 100 : 0}%`,
-  }
 }

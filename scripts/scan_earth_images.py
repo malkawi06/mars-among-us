@@ -1,8 +1,9 @@
-"""Scans every Earth satellite image in public/earth/ with the website's landform model.
+"""Scans the Earth and Moon/Mars target images (public/earth/, public/targets/) with the landform model.
 
-Writes public/earth/scan.json: for each site, square windows (~1.5 km) with the model's probability
+Writes public/earth/scan.json: for each image, square windows (~1.5 km) with the model's probability
 for every landform class. The Analyze page uses it to pick the Earth site that looks most like the
-uploaded image and to box the matching areas, instantly and offline.
+uploaded image, the Compare page to match a Moon or Mars target with an Earth site, and both to box
+the matching areas, instantly and offline.
 Run after fetch_earth_images.py (the deploy workflow does). Needs Pillow, numpy and onnxruntime.
 """
 
@@ -16,7 +17,7 @@ import onnxruntime as ort
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-EARTH = ROOT / 'public' / 'earth'
+PUBLIC = ROOT / 'public'
 MODEL = ROOT / 'public' / 'models' / 'mars_landforms.int8.onnx'
 WINDOW_M = 1500  # close to the ~1.2 km tiles the model was trained on
 SIZE = 224
@@ -51,14 +52,14 @@ def softmax(logits):
     return e / e.sum()
 
 
-def main():
-    index = json.loads((EARTH / 'index.json').read_text())
-    codes = class_codes()
-    session = ort.InferenceSession(str(MODEL), providers=['CPUExecutionProvider'])
+def scan_folder(folder, session, codes):
+    index_path = PUBLIC / folder / 'index.json'
+    if not index_path.exists():
+        return {}
     name = session.get_inputs()[0].name
-    out = {'classes': codes, 'windowMeters': WINDOW_M, 'sites': {}}
-    for site_id, entry in index.items():
-        image = Image.open(EARTH / entry['file']).convert('RGB')
+    scans = {}
+    for site_id, entry in json.loads(index_path.read_text()).items():
+        image = Image.open(PUBLIC / folder / entry['file']).convert('RGB')
         window = round(WINDOW_M / entry['metersPerPixel'])
         windows = []
         for y in positions(image.height, window):
@@ -66,11 +67,23 @@ def main():
                 probs = softmax(session.run(None, {name: to_input(image.crop((x, y, x + window, y + window)))})[0][0])
                 assert len(probs) == len(codes), f'model has {len(probs)} classes, site expects {len(codes)}'
                 windows.append({'x': x, 'y': y, 'size': window, 'p': [round(float(v), 3) for v in probs]})
-        out['sites'][site_id] = windows
+        scans[site_id] = windows
         best = max(windows, key=lambda w: max(w['p']))
-        print(f"{site_id}: {len(windows)} windows, strongest {codes[int(np.argmax(best['p']))]} {max(best['p']):.0%}")
-    (EARTH / 'scan.json').write_text(json.dumps(out, separators=(',', ':')))
-    print(f"scan.json: {len(out['sites'])} sites")
+        print(f"{folder}/{site_id}: {len(windows)} windows, strongest {codes[int(np.argmax(best['p']))]} {max(best['p']):.0%}")
+    return scans
+
+
+def main():
+    codes = class_codes()
+    session = ort.InferenceSession(str(MODEL), providers=['CPUExecutionProvider'])
+    out = {
+        'classes': codes,
+        'windowMeters': WINDOW_M,
+        'sites': scan_folder('earth', session, codes),
+        'targets': scan_folder('targets', session, codes),
+    }
+    (PUBLIC / 'earth' / 'scan.json').write_text(json.dumps(out, separators=(',', ':')))
+    print(f"scan.json: {len(out['sites'])} Earth sites, {len(out['targets'])} targets")
 
 
 if __name__ == '__main__':
