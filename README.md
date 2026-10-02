@@ -69,6 +69,12 @@ npx vercel env add VITE_NASA_API_KEY
 npx vercel --prod   # production deploy
 ```
 
+### GitHub Pages (main host)
+
+Live at **https://malkawi06.github.io/mars-among-us/**. `.github/workflows/deploy-pages.yml` builds and publishes every push to `main`, with no deploy limit. One-time setup: repo **Settings → Pages → Source: GitHub Actions**. Optionally add `VITE_NASA_API_KEY` under **Settings → Secrets and variables → Actions**.
+
+The workflow builds with `BASE_PATH=/mars-among-us/` (the site lives under that path), copies `index.html` to `404.html` so deep links survive a refresh, and points DONKI straight at NASA CCMC because Pages has no proxy.
+
 ### Netlify (fallback host)
 
 Some networks in Jordan can't reach `*.vercel.app` at all (DNS and IP both time out). The same app runs on Netlify: **https://marc-amoung-u.netlify.app**. `netlify.toml` mirrors `vercel.json` (build, SPA fallback, `/api/donki` proxy). In Netlify: Add new site → Import from GitHub → pick this repo → add `VITE_NASA_API_KEY` → Deploy. Every push to `main` then deploys to both hosts.

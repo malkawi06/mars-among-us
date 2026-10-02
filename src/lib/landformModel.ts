@@ -6,7 +6,7 @@
 import type { InferenceSession } from 'onnxruntime-web/wasm'
 import { LANDFORM_NAMES, type LandformCode } from '../data/analogs'
 
-const MODEL_URL = '/models/mars_landforms.int8.onnx'
+const MODEL_URL = `${import.meta.env.BASE_URL}models/mars_landforms.int8.onnx`
 const SIZE = 224
 const MEAN = [0.485, 0.456, 0.406]
 const STD = [0.229, 0.224, 0.225]
