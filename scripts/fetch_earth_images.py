@@ -30,6 +30,7 @@ EARTH_M_PER_PX_Z0 = 156543.03392
 
 CTX_URL = 'https://astro.arcgis.com/arcgis/rest/services/OnMars/CTX1/MapServer/tile/{z}/{y}/{x}'
 CTX_LEVEL = 12  # 0.3515625 / 2**12 degrees per pixel, about 5.1 m at the equator
+CTX_TILE = 512  # this service's tiles are 512 x 512 (MapServer tileInfo rows/cols)
 CTX_DEG_PER_PX = 0.3515625 / 2**CTX_LEVEL
 MARS_M_PER_DEG = 2 * math.pi * 3_396_190 / 360
 
@@ -47,12 +48,12 @@ def fetch(url):
         return Image.open(io.BytesIO(response.read())).convert('RGB')
 
 
-def mosaic(url, z, left, top, width, height):
+def mosaic(url, z, left, top, width, height, tile=TILE):
     """Stitches the tiles covering a pixel window (left, top, width, height) of a tile grid."""
     canvas = Image.new('RGB', (width, height))
-    for ty in range(top // TILE, (top + height - 1) // TILE + 1):
-        for tx in range(left // TILE, (left + width - 1) // TILE + 1):
-            canvas.paste(fetch(url.format(z=z, x=tx, y=ty)), (tx * TILE - left, ty * TILE - top))
+    for ty in range(top // tile, (top + height - 1) // tile + 1):
+        for tx in range(left // tile, (left + width - 1) // tile + 1):
+            canvas.paste(fetch(url.format(z=z, x=tx, y=ty)), (tx * tile - left, ty * tile - top))
     return canvas
 
 
@@ -72,7 +73,7 @@ def mars_image(lat, lon):
     height = round(span_m / MARS_M_PER_DEG / CTX_DEG_PER_PX)
     width = round(height / math.cos(math.radians(lat)))
     px, py = (lon + 180) / CTX_DEG_PER_PX, (90 - lat) / CTX_DEG_PER_PX
-    image = mosaic(CTX_URL, CTX_LEVEL, int(px - width / 2), int(py - height / 2), width, height)
+    image = mosaic(CTX_URL, CTX_LEVEL, int(px - width / 2), int(py - height / 2), width, height, CTX_TILE)
     return image.resize((SIZE, SIZE), Image.LANCZOS), span_m / SIZE
 
 
