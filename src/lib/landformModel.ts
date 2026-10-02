@@ -41,42 +41,89 @@ async function createSession(): Promise<InferenceSession> {
   return ort.InferenceSession.create(await response.arrayBuffer(), { executionProviders: ['wasm'] })
 }
 
-/** Classifies an image; returns every landform, most likely first. */
-export async function classifyLandform(image: HTMLImageElement): Promise<LandformPrediction[]> {
+/** A square area of an image, in image pixels. */
+export interface Square {
+  x: number
+  y: number
+  size: number
+}
+
+/** Classifies an image (or one square of it); returns every landform, most likely first. */
+export async function classifyLandform(
+  image: HTMLImageElement,
+  square = centreSquare(image),
+): Promise<LandformPrediction[]> {
+  return softmax(await logitsFor(image, square))
+    .map((probability, i) => ({ code: CLASSES[i], name: LANDFORM_NAMES[CLASSES[i]], probability }))
+    .sort((a, b) => b.probability - a.probability)
+}
+
+export interface ScanResult extends Square {
+  /** Probability of the requested landform in this square. */
+  probability: number
+}
+
+/**
+ * Scores one landform in square windows spread evenly over the image (neighbours overlap by at
+ * least 20%). Runs one window at a time so the page stays responsive; onProgress gets 0–1.
+ */
+export async function scanForLandform(
+  image: HTMLImageElement,
+  code: LandformCode,
+  window: number,
+  onProgress?: (done: number) => void,
+): Promise<ScanResult[]> {
+  const index = CLASSES.indexOf(code)
+  const positions = (length: number) => {
+    const span = Math.max(0, length - window)
+    const count = Math.ceil(span / (window * 0.8)) + 1
+    return Array.from({ length: count }, (_, i) =>
+      count === 1 ? 0 : Math.round((span * i) / (count - 1)),
+    )
+  }
+  const squares = positions(image.naturalHeight).flatMap((y) =>
+    positions(image.naturalWidth).map((x) => ({ x, y, size: window })),
+  )
+  const results: ScanResult[] = []
+  for (const [i, square] of squares.entries()) {
+    results.push({ ...square, probability: softmax(await logitsFor(image, square))[index] })
+    onProgress?.((i + 1) / squares.length)
+  }
+  return results
+}
+
+async function logitsFor(image: HTMLImageElement, square: Square): Promise<number[]> {
   const model = await loadLandformModel()
   const { Tensor } = await import('onnxruntime-web/wasm')
-  const input = new Tensor('float32', toInputTensor(image), [1, 3, SIZE, SIZE])
+  const input = new Tensor('float32', toInputTensor(image, square), [1, 3, SIZE, SIZE])
   const output = await model.run({ [model.inputNames[0]]: input })
   const logits = Array.from(output[model.outputNames[0]].data as Float32Array)
   if (logits.length !== CLASSES.length) {
     throw new Error(`Model returned ${logits.length} classes, expected ${CLASSES.length}.`)
   }
-  return softmax(logits)
-    .map((probability, i) => ({ code: CLASSES[i], name: LANDFORM_NAMES[CLASSES[i]], probability }))
-    .sort((a, b) => b.probability - a.probability)
+  return logits
+}
+
+function centreSquare(image: HTMLImageElement): Square {
+  const size = Math.min(image.naturalWidth, image.naturalHeight)
+  return { x: (image.naturalWidth - size) / 2, y: (image.naturalHeight - size) / 2, size }
 }
 
 /**
- * Same preprocessing as training: centre square crop, resize to 224, grayscale copied to 3 channels
+ * Same preprocessing as training: square crop, resize to 224, grayscale copied to 3 channels
  * (PIL's luma weights), ImageNet mean/std normalisation, CHW layout.
  */
-function toInputTensor(image: HTMLImageElement): Float32Array {
-  const canvas = document.createElement('canvas')
-  canvas.width = canvas.height = SIZE
-  const context = canvas.getContext('2d', { willReadFrequently: true })
+let canvasContext: CanvasRenderingContext2D | null | undefined
+
+function toInputTensor(image: HTMLImageElement, square: Square): Float32Array {
+  if (canvasContext === undefined) {
+    const canvas = document.createElement('canvas')
+    canvas.width = canvas.height = SIZE
+    canvasContext = canvas.getContext('2d', { willReadFrequently: true })
+  }
+  const context = canvasContext
   if (!context) throw new Error('Canvas is not available in this browser.')
-  const side = Math.min(image.naturalWidth, image.naturalHeight)
-  context.drawImage(
-    image,
-    (image.naturalWidth - side) / 2,
-    (image.naturalHeight - side) / 2,
-    side,
-    side,
-    0,
-    0,
-    SIZE,
-    SIZE,
-  )
+  context.drawImage(image, square.x, square.y, square.size, square.size, 0, 0, SIZE, SIZE)
   const { data } = context.getImageData(0, 0, SIZE, SIZE)
   const pixels = SIZE * SIZE
   const tensor = new Float32Array(3 * pixels)

@@ -3,11 +3,11 @@ import { Link } from 'react-router'
 import { AnalogMap } from '../components/AnalogMap'
 import { AnalogSiteDetails } from '../components/AnalogSiteDetails'
 import { Card } from '../components/Card'
-import { CompareImages } from '../components/CompareImages'
 import { ConfidenceBadge } from '../components/ConfidenceBadge'
 import { ErrorState } from '../components/ErrorState'
 import { LoadingState } from '../components/LoadingState'
 import { PageHeader } from '../components/PageHeader'
+import { SimilarSpots } from '../components/SimilarSpots'
 import { site as siteConfig } from '../config/site'
 import { analogsFor, LANDFORM_NAMES, type LandformCode } from '../data/analogs'
 import { useAsync } from '../hooks/useAsync'
@@ -58,7 +58,8 @@ export default function Analyze() {
   const top = data?.[0]
   const analogs = top ? analogsFor(top.code) : []
   const selected = analogs.find(({ site }) => site.id === selectedId)?.site
-  const pictured = analogs.find(({ site }) => site.image)?.site
+  /** The Earth site shown next to the uploaded image: the selected one, else the strongest analog. */
+  const focus = selected ?? analogs[0]?.site
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
@@ -138,17 +139,8 @@ export default function Analyze() {
               <h2 className="text-xl font-semibold">
                 Places on Earth with {top.name.toLowerCase()} like this
               </h2>
-              {imageUrl && pictured?.image && (
-                <CompareImages
-                  className="max-w-md"
-                  mars={{ src: imageUrl, label: 'Your image' }}
-                  earth={{
-                    src: pictured.image.url,
-                    label: pictured.name,
-                    credit: pictured.image.credit,
-                    page: pictured.image.page,
-                  }}
-                />
+              {imageUrl && focus && (
+                <SimilarSpots userImage={imageUrl} site={focus} landform={top} />
               )}
               <AnalogMap
                 sites={analogs.map(({ site }) => site)}
