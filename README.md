@@ -69,6 +69,10 @@ npx vercel env add VITE_NASA_API_KEY
 npx vercel --prod   # production deploy
 ```
 
+### Netlify (fallback host)
+
+Some networks in Jordan can't reach `*.vercel.app` at all (DNS and IP both time out). The same app runs on Netlify: **https://marc-amoung-u.netlify.app**. `netlify.toml` mirrors `vercel.json` (build, SPA fallback, `/api/donki` proxy). In Netlify: Add new site → Import from GitHub → pick this repo → add `VITE_NASA_API_KEY` → Deploy. Every push to `main` then deploys to both hosts.
+
 ---
 
 ## Where to edit things
