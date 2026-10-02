@@ -68,6 +68,7 @@ export const site = {
 
   nav: [
     { to: '/', label: 'Home' },
+    { to: '/analyze', label: 'Analyze' },
     { to: '/explore', label: 'Explore' },
     { to: '/data', label: 'Data' },
     { to: '/analogs', label: 'Earth Analogs' },
@@ -75,7 +76,7 @@ export const site = {
   ] satisfies NavItem[],
 
   home: {
-    primaryCta: { label: 'Start exploring', to: '/explore' },
+    primaryCta: { label: 'Analyze a Mars image', to: '/analyze' },
     secondaryCta: { label: 'About the project', to: '/about' },
     highlights: [
       {
@@ -116,6 +117,16 @@ export const site = {
   },
 
   /** Sections match the Space Apps project submission form. */
+  analyze: {
+    title: 'Analyze a Mars image',
+    intro:
+      'Upload an orbital image of Mars. A model trained on 16,150 NASA images names the landform, then we show the places on Earth that look like it, with sources.',
+    scaleNote:
+      'Works best on grayscale orbital images about 1 km across (the model learned from 200 × 200 px MRO Context Camera tiles, ~6 m per pixel). Other scales or cameras can be misread.',
+    lowConfidence:
+      'The model is not sure about this image. It may not be a Mars orbital image, or it may be at a very different scale from the training data.',
+  },
+
   analogs: {
     title: 'Earth Analogs',
     intro:
