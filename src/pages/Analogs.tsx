@@ -120,6 +120,21 @@ function SiteDetails({ site, onBack }: { site: AnalogSite; onBack: () => void })
         </button>
       }
     >
+      {site.image && (
+        <figure className="mb-4">
+          <img
+            src={site.image.url}
+            alt={site.name}
+            loading="lazy"
+            className="w-full rounded-lg border border-border"
+          />
+          <figcaption className="mt-1 text-xs text-muted">
+            <a href={site.image.page} target="_blank" rel="noreferrer" className="hover:underline">
+              {site.image.credit}
+            </a>
+          </figcaption>
+        </figure>
+      )}
       <p className="leading-relaxed text-fg-2">{site.why}</p>
       <p className="mt-3 text-sm">
         <span className="text-muted">Climate: </span>
