@@ -198,6 +198,8 @@ If an API blocks browser requests (CORS), proxy it the way `/api/donki` is proxi
 
 Until the file is there, the page explains that the model is missing.
 
+**Moon + Mars model (next step):** `ml/train_moon_mars_landforms.ipynb` trains one model on DoMars16k (15 Mars classes) and LROCNet (Moon: fresh crater, old crater, plain surface), plus lunar rockfalls when that dataset is reachable. It reports Mars, Moon and Moon-vs-Mars accuracy and saves `planet_landforms.int8.onnx`; the site keeps the Mars model until this one is wired in.
+
 **Sample images (optional):** the notebook's last cell exports one test image per landform as `samples.zip`. Upload everything inside it to `public/samples/` and the Analyze page shows a "Try one of these" gallery. It stays hidden until `public/samples/index.json` exists.
 
 ## Compare page
