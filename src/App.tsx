@@ -11,6 +11,7 @@ const Explore = lazy(() => import('./pages/Explore'))
 const Data = lazy(() => import('./pages/Data'))
 const Analyze = lazy(() => import('./pages/Analyze'))
 const Analogs = lazy(() => import('./pages/Analogs'))
+const Compare = lazy(() => import('./pages/Compare'))
 const About = lazy(() => import('./pages/About'))
 
 // To add a page: create it in src/pages, add a route here, and add a link to `nav` in src/config/site.ts.
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
             { path: 'data', element: <Data /> },
             { path: 'analyze', element: <Analyze /> },
             { path: 'analogs', element: <Analogs /> },
+            { path: 'compare', element: <Compare /> },
             { path: 'about', element: <About /> },
             { path: '*', element: <NotFound /> },
           ],
