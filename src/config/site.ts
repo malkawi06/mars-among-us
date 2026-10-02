@@ -70,6 +70,7 @@ export const site = {
     { to: '/', label: 'Home' },
     { to: '/explore', label: 'Explore' },
     { to: '/data', label: 'Data' },
+    { to: '/analogs', label: 'Earth Analogs' },
     { to: '/about', label: 'About' },
   ] satisfies NavItem[],
 
@@ -115,6 +116,12 @@ export const site = {
   },
 
   /** Sections match the Space Apps project submission form. */
+  analogs: {
+    title: 'Earth Analogs',
+    intro:
+      'Places on Earth that look like landforms on Mars, each backed by published sources. Pick a landform to filter, then select a site to fly to it.',
+  },
+
   about: {
     challenge:
       'Summarize the challenge in your own words: the problem, who it affects, and why it matters. Link to the official challenge page.',
