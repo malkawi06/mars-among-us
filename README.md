@@ -182,6 +182,16 @@ If an API blocks browser requests (CORS), proxy it the way `/api/donki` is proxi
 
 ---
 
+## Mars landform model
+
+`/analyze` classifies an uploaded Mars orbital image into one of 15 landforms and lists matching Earth analog sites (`src/data/analogs.ts`). The model runs entirely in the browser with onnxruntime-web, so images are never uploaded.
+
+1. Train it on Kaggle with `ml/train_mars_landforms.ipynb` (GPU, Internet on, **Save & Run All**). It prints the test accuracy of both the PyTorch model and the int8 file.
+2. Download `mars_landforms.int8.onnx` (~15 MB) from the notebook's **Output** panel.
+3. On GitHub, open `public/models/`, then **Add file → Upload files**, and commit. Netlify and Vercel redeploy on their own.
+
+Until the file is there, the page explains that the model is missing.
+
 ## Useful NASA data sources
 
 | Source                                                                                                                                                  | What it's good for                                                                                                                                       | Access                                                 |
