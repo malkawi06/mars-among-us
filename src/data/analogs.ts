@@ -64,6 +64,8 @@ export interface AnalogSite {
   climate: string
   /** Why it resembles Mars, in one or two sentences, backed by the sources. */
   why: string
+  /** Hand-picked NASA image (public domain). The map shows Sentinel-2 imagery for every site. */
+  image?: { url: string; credit: string; page: string }
   sources: Source[]
 }
 
@@ -232,6 +234,11 @@ export const ANALOG_SITES: AnalogSite[] = [
     landforms: { fsf: 'strong' },
     climate: 'Semi-arid steppe',
     why: 'Carved by the largest known floods on Earth; the standard analog for the giant outflow channels on Mars.',
+    image: {
+      url: 'https://science.nasa.gov/wp-content/uploads/2025/10/scablands_oli_2013-2018_render.jpg',
+      credit: 'NASA Earth Observatory, Landsat 8 OLI mosaic (2013–2018) over SRTM topography',
+      page: 'https://science.nasa.gov/earth/earth-observatory/channeled-scablands-92025/',
+    },
     sources: [
       {
         title: 'Channeled Scablands: an analog for Martian outflow channels (Caltech GPS)',
@@ -294,6 +301,11 @@ export const ANALOG_SITES: AnalogSite[] = [
     landforms: { fse: 'weak' },
     climate: 'Polar desert',
     why: 'Slope streaks are a specifically Martian phenomenon with no direct Earth analog; water tracks here are among the closest proposed candidates.',
+    image: {
+      url: 'https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/82000/82524/taylorglacier_pho_2013_studinger.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg',
+      credit: 'NASA Earth Observatory (aerial photograph, 2013)',
+      page: 'https://science.nasa.gov/earth/earth-observatory/taylor-valley-antarctica-82524/',
+    },
     sources: [
       {
         title:
@@ -335,6 +347,12 @@ export const ANALOG_SITES: AnalogSite[] = [
     landforms: { cra: 'strong' },
     climate: 'Semi-arid plateau',
     why: 'Exceptionally well-preserved simple impact crater, used for decades to train astronauts and scientists in planetary geology.',
+    image: {
+      url: 'https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/148000/148384/arizona_oli_2021135.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg',
+      credit:
+        'NASA Earth Observatory image by Joshua Stevens, using Landsat data from the U.S. Geological Survey',
+      page: 'https://science.nasa.gov/earth/earth-observatory/arizonas-meteor-crater-148384/',
+    },
     sources: [
       {
         title: 'Terrestrial analogs: using Earth to study space (USGS)',
@@ -352,6 +370,11 @@ export const ANALOG_SITES: AnalogSite[] = [
     landforms: { cra: 'strong', mix: 'moderate' },
     climate: 'Polar desert: cold, dry, windy, nearly unvegetated',
     why: 'The only known impact structure in a cold, dry, windy, nearly unvegetated polar desert; home of the NASA Haughton-Mars Project.',
+    image: {
+      url: 'https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/2000/2585/PIA03714.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg',
+      credit: 'NASA/JPL MISR (PIA03714), via NASA Earth Observatory',
+      page: 'https://science.nasa.gov/earth/earth-observatory/mars-researchers-rendezvous-on-remote-arctic-island-2585/',
+    },
     sources: [
       { title: 'Haughton-Mars Project (Mars Institute)', url: 'https://www.marsinstitute.no/hmp' },
       {
@@ -451,6 +474,12 @@ export const ANALOG_SITES: AnalogSite[] = [
     landforms: { rou: 'strong' },
     climate: 'Subarctic, unvegetated highland',
     why: 'Fresh 2014–2015 rubbly and spiny lava, studied as an analog for Elysium Planitia, the youngest volcanic terrain on Mars.',
+    image: {
+      url: 'https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/84000/84316/holuhraun_oli_2014249.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg',
+      credit:
+        'NASA Earth Observatory image by Jesse Allen, using Landsat data from the U.S. Geological Survey',
+      page: 'https://science.nasa.gov/earth/earth-observatory/roiling-flows-on-holuhraun-lava-field-84316/',
+    },
     sources: [
       {
         title:
