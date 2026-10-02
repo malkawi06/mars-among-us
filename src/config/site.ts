@@ -59,7 +59,7 @@ export const site = {
   links: {
     repo: 'https://github.com/malkawi06/mars-among-us',
     /** Live Vercel URL, once deployed. */
-    demo: '',
+    demo: 'https://mars-among-us.vercel.app',
     /** 30-second demo video (Space Apps asks for one). */
     video: '',
     /** Slide deck or project page on spaceappschallenge.org. */
