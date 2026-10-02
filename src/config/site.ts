@@ -30,7 +30,8 @@ export const site = {
   /** Project name: navbar, hero, browser tab. */
   name: 'Mars Among Us',
   /** One-line pitch: hero subtitle and <meta description>. */
-  pitch: 'One sentence that says what your project does and who it helps.',
+  pitch:
+    'Upload an orbital image of Mars and see the places on Earth that look the same, with the research to back it up.',
 
   event: {
     name: 'NASA Space Apps Challenge 2026',
@@ -45,20 +46,23 @@ export const site = {
   },
 
   team: {
-    name: 'Team Name',
-    location: 'City, Country',
+    /** Leave empty to hide. */
+    name: '',
+    location: 'Jordan',
     members: [
-      { name: 'Member One', role: 'Team lead · Frontend', github: '', linkedin: '' },
-      { name: 'Member Two', role: 'Data & science', github: '', linkedin: '' },
-      { name: 'Member Three', role: 'Design & storytelling', github: '', linkedin: '' },
-      { name: 'Member Four', role: 'Backend & deployment', github: '', linkedin: '' },
+      {
+        name: 'Mohammad Huseen Malkawi',
+        role: 'Creator · Model, data and web',
+        github: 'https://github.com/malkawi06',
+        linkedin: '',
+      },
     ] satisfies TeamMember[],
   },
 
   /** External links. Empty strings are hidden in the UI. */
   links: {
     repo: 'https://github.com/malkawi06/mars-among-us',
-    /** Live Vercel URL, once deployed. */
+    /** Live site URL. */
     demo: 'https://malkawi06.github.io/mars-among-us/',
     /** 30-second demo video (Space Apps asks for one). */
     video: '',
@@ -69,31 +73,41 @@ export const site = {
   nav: [
     { to: '/', label: 'Home' },
     { to: '/analyze', label: 'Analyze' },
-    { to: '/explore', label: 'Explore' },
-    { to: '/data', label: 'Data' },
     { to: '/analogs', label: 'Earth Analogs' },
     { to: '/about', label: 'About' },
   ] satisfies NavItem[],
 
   home: {
     primaryCta: { label: 'Analyze a Mars image', to: '/analyze' },
-    secondaryCta: { label: 'About the project', to: '/about' },
-    highlights: [
+    secondaryCta: { label: 'Browse Earth analogs', to: '/analogs' },
+    /** Hero comparison: a Mars image next to the Earth analog site with this id (src/data/analogs.ts). */
+    compare: {
+      mars: {
+        url: 'https://images-assets.nasa.gov/image/PIA08813/PIA08813~small.jpg',
+        label: 'Victoria Crater, Mars',
+        credit: 'NASA/JPL-Caltech/University of Arizona (HiRISE)',
+        page: 'https://images.nasa.gov/details/PIA08813',
+      },
+      earthSiteId: 'meteor-crater',
+      earthLabel: 'Meteor Crater, Arizona',
+    },
+    steps: [
       {
-        title: 'Explore',
-        body: 'Browse NASA satellite imagery by date and compare it with a time series.',
-        to: '/explore',
+        title: 'Upload a Mars image',
+        body: 'Drop an orbital image of Mars. It is analyzed in your browser and never leaves your device.',
       },
       {
-        title: 'Live NASA data',
-        body: 'Pull live data from api.nasa.gov. This starter shows the Astronomy Picture of the Day.',
-        to: '/data',
+        title: 'Name the landform',
+        body: 'A model trained on 16,150 NASA images recognises 15 landforms: dunes, craters, gullies, channels and more.',
       },
       {
-        title: 'About',
-        body: 'The challenge, our solution, the NASA data we used, and the team.',
-        to: '/about',
+        title: 'Find it on Earth',
+        body: 'See the places on Earth with the same landform on a satellite map, each backed by published research.',
       },
+    ],
+    stats: [
+      { value: '16,150', label: 'NASA Mars images used for training' },
+      { value: '93.8%', label: 'Accuracy on images the model never saw' },
     ],
   },
 
@@ -123,6 +137,9 @@ export const site = {
       'Upload an orbital image of Mars. A model trained on 16,150 NASA images names the landform, then we show the places on Earth that look like it, with sources.',
     scaleNote:
       'Works best on grayscale orbital images about 1 km across (the model learned from 200 × 200 px MRO Context Camera tiles, ~6 m per pixel). Other scales or cameras can be misread.',
+    samplesTitle: 'No image? Try one of these',
+    samplesNote:
+      'Context Camera tiles from the DoMars16k test set: the model never saw them during training.',
     lowConfidence:
       'The model is not sure about this image. It may not be a Mars orbital image, or it may be at a very different scale from the training data.',
   },
@@ -135,19 +152,35 @@ export const site = {
 
   about: {
     challenge:
-      'Summarize the challenge in your own words: the problem, who it affects, and why it matters. Link to the official challenge page.',
+      'Scientists test rovers, instruments and crews at places on Earth that resemble Mars, called terrestrial analogs. Finding the right analog for a given Martian landscape usually means searching scattered research papers by hand.',
     solution:
-      'Describe what you built, how it works, and what makes it useful. Mention the tools, languages, and hardware you used.',
+      'Mars Among Us turns a Mars orbital image into a list of places on Earth that look like it. A ConvNeXt-Nano image classifier, fine-tuned on 16,150 labelled Context Camera images (DoMars16k), names the landform with 93.8% accuracy on held-out test images. The site then shows Earth analog sites for that landform on a satellite map, each with the published sources that compare it with Mars. The model runs entirely in the browser with ONNX Runtime Web, so images are never uploaded. Built with React, TypeScript, Tailwind CSS and Leaflet; the model was trained with PyTorch on a free Kaggle GPU.',
     nasaData: [
+      {
+        name: 'Mars Reconnaissance Orbiter Context Camera (via DoMars16k)',
+        url: 'https://doi.org/10.5281/zenodo.4291940',
+        howWeUseIt:
+          'The 16,150 labelled CTX image tiles the landform model was trained and tested on.',
+      },
+      {
+        name: 'NASA Earth Observatory',
+        url: 'https://science.nasa.gov/earth/earth-observatory/',
+        howWeUseIt: 'Images of Earth analog sites such as Meteor Crater, Haughton and Holuhraun.',
+      },
+      {
+        name: 'HiRISE, via the NASA Image and Video Library',
+        url: 'https://images.nasa.gov/details/PIA08813',
+        howWeUseIt: 'The Victoria Crater image on the home page.',
+      },
       {
         name: 'NASA GIBS (Global Imagery Browse Services)',
         url: 'https://nasa-gibs.github.io/gibs-api-docs/',
-        howWeUseIt: 'Daily satellite imagery tiles on the Explore map.',
+        howWeUseIt: 'Daily satellite imagery tiles on the satellite explorer.',
       },
       {
         name: 'Astronomy Picture of the Day (APOD)',
         url: 'https://api.nasa.gov',
-        howWeUseIt: 'Shown on the Data page to verify the api.nasa.gov connection.',
+        howWeUseIt: 'Shown on the live NASA data page to verify the api.nasa.gov connection.',
       },
     ] satisfies NasaDataSource[],
     ai: 'List each AI tool you used (code assistants, image or text generators) and what you used it for. Check the current Space Apps rules on AI before submitting, for example how to label AI-generated images, video, and text.',
@@ -156,6 +189,11 @@ export const site = {
   footer: {
     tagline: 'Built for NASA Space Apps Challenge 2026',
     disclaimer: 'This project is not affiliated with or endorsed by NASA.',
+    /** Extra pages kept out of the main menu. */
+    more: [
+      { to: '/explore', label: 'Satellite explorer' },
+      { to: '/data', label: 'Live NASA data' },
+    ] satisfies NavItem[],
   },
 }
 

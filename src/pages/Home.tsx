@@ -1,84 +1,103 @@
 import { Link } from 'react-router'
+import { CompareImages } from '../components/CompareImages'
+import { StatTile } from '../components/StatTile'
 import { site } from '../config/site'
+import { ANALOG_SITES, LANDFORM_NAMES, type LandformCode } from '../data/analogs'
 import { usePageTitle } from '../hooks/usePageTitle'
+
+const LANDFORMS = Object.entries(LANDFORM_NAMES) as [LandformCode, string][]
 
 export default function Home() {
   usePageTitle()
-  const { team, home } = site
+  const { home } = site
+  const earthImage = ANALOG_SITES.find((s) => s.id === home.compare.earthSiteId)?.image
 
   return (
     <>
       <section className="hero-sky relative overflow-hidden border-b border-border">
-        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:py-28">
-          <p className="text-sm font-medium text-accent">
-            {site.event.name} · {site.event.dates}
-          </p>
-          <h1 className="mt-3 text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
-            {site.name}
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg text-pretty text-fg-2 sm:text-xl">{site.pitch}</p>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              to={home.primaryCta.to}
-              className="rounded-lg bg-accent px-5 py-2.5 font-medium text-accent-fg hover:opacity-90"
-            >
-              {home.primaryCta.label}
-            </Link>
-            <Link
-              to={home.secondaryCta.to}
-              className="rounded-lg border border-border bg-surface px-5 py-2.5 font-medium hover:bg-surface-2"
-            >
-              {home.secondaryCta.label}
-            </Link>
-          </div>
-
-          <div className="mt-12 text-sm">
-            <p className="text-muted">
-              Team <span className="font-medium text-fg">{team.name}</span> · {team.location} ·
-              Challenge:{' '}
-              <a
-                href={site.challenge.url}
-                target="_blank"
-                rel="noreferrer"
-                className="text-accent hover:underline"
-              >
-                {site.challenge.name}
-              </a>
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:py-24 lg:grid-cols-2">
+          <div>
+            <p className="text-sm font-medium text-accent">
+              {site.event.name} · {site.event.dates}
             </p>
-            <ul className="mt-3 flex flex-wrap gap-2">
-              {team.members.map((member) => (
-                <li
-                  key={member.name}
-                  className="rounded-full border border-border bg-surface px-3 py-1 text-fg-2"
-                >
-                  {member.name}
-                </li>
-              ))}
-            </ul>
+            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
+              {site.name}
+            </h1>
+            <p className="mt-4 max-w-xl text-lg text-pretty text-fg-2 sm:text-xl">{site.pitch}</p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                to={home.primaryCta.to}
+                className="rounded-lg bg-accent px-5 py-2.5 font-medium text-accent-fg hover:opacity-90"
+              >
+                {home.primaryCta.label}
+              </Link>
+              <Link
+                to={home.secondaryCta.to}
+                className="rounded-lg border border-border bg-surface px-5 py-2.5 font-medium hover:bg-surface-2"
+              >
+                {home.secondaryCta.label}
+              </Link>
+            </div>
           </div>
+
+          {earthImage && (
+            <CompareImages
+              className="mx-auto w-full max-w-lg"
+              mars={{ src: home.compare.mars.url, ...home.compare.mars }}
+              earth={{
+                src: earthImage.url,
+                label: home.compare.earthLabel,
+                credit: earthImage.credit,
+                page: earthImage.page,
+              }}
+            />
+          )}
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-4 px-4 py-12 sm:grid-cols-3">
-        {home.highlights.map((item) => (
-          <Link
-            key={item.to}
-            to={item.to}
-            className="group rounded-xl border border-border bg-surface p-5 transition-colors hover:border-accent"
-          >
-            <h2 className="font-semibold">
-              {item.title}{' '}
-              <span
-                aria-hidden="true"
-                className="inline-block text-accent transition-transform group-hover:translate-x-0.5"
-              >
-                →
+      <section className="mx-auto max-w-7xl px-4 py-14">
+        <h2 className="text-2xl font-semibold tracking-tight">How it works</h2>
+        <ol className="mt-6 grid gap-4 sm:grid-cols-3">
+          {home.steps.map((step, i) => (
+            <li key={step.title} className="rounded-xl border border-border bg-surface p-5">
+              <span className="grid size-8 place-items-center rounded-full bg-accent/15 text-sm font-semibold text-accent">
+                {i + 1}
               </span>
-            </h2>
-            <p className="mt-2 text-sm text-fg-2">{item.body}</p>
-          </Link>
-        ))}
+              <h3 className="mt-3 font-semibold">{step.title}</h3>
+              <p className="mt-1 text-sm text-fg-2">{step.body}</p>
+            </li>
+          ))}
+        </ol>
+
+        <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {home.stats.map((stat) => (
+            <StatTile key={stat.label} label={stat.label} value={stat.value} />
+          ))}
+          <StatTile label="Mars landforms recognised" value={LANDFORMS.length} />
+          <StatTile label="Earth analog sites, all sourced" value={ANALOG_SITES.length} />
+        </div>
+      </section>
+
+      <section className="border-t border-border">
+        <div className="mx-auto max-w-7xl px-4 py-14">
+          <h2 className="text-2xl font-semibold tracking-tight">The landforms it knows</h2>
+          <p className="mt-2 max-w-2xl text-fg-2">
+            Pick one to see where on Earth it can be found.
+          </p>
+          <ul className="mt-6 flex flex-wrap gap-2">
+            {LANDFORMS.map(([code, name]) => (
+              <li key={code}>
+                <Link
+                  to={`/analogs?landform=${code}`}
+                  className="block rounded-full border border-border bg-surface px-3 py-1.5 text-sm text-fg-2 transition-colors hover:border-accent hover:text-fg"
+                >
+                  {name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
     </>
   )

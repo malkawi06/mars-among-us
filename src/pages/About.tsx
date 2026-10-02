@@ -55,7 +55,7 @@ export default function About() {
 
       <Section id="team" title="Team">
         <p className="mb-4 text-sm text-muted">
-          {team.name} · {team.location}
+          {[team.name, team.location].filter(Boolean).join(' · ')}
         </p>
         <ul className="grid gap-3 sm:grid-cols-2">
           {team.members.map((member) => (
