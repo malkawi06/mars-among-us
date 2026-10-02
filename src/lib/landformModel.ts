@@ -58,40 +58,6 @@ export async function classifyLandform(
     .sort((a, b) => b.probability - a.probability)
 }
 
-export interface ScanResult extends Square {
-  /** Probability of the requested landform in this square. */
-  probability: number
-}
-
-/**
- * Scores one landform in square windows spread evenly over the image (neighbours overlap by at
- * least 20%). Runs one window at a time so the page stays responsive; onProgress gets 0–1.
- */
-export async function scanForLandform(
-  image: HTMLImageElement,
-  code: LandformCode,
-  window: number,
-  onProgress?: (done: number) => void,
-): Promise<ScanResult[]> {
-  const index = CLASSES.indexOf(code)
-  const positions = (length: number) => {
-    const span = Math.max(0, length - window)
-    const count = Math.ceil(span / (window * 0.8)) + 1
-    return Array.from({ length: count }, (_, i) =>
-      count === 1 ? 0 : Math.round((span * i) / (count - 1)),
-    )
-  }
-  const squares = positions(image.naturalHeight).flatMap((y) =>
-    positions(image.naturalWidth).map((x) => ({ x, y, size: window })),
-  )
-  const results: ScanResult[] = []
-  for (const [i, square] of squares.entries()) {
-    results.push({ ...square, probability: softmax(await logitsFor(image, square))[index] })
-    onProgress?.((i + 1) / squares.length)
-  }
-  return results
-}
-
 async function logitsFor(image: HTMLImageElement, square: Square): Promise<number[]> {
   const model = await loadLandformModel()
   const { Tensor } = await import('onnxruntime-web/wasm')

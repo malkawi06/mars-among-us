@@ -32,9 +32,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Download Earth satellite images
+      - name: Download and scan Earth satellite images
         continue-on-error: true
-        run: pip install --quiet pillow && python scripts/fetch_earth_images.py
+        run: |
+          pip install --quiet pillow numpy onnxruntime
+          python scripts/fetch_earth_images.py
+          python scripts/scan_earth_images.py
       - run: npm run build
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
