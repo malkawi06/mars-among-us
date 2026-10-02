@@ -29,6 +29,25 @@ export type LandformCode =
 
 export type Confidence = 'strong' | 'moderate' | 'weak'
 
+/** Display names, in the model's class order (labels.json). */
+export const LANDFORM_NAMES: Record<LandformCode, string> = {
+  aec: 'Aeolian Curved',
+  ael: 'Aeolian Straight',
+  cli: 'Cliff',
+  cra: 'Crater',
+  fse: 'Slope Streaks',
+  fsf: 'Channel',
+  fsg: 'Gullies',
+  fss: 'Mass Wasting',
+  mix: 'Mixed Terrain',
+  rid: 'Ridge',
+  rou: 'Rough Terrain',
+  sfe: 'Mounds',
+  sfx: 'Crater Field',
+  smo: 'Smooth Terrain',
+  tex: 'Textured Terrain',
+}
+
 export interface Source {
   title: string
   url: string
