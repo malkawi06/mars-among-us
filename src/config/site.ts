@@ -81,17 +81,6 @@ export const site = {
   home: {
     primaryCta: { label: 'Analyze a Mars image', to: '/analyze' },
     secondaryCta: { label: 'Browse Earth analogs', to: '/analogs' },
-    /** Hero comparison: a Mars image next to the Earth analog site with this id (src/data/analogs.ts). */
-    compare: {
-      mars: {
-        url: 'https://images-assets.nasa.gov/image/PIA08813/PIA08813~small.jpg',
-        label: 'Victoria Crater, Mars',
-        credit: 'NASA/JPL-Caltech/University of Arizona (HiRISE)',
-        page: 'https://images.nasa.gov/details/PIA08813',
-      },
-      earthSiteId: 'meteor-crater',
-      earthLabel: 'Meteor Crater, Arizona',
-    },
     steps: [
       {
         title: 'Upload a Mars image',
@@ -176,11 +165,6 @@ export const site = {
         name: 'NASA Earth Observatory',
         url: 'https://science.nasa.gov/earth/earth-observatory/',
         howWeUseIt: 'Images of Earth analog sites such as Meteor Crater, Haughton and Holuhraun.',
-      },
-      {
-        name: 'HiRISE, via the NASA Image and Video Library',
-        url: 'https://images.nasa.gov/details/PIA08813',
-        howWeUseIt: 'The Victoria Crater image on the home page.',
       },
       {
         name: 'NASA GIBS (Global Imagery Browse Services)',

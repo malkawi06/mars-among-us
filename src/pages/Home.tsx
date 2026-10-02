@@ -1,5 +1,4 @@
 import { Link } from 'react-router'
-import { CompareImages } from '../components/CompareImages'
 import { StatTile } from '../components/StatTile'
 import { site } from '../config/site'
 import { ANALOG_SITES, LANDFORM_NAMES, type LandformCode } from '../data/analogs'
@@ -10,12 +9,11 @@ const LANDFORMS = Object.entries(LANDFORM_NAMES) as [LandformCode, string][]
 export default function Home() {
   usePageTitle()
   const { home } = site
-  const earthImage = ANALOG_SITES.find((s) => s.id === home.compare.earthSiteId)?.image
 
   return (
     <>
       <section className="hero-sky relative overflow-hidden border-b border-border">
-        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:py-24 lg:grid-cols-2">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:py-24">
           <div>
             <p className="text-sm font-medium text-accent">
               {site.event.name} · {site.event.dates}
@@ -40,19 +38,6 @@ export default function Home() {
               </Link>
             </div>
           </div>
-
-          {earthImage && (
-            <CompareImages
-              className="mx-auto w-full max-w-lg"
-              mars={{ src: home.compare.mars.url, ...home.compare.mars }}
-              earth={{
-                src: earthImage.url,
-                label: home.compare.earthLabel,
-                credit: earthImage.credit,
-                page: earthImage.page,
-              }}
-            />
-          )}
         </div>
       </section>
 

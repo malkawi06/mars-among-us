@@ -30,3 +30,6 @@ dist-ssr
 
 # Vercel CLI
 .vercel
+
+# Generated at deploy time by scripts/fetch_earth_images.py
+public/earth/
