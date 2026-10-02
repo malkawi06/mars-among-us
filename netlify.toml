@@ -1,0 +1,17 @@
+# Netlify equivalent of vercel.json (fallback host where *.vercel.app is blocked).
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# DONKI proxy (same as vercel.json and vite.config.ts). Query strings pass through.
+[[redirects]]
+  from = "/api/donki/*"
+  to = "https://ccmc.gsfc.nasa.gov/DONKI-API/get/:splat"
+  status = 200
+  force = true
+
+# SPA fallback so React Router routes survive a refresh.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
