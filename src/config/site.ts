@@ -74,6 +74,7 @@ export const site = {
     { to: '/', label: 'Home' },
     { to: '/analyze', label: 'Analyze' },
     { to: '/analogs', label: 'Earth Analogs' },
+    { to: '/compare', label: 'Compare' },
     { to: '/about', label: 'About' },
   ] satisfies NavItem[],
 
@@ -148,6 +149,15 @@ export const site = {
     title: 'Earth Analogs',
     intro:
       'Places on Earth that look like landforms on Mars, each backed by published sources. Pick a landform to filter, then select a site to fly to it.',
+  },
+
+  compare: {
+    title: 'Compare with the Moon and Mars',
+    intro:
+      'Pick a place on the Moon or Mars and what you need an Earth analog for. Every Earth site is scored factor by factor, so you can see exactly where it matches and where it does not.',
+    method:
+      'Each factor scores 1 (weak), 2 (partial) or 3 (strong), and all factors count equally, following the NASA-led framework of Stern et al. (2025). Factors without sourced data for the target are left out. Earth climate: NASA POWER 2001–2020; Earth slope and elevation: ASTER 30 m elevation model.',
+    methodSource: 'https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2024JE008803',
   },
 
   about: {

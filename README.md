@@ -200,6 +200,10 @@ Until the file is there, the page explains that the model is missing.
 
 **Sample images (optional):** the notebook's last cell exports one test image per landform as `samples.zip`. Upload everything inside it to `public/samples/` and the Analyze page shows a "Try one of these" gallery. It stays hidden until `public/samples/index.json` exists.
 
+## Compare page
+
+`/compare` scores every Earth analog site against a Moon or Mars target (the nine Artemis III regions and five Mars sites) for a chosen purpose, factor by factor, with sources. The data and method live in [`analysis/`](analysis/README.md); regenerate `src/data/compare.ts` with `python3 analysis/build_compare_data.py`.
+
 ## Useful NASA data sources
 
 | Source                                                                                                                                                  | What it's good for                                                                                                                                       | Access                                                 |
