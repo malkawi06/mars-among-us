@@ -20,7 +20,7 @@ export function Navbar() {
           onClick={close}
           className="flex items-center gap-2 font-semibold tracking-tight"
         >
-          <img src="/favicon.svg" alt="" className="size-7" />
+          <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className="size-7" />
           {site.name}
         </Link>
 

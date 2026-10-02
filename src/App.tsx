@@ -14,25 +14,28 @@ const Analogs = lazy(() => import('./pages/Analogs'))
 const About = lazy(() => import('./pages/About'))
 
 // To add a page: create it in src/pages, add a route here, and add a link to `nav` in src/config/site.ts.
-const router = createBrowserRouter([
-  {
-    element: <Layout />,
-    children: [
-      {
-        errorElement: <ErrorPage />,
-        children: [
-          { index: true, element: <Home /> },
-          { path: 'explore', element: <Explore /> },
-          { path: 'data', element: <Data /> },
-          { path: 'analyze', element: <Analyze /> },
-          { path: 'analogs', element: <Analogs /> },
-          { path: 'about', element: <About /> },
-          { path: '*', element: <NotFound /> },
-        ],
-      },
-    ],
-  },
-])
+const router = createBrowserRouter(
+  [
+    {
+      element: <Layout />,
+      children: [
+        {
+          errorElement: <ErrorPage />,
+          children: [
+            { index: true, element: <Home /> },
+            { path: 'explore', element: <Explore /> },
+            { path: 'data', element: <Data /> },
+            { path: 'analyze', element: <Analyze /> },
+            { path: 'analogs', element: <Analogs /> },
+            { path: 'about', element: <About /> },
+            { path: '*', element: <NotFound /> },
+          ],
+        },
+      ],
+    },
+  ],
+  { basename: import.meta.env.BASE_URL.replace(/\/$/, '') || '/' },
+)
 
 export default function App() {
   return <RouterProvider router={router} />

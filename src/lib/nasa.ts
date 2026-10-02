@@ -14,7 +14,7 @@
 import { today } from './date'
 
 const API_ROOT = 'https://api.nasa.gov'
-const DONKI_ROOT = '/api/donki'
+const DONKI_ROOT = import.meta.env.VITE_DONKI_BASE || '/api/donki'
 const MINUTE = 60 * 1000
 const HOUR = 60 * MINUTE
 
