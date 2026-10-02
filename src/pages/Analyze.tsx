@@ -12,6 +12,7 @@ import { site as siteConfig } from '../config/site'
 import { analogsFor, LANDFORM_NAMES, type LandformCode } from '../data/analogs'
 import { useAsync } from '../hooks/useAsync'
 import { usePageTitle } from '../hooks/usePageTitle'
+import { loadEarthScan, visualMatch } from '../lib/earthScan'
 import { classifyLandform, loadLandformModel, type LandformPrediction } from '../lib/landformModel'
 
 const LOW_CONFIDENCE = 0.5
@@ -34,6 +35,7 @@ export default function Analyze() {
   const [dragging, setDragging] = useState(false)
   const { data, error, loading, reload } = useAsync(imageUrl ?? null, () => classify(imageUrl!))
   const { data: samples } = useAsync('samples', loadSamples)
+  const { data: earthScan } = useAsync('earth-scan', loadEarthScan)
 
   // Start downloading the model while the user picks an image. Errors surface on analysis.
   useEffect(() => {
@@ -58,8 +60,12 @@ export default function Analyze() {
   const top = data?.[0]
   const analogs = top ? analogsFor(top.code) : []
   const selected = analogs.find(({ site }) => site.id === selectedId)?.site
-  /** The Earth site shown next to the uploaded image: the selected one, else the strongest analog. */
-  const focus = selected ?? analogs[0]?.site
+  const lookAlike = (id: string) => (top && earthScan ? visualMatch(earthScan, id, top.code) : null)
+  /** Shown next to the upload: the selected site, else the one whose satellite image looks most alike. */
+  const bestLooking = [...analogs].sort(
+    (a, b) => (lookAlike(b.site.id) ?? -1) - (lookAlike(a.site.id) ?? -1),
+  )[0]?.site
+  const focus = selected ?? bestLooking
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
@@ -140,7 +146,14 @@ export default function Analyze() {
                 Places on Earth with {top.name.toLowerCase()} like this
               </h2>
               {imageUrl && focus && (
-                <SimilarSpots userImage={imageUrl} site={focus} landform={top} />
+                <SimilarSpots
+                  userImage={imageUrl}
+                  site={focus}
+                  landform={top}
+                  scan={earthScan}
+                  candidates={analogs.length}
+                  autoPicked={!selected}
+                />
               )}
               <AnalogMap
                 sites={analogs.map(({ site }) => site)}
@@ -162,6 +175,11 @@ export default function Analyze() {
                         <span className="block font-medium">{site.name}</span>
                         <span className="block text-sm text-muted">{site.country}</span>
                         <ConfidenceBadge confidence={confidence} className="mt-2" />
+                        {lookAlike(site.id) !== null && (
+                          <span className="mt-1 block text-xs text-muted">
+                            Satellite image looks {Math.round(lookAlike(site.id)! * 100)}% alike
+                          </span>
+                        )}
                       </button>
                     </li>
                   ))}

@@ -1,52 +1,42 @@
-import { useState } from 'react'
 import type { AnalogSite } from '../data/analogs'
 import { EARTH_SITES } from '../data/compare'
-import { useAsync } from '../hooks/useAsync'
-import { scanForLandform, type LandformPrediction, type ScanResult } from '../lib/landformModel'
+import { EARTH_URL, topSpots, type EarthScan, type Spot } from '../lib/earthScan'
+import type { LandformPrediction } from '../lib/landformModel'
 import { Card } from './Card'
-import { LoadingState } from './LoadingState'
 
-const EARTH_URL = `${import.meta.env.BASE_URL}earth/`
-/** Window width on the ground, close to the ~1.2 km tiles the model was trained on. */
-const WINDOW_M = 1500
-/** A box is drawn only if the model gives the landform at least this probability. */
-const MIN_PROBABILITY = 0.4
-const MAX_BOXES = 5
+/** Spots at or above this probability are drawn as clear matches; below it as weak ones. */
+const CLEAR = 0.4
 
-/** One entry of earth/index.json (written by scripts/fetch_earth_images.py at deploy time). */
-interface EarthImage {
-  file: string
-  size: number
-  metersPerPixel: number
-}
+const percent = (value: number) => `${Math.round(value * 100)}%`
+const strength = (p: number) => (p >= 0.6 ? 'strong' : p >= CLEAR ? 'moderate' : 'weak')
 
 /**
- * The uploaded image next to a satellite image of an Earth analog site, with boxes where the
- * model sees the same landform, and a plain-language analysis of why the two are compared.
+ * The uploaded image next to a satellite image of an Earth analog site, with the areas where the
+ * model sees the same landform boxed and enlarged, and a plain-language analysis of the match.
  */
 export function SimilarSpots({
   userImage,
   site,
   landform,
+  scan,
+  candidates,
+  autoPicked,
 }: {
   userImage: string
   site: AnalogSite
   landform: LandformPrediction
+  /** null = no satellite images in this build; undefined = still loading. */
+  scan: EarthScan | null | undefined
+  /** How many sourced analog sites were compared to pick this one. */
+  candidates: number
+  /** True when the site was chosen because its image looks most like the upload. */
+  autoPicked: boolean
 }) {
-  const { data: index, loading: indexLoading } = useAsync('earth-index', loadEarthIndex)
-  const earth = index?.[site.id]
-  const windowPx = earth ? Math.round(WINDOW_M / earth.metersPerPixel) : 0
-  const [progress, setProgress] = useState(0)
-  const {
-    data: scan,
-    error,
-    loading,
-  } = useAsync(earth ? `${site.id}:${landform.code}` : null, () =>
-    scanEarthImage(EARTH_URL + earth!.file, landform, windowPx, setProgress),
-  )
-  const boxes = scan ? strongestSpots(scan) : []
+  const image = scan?.images[site.id]
+  const spots = scan && image ? topSpots(scan, site.id, landform.code) : []
   const climate = EARTH_SITES.find((s) => s.id === site.id)
-  const landformName = landform.name.toLowerCase()
+  const name = landform.name.toLowerCase()
+  const best = spots[0]
 
   return (
     <div className="space-y-4">
@@ -55,105 +45,111 @@ export function SimilarSpots({
           <img
             src={userImage}
             alt="Your image"
-            className="aspect-square w-full rounded-xl border border-border object-cover"
+            className="aspect-square w-full rounded-xl border-2 border-earth object-cover"
           />
           <figcaption className="mt-2 text-sm font-medium">
-            Your image: {landform.name} ({Math.round(landform.probability * 100)}%)
+            Your image: {landform.name} ({percent(landform.probability)})
           </figcaption>
         </figure>
         <figure className="min-w-0">
-          {earth ? (
+          {image ? (
             <div className="relative overflow-hidden rounded-xl border border-border">
               <img
-                src={EARTH_URL + earth.file}
+                src={EARTH_URL + image.file}
                 alt={`Satellite image of ${site.name}`}
                 className="aspect-square w-full object-cover"
               />
-              {boxes.map((box, i) => (
-                <span
-                  key={`${box.x}-${box.y}`}
-                  className="absolute border-2 border-accent shadow-[0_0_0_1px_rgba(0,0,0,0.5)]"
-                  style={{
-                    left: `${(box.x / earth.size) * 100}%`,
-                    top: `${(box.y / earth.size) * 100}%`,
-                    width: `${(box.size / earth.size) * 100}%`,
-                    height: `${(box.size / earth.size) * 100}%`,
-                  }}
-                >
-                  <span className="absolute -top-px -left-px bg-accent px-1.5 text-xs font-semibold text-accent-fg">
-                    {i + 1}
-                  </span>
-                </span>
+              {spots.map((spot, i) => (
+                <SpotBox
+                  key={`${spot.x}-${spot.y}`}
+                  spot={spot}
+                  number={i + 1}
+                  imageSize={image.size}
+                />
               ))}
             </div>
           ) : (
             <div className="grid aspect-square place-items-center rounded-xl border border-dashed border-border p-4 text-center text-sm text-muted">
-              {indexLoading ? 'Loading…' : 'No satellite image of this site is available yet.'}
+              {scan === undefined ? 'Loading…' : 'No satellite image of this site in this build.'}
             </div>
           )}
           <figcaption className="mt-2 text-sm font-medium">Earth: {site.name}</figcaption>
         </figure>
       </div>
 
-      {earth && (
-        <p className="text-xs text-muted">
-          Satellite image about {((earth.size * earth.metersPerPixel) / 1000).toFixed(1)} km across;
-          each box about {(WINDOW_M / 1000).toFixed(1)} km. Sentinel-2 cloudless 2024 by EOX IT
-          Services GmbH (contains modified Copernicus Sentinel data 2024).
-        </p>
-      )}
-      {loading && (
+      {image && spots.length > 0 && (
         <div>
-          <LoadingState
-            label={`Scanning the satellite image for ${landformName}… ${Math.round(progress * 100)}%`}
-            className="py-3"
-          />
-          <div className="h-1.5 rounded-full bg-surface-2">
-            <div
-              className="h-1.5 rounded-full bg-accent transition-[width]"
-              style={{ width: `${progress * 100}%` }}
-            />
-          </div>
+          <h3 className="text-sm font-semibold">Side by side, enlarged</h3>
+          <ul className="mt-2 grid grid-cols-4 gap-2">
+            <li>
+              <img
+                src={userImage}
+                alt=""
+                className="aspect-square w-full rounded-lg border-2 border-earth object-cover"
+              />
+              <p className="mt-1 text-xs text-fg-2">Your image</p>
+            </li>
+            {spots.map((spot, i) => (
+              <li key={`${spot.x}-${spot.y}`}>
+                <div
+                  role="img"
+                  aria-label={`Area ${i + 1}, enlarged`}
+                  className={`aspect-square w-full rounded-lg border-2 ${spot.probability >= CLEAR ? 'border-accent' : 'border-dashed border-muted'}`}
+                  style={cropStyle(EARTH_URL + image.file, spot, image.size)}
+                />
+                <p className="mt-1 text-xs text-fg-2">
+                  Area {i + 1}: {percent(spot.probability)} {name} ({strength(spot.probability)})
+                </p>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-xs text-muted">
+            Satellite image about {((image.size * image.metersPerPixel) / 1000).toFixed(1)} km
+            across; each area about {(scan!.windowMeters / 1000).toFixed(1)} km. Sentinel-2
+            cloudless 2024 by EOX IT Services GmbH (contains modified Copernicus Sentinel data
+            2024).
+          </p>
         </div>
-      )}
-      {error && (
-        <p className="text-sm text-danger">Could not scan the satellite image: {error.message}</p>
       )}
 
       <Card title={`Why ${site.name} matches your image`}>
         <ul className="space-y-3 text-sm leading-relaxed text-fg-2">
           <li>
-            <span className="font-medium text-fg">What the model sees: </span>
-            your image looks like <strong className="text-fg">{landformName}</strong> (
-            {Math.round(landform.probability * 100)}% confidence).
+            <span className="font-medium text-fg">1. What the model sees: </span>
+            your image looks like <strong className="text-fg">{name}</strong> (
+            {percent(landform.probability)} confidence).
           </li>
-          {scan && (
+          {best && (
             <li>
-              <span className="font-medium text-fg">In the satellite image: </span>
-              {boxes.length ? (
+              <span className="font-medium text-fg">2. Where it looks the same on Earth: </span>
+              {autoPicked && candidates > 1
+                ? `Of the ${candidates} sourced Earth sites for ${name}, this satellite image looks most like yours. `
+                : ''}
+              {best.probability >= CLEAR ? (
                 <>
-                  the model found {boxes.length} area{boxes.length > 1 ? 's' : ''} that look like{' '}
-                  {landformName}:{' '}
-                  {boxes
-                    .map((box, i) => `box ${i + 1} ${Math.round(box.probability * 100)}%`)
-                    .join(', ')}
-                  .
+                  The model sees {name} in area 1 ({percent(best.probability)},{' '}
+                  {strength(best.probability)})
+                  {spots.length > 1
+                    ? ` and in ${spots.length - 1} more boxed area${spots.length > 2 ? 's' : ''}`
+                    : ''}
+                  . Compare the enlarged areas with your image above.
                 </>
               ) : (
                 <>
-                  the model did not find a clear {landformName} area at this scale. The published
-                  evidence below is why the site is still a known analog.
+                  The closest area only reaches {percent(best.probability)}, a weak visual match at
+                  this scale. The site is still a known analog because of the published evidence in
+                  point 3.
                 </>
               )}
             </li>
           )}
           <li>
-            <span className="font-medium text-fg">Why scientists compare them: </span>
+            <span className="font-medium text-fg">3. Why scientists compare them: </span>
             {site.why}
           </li>
           {climate && (
             <li>
-              <span className="font-medium text-fg">Environment at the site: </span>
+              <span className="font-medium text-fg">4. Environment at the site: </span>
               mean {climate.meanTempC.toFixed(1)} °C, about {climate.precipMmYr} mm of rain a year,
               slope {climate.slopeDeg.toFixed(1)}° (NASA POWER 2001–2020; ASTER 30 m elevation
               model). Mars today is about −65 °C with no rain (NASA).
@@ -184,35 +180,34 @@ export function SimilarSpots({
   )
 }
 
-async function loadEarthIndex(): Promise<Record<string, EarthImage>> {
-  const response = await fetch(`${EARTH_URL}index.json`)
-  // Images are added at deploy time; without them the host answers with index.html or a 404.
-  if (!response.ok || !response.headers.get('content-type')?.includes('json')) return {}
-  return response.json()
+function SpotBox({ spot, number, imageSize }: { spot: Spot; number: number; imageSize: number }) {
+  const clear = spot.probability >= CLEAR
+  return (
+    <span
+      className={`absolute border-2 shadow-[0_0_0_1px_rgba(0,0,0,0.6)] ${clear ? 'border-accent' : 'border-dashed border-white/70'}`}
+      style={{
+        left: `${(spot.x / imageSize) * 100}%`,
+        top: `${(spot.y / imageSize) * 100}%`,
+        width: `${(spot.size / imageSize) * 100}%`,
+        height: `${(spot.size / imageSize) * 100}%`,
+      }}
+    >
+      <span
+        className={`absolute -top-px -left-px px-1.5 text-xs font-semibold ${clear ? 'bg-accent text-accent-fg' : 'bg-black/70 text-white'}`}
+      >
+        {number} · {percent(spot.probability)}
+      </span>
+    </span>
+  )
 }
 
-async function scanEarthImage(
-  url: string,
-  landform: LandformPrediction,
-  windowPx: number,
-  onProgress: (done: number) => void,
-): Promise<ScanResult[]> {
-  const image = new Image()
-  image.src = url
-  await image.decode()
-  onProgress(0)
-  return scanForLandform(image, landform.code, windowPx, onProgress)
-}
-
-/** Highest-scoring windows above the threshold, skipping ones that mostly overlap a better one. */
-function strongestSpots(results: ScanResult[]): ScanResult[] {
-  const picked: ScanResult[] = []
-  for (const r of [...results].sort((a, b) => b.probability - a.probability)) {
-    if (r.probability < MIN_PROBABILITY || picked.length === MAX_BOXES) break
-    const overlaps = picked.some(
-      (p) => Math.abs(p.x - r.x) < r.size * 0.75 && Math.abs(p.y - r.y) < r.size * 0.75,
-    )
-    if (!overlaps) picked.push(r)
+/** Shows one square of an image, scaled to fill the element. */
+function cropStyle(url: string, spot: Spot, imageSize: number) {
+  const scale = imageSize / spot.size
+  const range = imageSize - spot.size
+  return {
+    backgroundImage: `url(${url})`,
+    backgroundSize: `${scale * 100}%`,
+    backgroundPosition: `${range ? (spot.x / range) * 100 : 0}% ${range ? (spot.y / range) * 100 : 0}%`,
   }
-  return picked
 }
