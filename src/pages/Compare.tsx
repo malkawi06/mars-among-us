@@ -3,10 +3,13 @@ import { useSearchParams } from 'react-router'
 import { Card } from '../components/Card'
 import { ConfidenceBadge } from '../components/ConfidenceBadge'
 import { PageHeader } from '../components/PageHeader'
+import { TargetImages } from '../components/TargetImages'
 import { site as siteConfig } from '../config/site'
 import type { Confidence } from '../data/analogs'
 import { EARTH_SITES, TARGETS } from '../data/compare'
+import { useAsync } from '../hooks/useAsync'
 import { usePageTitle } from '../hooks/usePageTitle'
+import { loadEarthScan } from '../lib/earthScan'
 import { PURPOSES, rank, type FactorResult, type Match, type Score } from '../lib/similarity'
 
 /** Sites shown before "Show all". */
@@ -27,6 +30,7 @@ export default function Compare() {
   const purpose = purposes.find((p) => p.id === params.get('purpose')) ?? purposes[0]
   const matches = rank(target, purpose, EARTH_SITES)
   const selected = matches.find((m) => m.site.id === params.get('site')) ?? matches[0]
+  const { data: scan } = useAsync('earth-scan', loadEarthScan)
   const [showAll, setShowAll] = useState(false)
   const details = useRef<HTMLDivElement>(null)
 
@@ -150,6 +154,7 @@ export default function Compare() {
           ref={details}
           className="order-first scroll-mt-20 space-y-4 lg:order-none lg:sticky lg:top-20 lg:col-span-3 lg:self-start"
         >
+          <TargetImages target={target} site={selected.site} scan={scan} />
           <MatchDetails match={selected} targetName={target.name} purposeLabel={purpose.label} />
           <p className="text-xs text-muted">
             {page.method}{' '}
