@@ -1,5 +1,6 @@
 import { LANDFORM_NAMES, type LandformCode } from '../data/analogs'
 import {
+  CLEAR,
   EARTH_URL,
   percent,
   strength,
@@ -50,7 +51,10 @@ export function TargetImages({
   if (!landform) return null
   const name = LANDFORM_NAMES[landform.code as LandformCode].toLowerCase()
   const targetSpots = topSpots(scan.targets[target.id], scan.classes, landform.code, 1)
-  const earthSpots = topSpots(scan.sites[site.id], scan.classes, landform.code)
+  // Only clear matches are boxed: a 2% box is noise, not likeness.
+  const earthSpots = topSpots(scan.sites[site.id], scan.classes, landform.code).filter(
+    (spot) => spot.probability >= CLEAR,
+  )
   const best = earthSpots[0]
 
   return (
@@ -76,8 +80,9 @@ export function TargetImages({
         <span className="font-medium text-fg">What the images show: </span>
         in the {target.name} image the model sees <strong className="text-fg">{name}</strong> most
         clearly ({percent(landform.probability)}, area 1 on the left).
-        {best &&
-          ` In the ${site.name} satellite image the closest ${name} area reaches ${percent(best.probability)} (${strength(best.probability)}).`}
+        {best
+          ? ` In the ${site.name} satellite image the closest ${name} area reaches ${percent(best.probability)} (${strength(best.probability)}).`
+          : ` The ${site.name} satellite image has no clear ${name} area at this scale, so its match rests on the scores.`}
         {target.body === 'Moon' &&
           ' The model learned from Mars images, so on Moon images this is a visual hint, not a measurement.'}
       </p>
