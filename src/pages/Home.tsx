@@ -2,6 +2,8 @@ import { Link } from 'react-router'
 import { StatTile } from '../components/StatTile'
 import { site } from '../config/site'
 import { ANALOG_SITES, LANDFORM_NAMES, type LandformCode } from '../data/analogs'
+import { EARTH_SITES, TARGETS } from '../data/compare'
+import { PURPOSES } from '../lib/similarity'
 import { usePageTitle } from '../hooks/usePageTitle'
 
 const LANDFORMS = Object.entries(LANDFORM_NAMES) as [LandformCode, string][]
@@ -56,17 +58,19 @@ export default function Home() {
         </ol>
 
         <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {home.stats.map((stat) => (
-            <StatTile key={stat.label} label={stat.label} value={stat.value} />
-          ))}
-          <StatTile label="Moon and Mars landforms recognised" value={LANDFORMS.length} />
-          <StatTile label="Earth analog sites, all sourced" value={ANALOG_SITES.length} />
+          <StatTile label="Places on the Moon and Mars to compare" value={TARGETS.length} />
+          <StatTile label="Earth sites scored factor by factor" value={EARTH_SITES.length} />
+          <StatTile label="Analog purposes" value={PURPOSES.length} />
+          <StatTile
+            label="Earth analog sites on the map, all sourced"
+            value={ANALOG_SITES.length}
+          />
         </div>
       </section>
 
       <section className="border-t border-border">
         <div className="mx-auto max-w-7xl px-4 py-14">
-          <h2 className="text-2xl font-semibold tracking-tight">The landforms it knows</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">Browse by landform</h2>
           <p className="mt-2 max-w-2xl text-fg-2">
             Pick one to see where on Earth it can be found.
           </p>

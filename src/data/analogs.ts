@@ -1,6 +1,6 @@
 /**
- * Earth analog sites for the landform classes of the Moon + Mars model
- * (ml/train_moon_mars_landforms.ipynb): 15 Mars classes from DoMars16k, 4 Moon classes.
+ * Earth analog sites, grouped by landform: the 15 Mars landform classes of DoMars16k (Wilhelm et al.
+ * 2020, doi 10.5281/zenodo.4291940), plus the Moon, whose analog sites are compared with it in general.
  *
  * Every site cites at least one source that explicitly compares it with Mars or the Moon.
  * - landforms maps each landform this site is an analog for to a confidence:
@@ -21,10 +21,7 @@ export type LandformCode =
   | 'fsg'
   | 'fss'
   | 'mix'
-  | 'moon_fresh'
-  | 'moon_none'
-  | 'moon_old'
-  | 'moon_rockfall'
+  | 'moon'
   | 'rid'
   | 'rou'
   | 'sfe'
@@ -34,7 +31,7 @@ export type LandformCode =
 
 export type Confidence = 'strong' | 'moderate' | 'weak'
 
-/** Display names, in the model's class order (labels.json). */
+/** Display names. */
 export const LANDFORM_NAMES: Record<LandformCode, string> = {
   aec: 'Aeolian Curved',
   ael: 'Aeolian Straight',
@@ -45,10 +42,7 @@ export const LANDFORM_NAMES: Record<LandformCode, string> = {
   fsg: 'Gullies',
   fss: 'Mass Wasting',
   mix: 'Mixed Terrain',
-  moon_fresh: 'Fresh Crater (Moon)',
-  moon_none: 'Plain Surface (Moon)',
-  moon_old: 'Old Crater (Moon)',
-  moon_rockfall: 'Rockfall (Moon)',
+  moon: 'Moon',
   rid: 'Ridge',
   rou: 'Rough Terrain',
   sfe: 'Mounds',
@@ -56,15 +50,6 @@ export const LANDFORM_NAMES: Record<LandformCode, string> = {
   smo: 'Smooth Terrain',
   tex: 'Textured Terrain',
 }
-
-export type Body = 'Mars' | 'Moon'
-
-/** Which world a landform class belongs to. */
-export const bodyOf = (code: LandformCode): Body => (code.startsWith('moon_') ? 'Moon' : 'Mars')
-
-/** A landform's name for use inside a sentence: lower case, without the "(Moon)" tag. */
-export const landformInText = (code: LandformCode) =>
-  LANDFORM_NAMES[code].replace(' (Moon)', '').toLowerCase()
 
 export interface Source {
   title: string
@@ -85,13 +70,6 @@ export interface AnalogSite {
   /** Hand-picked NASA image (public domain). The map shows Sentinel-2 imagery for every site. */
   image?: { url: string; credit: string; page: string }
   sources: Source[]
-}
-
-const MOON_GENERAL: AnalogSite['landforms'] = {
-  moon_fresh: 'moderate',
-  moon_none: 'moderate',
-  moon_old: 'moderate',
-  moon_rockfall: 'moderate',
 }
 
 export const ANALOG_SITES: AnalogSite[] = [
@@ -537,7 +515,7 @@ export const ANALOG_SITES: AnalogSite[] = [
   },
   // ---- Moon ------------------------------------------------------------------------------
   // Recognised Moon analog sites. Their sources compare them with the Moon in general, not with
-  // one Moon landform, so every Moon class lists them as 'moderate'.
+  // one Moon landform, so they are listed under 'moon' as 'moderate'.
   {
     id: 'ries',
     name: 'Nördlinger Ries crater',
@@ -545,7 +523,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lat: 48.88,
     lon: 10.58,
     precision: 'region',
-    landforms: MOON_GENERAL,
+    landforms: { moon: 'moderate' },
     climate: 'Mean 8.7 °C, 748 mm of rain a year (NASA POWER 2001–2020)',
     why: 'A 25 km, well-preserved impact crater where the Apollo 14 and 17 crews trained in 1970; ESA astronauts now study its impact rocks to prepare for the Moon.',
     sources: [
@@ -562,7 +540,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lat: 55.88,
     lon: -63.3,
     precision: 'region',
-    landforms: MOON_GENERAL,
+    landforms: { moon: 'moderate' },
     climate: 'Mean −5.9 °C, 949 mm of rain a year (NASA POWER 2001–2020)',
     why: 'A 28 km impact crater in anorthosite, the rock of the lunar highlands, studied as a geological analogue for lunar highland craters.',
     sources: [
@@ -584,7 +562,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lat: 68.1,
     lon: 13.5,
     precision: 'region',
-    landforms: MOON_GENERAL,
+    landforms: { moon: 'moderate' },
     climate: 'Mean 6.0 °C, 1,212 mm of rain a year (NASA POWER 2001–2020)',
     why: 'One of the finest exposures of anorthosite on Earth, a rock rare here but common in the bright lunar highlands; ESA astronauts learn Moon geology there.',
     sources: [
@@ -601,7 +579,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lat: 43.46,
     lon: -113.51,
     precision: 'region',
-    landforms: MOON_GENERAL,
+    landforms: { moon: 'moderate' },
     climate: 'Mean 5.7 °C, 416 mm of rain a year (NASA POWER 2001–2020)',
     why: 'Apollo 14 astronauts trained here in 1969 to learn volcanic geology, since much of the Moon is covered by volcanic rock; NASA still uses it as a research site.',
     sources: [

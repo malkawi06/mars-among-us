@@ -1,16 +1,5 @@
-import { landformInText, type LandformCode } from '../data/analogs'
-import {
-  CLEAR,
-  EARTH_URL,
-  percent,
-  strength,
-  strongestLandform,
-  TARGETS_URL,
-  topSpots,
-  type EarthScan,
-} from '../lib/earthScan'
+import { EARTH_URL, TARGETS_URL, type OrbitalImages } from '../lib/orbitalImages'
 import type { EarthSite, Target } from '../lib/similarity'
-import { SpotImages } from './SpotImages'
 
 const CREDITS = {
   Mars: 'Mars: Global CTX Mosaic, NASA/JPL/MSSS/The Murray Lab.',
@@ -20,24 +9,21 @@ const EARTH_CREDIT =
   'Earth: Sentinel-2 cloudless 2024 by EOX IT Services GmbH (contains modified Copernicus Sentinel data 2024).'
 const MOON_MOSAIC_LIMIT = -85.5
 
-/**
- * A Moon or Mars target image next to an Earth analog's satellite image. The model's clearest
- * landform in the target image is boxed there, and the matching areas are boxed on Earth.
- */
+/** A Moon or Mars target's orbital image next to an Earth analog's satellite image, at the same scale. */
 export function TargetImages({
   target,
   site,
-  scan,
+  images,
 }: {
   target: Target
   site: EarthSite
   /** null = no images in this build; undefined = still loading. */
-  scan: EarthScan | null | undefined
+  images: OrbitalImages | null | undefined
 }) {
-  if (scan === undefined) return <p className="text-sm text-muted">Loading images…</p>
-  const targetImage = scan?.targetImages[target.id]
-  const earthImage = scan?.earthImages[site.id]
-  if (!scan || !targetImage || !earthImage) {
+  if (images === undefined) return <p className="text-sm text-muted">Loading images…</p>
+  const targetImage = images?.targets[target.id]
+  const earthImage = images?.earth[site.id]
+  if (!targetImage || !earthImage) {
     return (
       <p className="rounded-xl border border-dashed border-border p-4 text-sm text-muted">
         {target.body === 'Moon' && target.lat > MOON_MOSAIC_LIMIT
@@ -47,46 +33,26 @@ export function TargetImages({
     )
   }
 
-  const landform = strongestLandform(scan.targets[target.id], scan.classes, target.body)
-  if (!landform) return null
-  const name = landformInText(landform.code as LandformCode)
-  const targetSpots = topSpots(scan.targets[target.id], scan.classes, landform.code, 1)
-  // Only clear matches are boxed: a 2% box is noise, not likeness.
-  const earthSpots = topSpots(scan.sites[site.id], scan.classes, landform.code).filter(
-    (spot) => spot.probability >= CLEAR,
-  )
-  const best = earthSpots[0]
-
+  const km = (targetImage.size * targetImage.metersPerPixel) / 1000
   return (
     <div className="space-y-3">
-      <SpotImages
-        left={{
-          src: TARGETS_URL + targetImage.file,
-          caption: `${target.body}: ${target.name}`,
-          size: targetImage.size,
-          spots: targetSpots,
-          highlight: true,
-        }}
-        right={{
-          src: EARTH_URL + earthImage.file,
-          caption: `Earth: ${site.name}`,
-          size: earthImage.size,
-          spots: earthSpots,
-        }}
-        landformName={name}
-        enlarged={false}
-        note={`Both images about ${((targetImage.size * targetImage.metersPerPixel) / 1000).toFixed(1)} km across; each area about ${(scan.windowMeters / 1000).toFixed(1)} km. ${CREDITS[target.body]} ${EARTH_CREDIT}`}
-      />
-      <p className="text-sm leading-relaxed text-fg-2">
-        <span className="font-medium text-fg">What the images show: </span>
-        in the {target.name} image the model sees <strong className="text-fg">{name}</strong> most
-        clearly ({percent(landform.probability)}, area 1 on the left).
-        {best
-          ? ` In the ${site.name} satellite image the closest ${name} area reaches ${percent(best.probability)} (${strength(best.probability)}).`
-          : ` The ${site.name} satellite image has no clear ${name} area at this scale, so its match rests on the scores.`}
-        {
-          ' The model learned from Moon and Mars images, so on Earth images the boxes are a visual hint, not a measurement.'
-        }
+      <div className="grid grid-cols-2 gap-3">
+        {[
+          { src: TARGETS_URL + targetImage.file, caption: `${target.body}: ${target.name}` },
+          { src: EARTH_URL + earthImage.file, caption: `Earth: ${site.name}` },
+        ].map((image) => (
+          <figure key={image.src} className="min-w-0">
+            <img
+              src={image.src}
+              alt={image.caption}
+              className="aspect-square w-full rounded-xl border border-border object-cover"
+            />
+            <figcaption className="mt-2 text-sm font-medium">{image.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <p className="text-xs text-muted">
+        Both images about {km.toFixed(1)} km across. {CREDITS[target.body]} {EARTH_CREDIT}
       </p>
     </div>
   )

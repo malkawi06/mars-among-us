@@ -12,7 +12,7 @@ export default function Analogs() {
   const { analogs: page } = siteConfig
   usePageTitle(page.title)
 
-  // ?landform=cra&site=meteor-crater deep-links from the Analyze page.
+  // ?landform=cra&site=meteor-crater links straight to a landform and site (the Home page uses it).
   const [params] = useSearchParams()
   const [landform, setLandform] = useState<LandformCode | 'all'>(() => {
     const code = params.get('landform')

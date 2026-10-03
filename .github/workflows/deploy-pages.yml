@@ -27,17 +27,16 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # Satellite images of the Earth analog sites, scanned by the model on the Analyze page.
+      # Orbital images of the Earth analog sites and the Moon/Mars targets, shown on the Compare page.
       # Optional: if EOX is unreachable the page explains the images are missing.
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Download and scan Earth satellite images
+      - name: Download orbital images
         continue-on-error: true
         run: |
-          pip install --quiet pillow numpy onnxruntime
+          pip install --quiet pillow
           python scripts/fetch_earth_images.py
-          python scripts/scan_earth_images.py
       - run: npm run build
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
