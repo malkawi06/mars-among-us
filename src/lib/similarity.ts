@@ -21,8 +21,9 @@ export interface EarthSite {
   dailyRangeC: number
   precipMmYr: number
   elevationM: number
-  slopeDeg: number
-  reliefM: number
+  /** null = not measured: the coordinates fall on a lake or the sea. */
+  slopeDeg: number | null
+  reliefM: number | null
   materials: string[]
   landforms: string[]
   source: string
@@ -159,8 +160,16 @@ const noData = (factor: FactorId, earth = '—') =>
 export function scoreFactor(factor: FactorId, target: Target, site: EarthSite): FactorResult {
   switch (factor) {
     case 'slope': {
-      const earth = `${site.slopeDeg.toFixed(1)}°`
+      const earth = site.slopeDeg === null ? 'not measured' : `${site.slopeDeg.toFixed(1)}°`
       if (target.slopeMaxDeg === undefined) return noData(factor, earth)
+      if (site.slopeDeg === null)
+        return result(
+          factor,
+          2,
+          `under ${target.slopeMaxDeg}°`,
+          earth,
+          'Not measured: the coordinates fall on water. Neutral.',
+        )
       const score: Score = site.slopeDeg <= target.slopeMaxDeg ? 3 : site.slopeDeg < 8 ? 2 : 1
       const reason =
         score === 3
@@ -238,7 +247,7 @@ export function scoreFactor(factor: FactorId, target: Target, site: EarthSite): 
         : result(factor, 1, 'ice reachable', 'no ice', 'No ground ice at this site.')
     }
     case 'relief':
-      return noData(factor, `${site.reliefM} m`)
+      return noData(factor, site.reliefM === null ? 'not measured' : `${site.reliefM} m`)
     case 'dailyRange':
       return noData(factor, `${site.dailyRangeC.toFixed(1)} °C`)
     case 'sunlight':
@@ -268,7 +277,10 @@ export function compare(target: Target, purpose: Purpose, site: EarthSite): Matc
     factors,
     percent: scores.length ? Math.round(((mean - 1) / 2) * 100) : null,
     scored: scores.length,
-    fails: purpose.maxSlopeDeg !== undefined && site.slopeDeg >= purpose.maxSlopeDeg,
+    fails:
+      purpose.maxSlopeDeg !== undefined &&
+      site.slopeDeg !== null &&
+      site.slopeDeg >= purpose.maxSlopeDeg,
   }
 }
 

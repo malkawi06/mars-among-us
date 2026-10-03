@@ -68,22 +68,31 @@ EARTH = [
 
 JGR = 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434'
 LPI_HIGHLANDS = 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf'
-NASA_MARS_TEMP = 'https://science.nasa.gov/solar-system/temperatures-across-our-solar-system/'
 # name, accessible cold trap (< 110 K) from a landing site (JGR Planets 2025)
 MOON = [('Peak near Cabeus B', False), ('Haworth', True), ('Malapert Massif', False), ('Mons Mouton Plateau', True),
         ('Mons Mouton', True), ('Nobile Rim 1', False), ('Nobile Rim 2', True), ('de Gerlache Rim 2', False),
         ('Slater Plain', True)]
+# id, name, lat, lon, materials, landforms, reachable ice, note, sources (geology, coordinates)
 MARS = [
-    ('jezero', 'Jezero Crater', 18.0, 77.0, ['clay', 'carbonate'], ['lake-sediment'], False,
-     'https://www.esa.int/ESA_Multimedia/Images/2022/08/Water-rich_minerals_at_Jezero_Crater'),
+    ('jezero', 'Jezero Crater', 18.44, 77.45, ['clay', 'carbonate'], ['lake-sediment'], False,
+     'Perseverance landing site (Octavia E. Butler Landing).',
+     ['https://www.esa.int/ESA_Multimedia/Images/2022/08/Water-rich_minerals_at_Jezero_Crater',
+      'https://en.wikipedia.org/wiki/Octavia_E._Butler_Landing']),
     ('gale', 'Gale Crater', -4.5895, 137.4417, ['clay'], ['lake-sediment'], False,
-     'https://www.jpl.nasa.gov/news/nasas-curiosity-rover-finds-patches-of-rock-record-erased-revealing-clues/'),
+     'Curiosity landing site (Bradbury Landing).',
+     ['https://www.jpl.nasa.gov/news/nasas-curiosity-rover-finds-patches-of-rock-record-erased-revealing-clues/',
+      'https://en.wikipedia.org/wiki/Bradbury_Landing']),
     ('oxia-planum', 'Oxia Planum', 18.20, -24.55, ['clay'], ['lake-sediment'], False,
-     'https://pmc.ncbi.nlm.nih.gov/articles/PMC7987365/'),
+     'Centre of the ExoMars Rosalind Franklin landing area (18.20°N, 335.45°E).',
+     ['https://pmc.ncbi.nlm.nih.gov/articles/PMC7987365/',
+      'https://www.tandfonline.com/doi/full/10.1080/17445647.2024.2302361']),
     ('victoria', 'Victoria Crater (Meridiani Planum)', -2.05, -5.50, ['sulfate', 'sandstone'], ['impact'], False,
-     'https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2022JE007374'),
-    ('arcadia', 'Arcadia Planitia', 40.0, -162.0, ['ice'], [], True,
-     'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2024JE008724'),
+     'Crater explored by the Opportunity rover.',
+     ['https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2022JE007374',
+      'https://en.wikipedia.org/wiki/Victoria_(crater)']),
+    ('arcadia', 'Arcadia Planitia', 39.8, -157.9, ['ice'], [], True,
+     'Candidate human landing site AP-1 (39.8°N, 202.1°E), with evidence of near-surface ice.',
+     ['https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2024JE008724']),
 ]
 
 
@@ -91,6 +100,7 @@ def ts(value):
     return json.dumps(value, ensure_ascii=False)
 
 
+ON_WATER = {'tuktoyaktuk', 'lonar', 'mistastin'}
 earth_rows = []
 for sid, analog_for, materials, landforms, extra in EARTH:
     name, country, lat, lon, source = extra or tuple(existing[sid][k] for k in ('name', 'country', 'lat', 'lon', 'source'))
@@ -99,7 +109,10 @@ for sid, analog_for, materials, landforms, extra in EARTH:
         'id': sid, 'name': name, 'country': country, 'lat': lat, 'lon': lon, 'analogFor': analog_for,
         'meanTempC': float(p['t2m_ann_c']), 'dailyRangeC': float(p['t2m_range_ann_c']),
         'precipMmYr': round(float(p['prec_mm_per_day_ann']) * 365),
-        'elevationM': int(d['site_elev_m']), 'slopeDeg': float(d['slope_deg']), 'reliefM': int(d['relief_m']),
+        'elevationM': int(d['site_elev_m']),
+        # Coordinates on a lake or the sea: the elevation model measures the water, not the terrain.
+        'slopeDeg': None if sid in ON_WATER else float(d['slope_deg']),
+        'reliefM': None if sid in ON_WATER else int(d['relief_m']),
         'materials': materials, 'landforms': landforms, 'source': source,
     }
     if d['flag']:
@@ -115,12 +128,13 @@ for i, (name, cold_trap) in enumerate(MOON, 1):
         'note': f'Artemis III candidate region. Centre = mean of {n} published landing sites; most landing sites have slopes under 5°.',
         'sources': [JGR, LPI_HIGHLANDS],
     })
-for sid, name, lat, lon, materials, landforms, ice, source in MARS:
+for sid, name, lat, lon, materials, landforms, ice, note, sources in MARS:
+    # No rain falls on Mars today. Site temperatures are left out until a sourced local value is added:
+    # the planet-wide average is not a site value.
     targets.append({
         'id': f'mars-{sid}', 'name': name, 'body': 'Mars', 'lat': lat, 'lon': lon,
-        'materials': materials, 'landforms': landforms, 'meanTempC': -65, 'precipMmYr': 0, 'iceAccess': ice,
-        'note': 'Mean temperature is the planet-wide median (NASA).',
-        'sources': [source, NASA_MARS_TEMP],
+        'materials': materials, 'landforms': landforms, 'precipMmYr': 0, 'iceAccess': ice,
+        'note': note, 'sources': sources,
     })
 
 out = f'''// Generated by analysis/build_compare_data.py from analysis/data. Do not edit by hand.

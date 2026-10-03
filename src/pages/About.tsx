@@ -14,15 +14,20 @@ export default function About() {
 
       <Section id="challenge" title="The Challenge">
         <p className="text-sm text-muted">
-          {site.event.name} ·{' '}
-          <a
-            href={site.challenge.url}
-            target="_blank"
-            rel="noreferrer"
-            className="text-accent hover:underline"
-          >
-            {site.challenge.name}
-          </a>
+          {site.event.name}
+          {site.challenge.name && (
+            <>
+              {' · '}
+              <a
+                href={site.challenge.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-accent hover:underline"
+              >
+                {site.challenge.name}
+              </a>
+            </>
+          )}
         </p>
         <p className="mt-2">{about.challenge}</p>
       </Section>
@@ -49,9 +54,11 @@ export default function About() {
         </ul>
       </Section>
 
-      <Section id="ai" title="Use of AI">
-        <p>{about.ai}</p>
-      </Section>
+      {about.ai && (
+        <Section id="ai" title="Use of AI">
+          <p>{about.ai}</p>
+        </Section>
+      )}
 
       <Section id="team" title="Team">
         <p className="mb-4 text-sm text-muted">

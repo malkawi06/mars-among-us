@@ -184,7 +184,7 @@ export default function Compare() {
 
             {selected.fails && (
               <p className="mx-5 mb-4 rounded-lg border border-danger/40 bg-danger/10 p-3 text-sm text-fg-2">
-                This site is {selected.site.slopeDeg.toFixed(1)}° steep. NASA requires landing
+                This site is {selected.site.slopeDeg?.toFixed(1)}° steep. NASA requires landing
                 slopes under 8°, so it is ranked last for this purpose.
               </p>
             )}
