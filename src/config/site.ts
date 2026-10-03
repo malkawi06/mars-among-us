@@ -48,7 +48,7 @@ export const site = {
 
   team: {
     /** Leave empty to hide. */
-    name: '',
+    name: 'Mars Among Us',
     location: 'Jordan',
     members: [
       {

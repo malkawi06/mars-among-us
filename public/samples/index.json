@@ -1,0 +1,78 @@
+[
+  {
+    "file": "aec.jpg",
+    "landform": "aec"
+  },
+  {
+    "file": "ael.jpg",
+    "landform": "ael"
+  },
+  {
+    "file": "cli.jpg",
+    "landform": "cli"
+  },
+  {
+    "file": "cra.jpg",
+    "landform": "cra"
+  },
+  {
+    "file": "fse.jpg",
+    "landform": "fse"
+  },
+  {
+    "file": "fsf.jpg",
+    "landform": "fsf"
+  },
+  {
+    "file": "fsg.jpg",
+    "landform": "fsg"
+  },
+  {
+    "file": "fss.jpg",
+    "landform": "fss"
+  },
+  {
+    "file": "mix.jpg",
+    "landform": "mix"
+  },
+  {
+    "file": "moon_fresh.jpg",
+    "landform": "moon_fresh"
+  },
+  {
+    "file": "moon_none.jpg",
+    "landform": "moon_none"
+  },
+  {
+    "file": "moon_old.jpg",
+    "landform": "moon_old"
+  },
+  {
+    "file": "moon_rockfall.jpg",
+    "landform": "moon_rockfall"
+  },
+  {
+    "file": "rid.jpg",
+    "landform": "rid"
+  },
+  {
+    "file": "rou.jpg",
+    "landform": "rou"
+  },
+  {
+    "file": "sfe.jpg",
+    "landform": "sfe"
+  },
+  {
+    "file": "sfx.jpg",
+    "landform": "sfx"
+  },
+  {
+    "file": "smo.jpg",
+    "landform": "smo"
+  },
+  {
+    "file": "tex.jpg",
+    "landform": "tex"
+  }
+]
