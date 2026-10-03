@@ -19,13 +19,16 @@ export function SpotImages({
   right,
   landformName,
   note,
+  enlarged = true,
 }: {
   left: PanelImage
   right: PanelImage
   landformName: string
   note?: string
+  /** Show each boxed area enlarged under the images. */
+  enlarged?: boolean
 }) {
-  const crops = right.spots && right.size ? right.spots : []
+  const crops = enlarged && right.spots && right.size ? right.spots : []
   const leftCrop = left.spots?.[0] && left.size ? left.spots[0] : undefined
   return (
     <div className="space-y-4">
