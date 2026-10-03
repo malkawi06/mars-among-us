@@ -7,19 +7,19 @@ wadi-rum,944,5.6,94,
 green-river,1280,0.4,9,
 qaidam,2733,3.4,43,
 channeled-scablands,475,12.8,138,
-tuktoyaktuk,14,0.7,25,DEM samples at sea level/water near the coast: slope unreliable.
+tuktoyaktuk,14,0.7,25,Coordinates fall on water near the coast: slope and relief not measured.
 garwood-valley,78,6.5,103,
 taylor-valley,198,5.0,69,
 blackhawk,1361,12.2,171,
 meteor-crater,1561,1.7,75,
 haughton,140,0.9,30,
-lonar,477,0.0,0,"Coordinates fall on the crater lake surface: slope reflects the lake, not the crater walls."
+lonar,477,0.0,0,Coordinates fall on the crater lake: slope and relief not measured.
 henbury,462,2.4,35,
 atacama-yungay,1061,2.5,52,
 salar-de-uyuni,3660,0.8,23,Salt flat: the small slope is within DEM noise.
 holuhraun,734,1.1,15,
 beacon-valley,1332,22.5,417,
-mistastin,326,0.3,8,Coordinates fall on Mistastin Lake: slope reflects the lake surface.
+mistastin,326,0.3,8,Coordinates fall on Mistastin Lake: slope and relief not measured.
 ries,416,0.6,13,
 lofoten,321,2.7,166,
 craters-of-the-moon,1736,1.6,22,

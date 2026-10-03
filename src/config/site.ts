@@ -40,9 +40,10 @@ export const site = {
   },
 
   challenge: {
-    name: 'Challenge name goes here',
+    /** Leave empty to hide. */
+    name: '',
     /** Link to the challenge page on spaceappschallenge.org. */
-    url: 'https://www.spaceappschallenge.org',
+    url: '',
   },
 
   team: {
@@ -178,7 +179,8 @@ export const site = {
         howWeUseIt: 'Slope and local relief at every Earth analog site.',
       },
     ] satisfies NasaDataSource[],
-    ai: 'List each AI tool you used (code assistants, image or text generators) and what you used it for. Check the current Space Apps rules on AI before submitting, for example how to label AI-generated images, video, and text.',
+    /** Each AI tool used and what for (the Space Apps form asks). Leave empty to hide the section. */
+    ai: '',
   },
 
   footer: {

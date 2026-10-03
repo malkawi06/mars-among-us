@@ -97,9 +97,10 @@ export function SimilarSpots({
           {climate && (
             <li>
               <span className="font-medium text-fg">4. Environment at the site: </span>
-              mean {climate.meanTempC.toFixed(1)} °C, about {climate.precipMmYr} mm of rain a year,
-              slope {climate.slopeDeg.toFixed(1)}° (NASA POWER 2001–2020; ASTER 30 m elevation
-              model). Mars today is about −65 °C with no rain (NASA).
+              mean {climate.meanTempC.toFixed(1)} °C, about {climate.precipMmYr} mm of rain a year
+              {climate.slopeDeg !== null && `, slope ${climate.slopeDeg.toFixed(1)}°`} (NASA POWER
+              2001–2020; ASTER 30 m elevation model). Mars today is about −65 °C with no rain
+              (NASA).
             </li>
           )}
           <li className="text-xs text-muted">

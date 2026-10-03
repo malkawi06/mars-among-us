@@ -25,6 +25,7 @@ sourced value for the target are left out and shown as "no data". The thresholds
 
 - NASA POWER values describe a ~50 km grid cell, not the exact point.
 - Slope and relief describe a 0.6 km window around the coordinates. For Lonar and Mistastin the
-  coordinates fall on a lake, for Tuktoyaktuk on the coast.
-- Moon targets have no sourced temperature or sunlight values yet; Mars targets use the planet-wide
-  median temperature (−65 °C, NASA).
+  coordinates fall on a lake, for Tuktoyaktuk on the sea, so slope and relief are left unmeasured there
+  (neutral in the score) rather than using the water surface.
+- Moon and Mars targets have no sourced site temperature or sunlight values yet, so those factors are
+  left out. The planet-wide average is not used as a site value.
