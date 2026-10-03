@@ -74,6 +74,7 @@ export function TargetImages({
           spots: earthSpots,
         }}
         landformName={name}
+        enlarged={false}
         note={`Both images about ${((targetImage.size * targetImage.metersPerPixel) / 1000).toFixed(1)} km across; each area about ${(scan.windowMeters / 1000).toFixed(1)} km. ${CREDITS[target.body]} ${EARTH_CREDIT}`}
       />
       <p className="text-sm leading-relaxed text-fg-2">
