@@ -101,25 +101,6 @@ export const site = {
     ],
   },
 
-  explore: {
-    title: 'Explore',
-    intro:
-      'Pick a date to load NASA GIBS satellite imagery for that day. The chart shows sample data until you connect a real source.',
-    mapTitle: 'Satellite imagery',
-    chartTitle: 'Sample time series',
-    chartSubtitle: 'Synthetic daily values for the 30 days ending on the selected date.',
-    unit: 'units',
-    /** Initial map view: [latitude, longitude] and zoom level. */
-    mapCenter: [20, 0] as [number, number],
-    mapZoom: 2,
-  },
-
-  data: {
-    title: 'Data',
-    intro:
-      'Live responses from NASA APIs. Use this page to confirm your API key and network setup.',
-  },
-
   /** Sections match the Space Apps project submission form. */
   analyze: {
     title: 'Analyze a Mars image',
@@ -153,7 +134,7 @@ export const site = {
     challenge:
       'Scientists test rovers, instruments and crews at places on Earth that resemble Mars, called terrestrial analogs. Finding the right analog for a given Martian landscape usually means searching scattered research papers by hand.',
     solution:
-      'Mars Among Us turns a Mars orbital image into a list of places on Earth that look like it. A ConvNeXt-Nano image classifier, fine-tuned on 16,150 labelled Context Camera images (DoMars16k), names the landform with 93.8% accuracy on held-out test images. The site then shows Earth analog sites for that landform on a satellite map, each with the published sources that compare it with Mars. The model runs entirely in the browser with ONNX Runtime Web, so images are never uploaded. Built with React, TypeScript, Tailwind CSS and Leaflet; the model was trained with PyTorch on a free Kaggle GPU.',
+      'Mars Among Us does two things. Analyze turns a Mars orbital image into the places on Earth that look like it: a ConvNeXt-Nano image classifier, fine-tuned on 16,150 labelled Context Camera images (DoMars16k), names the landform with 93.8% accuracy on held-out test images, then scans satellite images of every Earth analog site and boxes the areas that look most alike. Compare starts from a place on the Moon (the nine Artemis III landing regions) or Mars and ranks Earth analog sites for a purpose such as rover testing or a base, factor by factor (slope, rock type, temperature, aridity), following the NASA-led analog framework of Stern et al. (2025), with a source for every number and the orbital image of the target next to the Earth site. The model runs entirely in the browser with ONNX Runtime Web, so images are never uploaded. Built with React, TypeScript, Tailwind CSS and Leaflet; the model was trained with PyTorch on a free Kaggle GPU.',
     nasaData: [
       {
         name: 'Mars Reconnaissance Orbiter Context Camera (via DoMars16k)',
@@ -169,12 +150,32 @@ export const site = {
       {
         name: 'NASA GIBS (Global Imagery Browse Services)',
         url: 'https://nasa-gibs.github.io/gibs-api-docs/',
-        howWeUseIt: 'Daily satellite imagery tiles on the satellite explorer.',
+        howWeUseIt: 'Satellite imagery layer on the Earth analog maps.',
       },
       {
-        name: 'Astronomy Picture of the Day (APOD)',
-        url: 'https://api.nasa.gov',
-        howWeUseIt: 'Shown on the live NASA data page to verify the api.nasa.gov connection.',
+        name: 'Artemis III candidate landing regions',
+        url: 'https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/',
+        howWeUseIt: 'The nine Moon south-pole regions on the Compare page.',
+      },
+      {
+        name: 'LRO LROC NAC south-pole mosaic (via NASA Moon Trek)',
+        url: 'https://trek.nasa.gov/moon/',
+        howWeUseIt: 'Orbital images of the Artemis III regions on the Compare page.',
+      },
+      {
+        name: 'Global CTX Mosaic of Mars (NASA/JPL/MSSS/The Murray Lab)',
+        url: 'https://murray-lab.caltech.edu/CTX/',
+        howWeUseIt: 'Orbital images of the Mars targets on the Compare page.',
+      },
+      {
+        name: 'NASA POWER',
+        url: 'https://power.larc.nasa.gov',
+        howWeUseIt: 'Temperature and rainfall (2001–2020) at every Earth analog site.',
+      },
+      {
+        name: 'ASTER Global Digital Elevation Model (NASA/METI)',
+        url: 'https://asterweb.jpl.nasa.gov/gdem.asp',
+        howWeUseIt: 'Slope and local relief at every Earth analog site.',
       },
     ] satisfies NasaDataSource[],
     ai: 'List each AI tool you used (code assistants, image or text generators) and what you used it for. Check the current Space Apps rules on AI before submitting, for example how to label AI-generated images, video, and text.',
@@ -183,11 +184,6 @@ export const site = {
   footer: {
     tagline: 'Built for NASA Space Apps Challenge 2026',
     disclaimer: 'This project is not affiliated with or endorsed by NASA.',
-    /** Extra pages kept out of the main menu. */
-    more: [
-      { to: '/explore', label: 'Satellite explorer' },
-      { to: '/data', label: 'Live NASA data' },
-    ] satisfies NavItem[],
   },
 }
 

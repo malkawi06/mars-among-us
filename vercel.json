@@ -3,11 +3,5 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "rewrites": [
-    {
-      "source": "/api/donki/:path*",
-      "destination": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/:path*"
-    },
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
