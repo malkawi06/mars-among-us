@@ -31,7 +31,7 @@ export const site = {
   name: 'Mars Among Us',
   /** One-line pitch: hero subtitle and <meta description>. */
   pitch:
-    'Upload an orbital image of Mars and see the places on Earth that look the same, with the research to back it up.',
+    'Upload an orbital image of the Moon or Mars and see the places on Earth that look the same, with the research to back it up.',
 
   event: {
     name: 'NASA Space Apps Challenge 2026',
@@ -80,16 +80,16 @@ export const site = {
   ] satisfies NavItem[],
 
   home: {
-    primaryCta: { label: 'Analyze a Mars image', to: '/analyze' },
+    primaryCta: { label: 'Analyze an image', to: '/analyze' },
     secondaryCta: { label: 'Browse Earth analogs', to: '/analogs' },
     steps: [
       {
-        title: 'Upload a Mars image',
-        body: 'Drop an orbital image of Mars. It is analyzed in your browser and never leaves your device.',
+        title: 'Upload a Moon or Mars image',
+        body: 'Drop an orbital image of the Moon or Mars. It is analyzed in your browser and never leaves your device.',
       },
       {
         title: 'Name the landform',
-        body: 'A model trained on 16,150 NASA images recognises 15 landforms: dunes, craters, gullies, channels and more.',
+        body: 'A model trained on 19,971 NASA images tells the Moon from Mars and recognises 19 landforms: dunes, craters, gullies, channels and more.',
       },
       {
         title: 'Find it on Earth',
@@ -97,29 +97,32 @@ export const site = {
       },
     ],
     stats: [
-      { value: '16,150', label: 'NASA Mars images used for training' },
-      { value: '93.8%', label: 'Accuracy on images the model never saw' },
+      {
+        value: '19,971',
+        label: 'Labelled NASA Moon and Mars images used to train and test the model',
+      },
+      { value: '89.4%', label: 'Accuracy on 2,430 test images the model never saw' },
     ],
   },
 
   /** Sections match the Space Apps project submission form. */
   analyze: {
-    title: 'Analyze a Mars image',
+    title: 'Analyze a Moon or Mars image',
     intro:
-      'Upload an orbital image of Mars. A model trained on 16,150 NASA images names the landform, then we show the places on Earth that look like it, with sources.',
+      'Upload an orbital image of the Moon or Mars. A model trained on 19,971 NASA images names the landform, then we show the places on Earth that look like it, with sources.',
     scaleNote:
-      'Works best on grayscale orbital images about 1 km across (the model learned from 200 × 200 px MRO Context Camera tiles, ~6 m per pixel). Other scales or cameras can be misread.',
+      'Works best on grayscale orbital images like the training data: Mars Context Camera tiles about 1 km across (~6 m per pixel) and Lunar Reconnaissance Orbiter Narrow Angle Camera images of the Moon. Other scales or cameras can be misread.',
     samplesTitle: 'No image? Try one of these',
     samplesNote:
-      'Context Camera tiles from the DoMars16k test set: the model never saw them during training.',
+      'Images from the DoMars16k and LROCNet test sets: the model never saw them during training.',
     lowConfidence:
-      'The model is not sure about this image. It may not be a Mars orbital image, or it may be at a very different scale from the training data.',
+      'The model is not sure about this image. It may not be a Moon or Mars orbital image, or it may be at a very different scale from the training data.',
   },
 
   analogs: {
     title: 'Earth Analogs',
     intro:
-      'Places on Earth that look like landforms on Mars, each backed by published sources. Pick a landform to filter, then select a site to fly to it.',
+      'Places on Earth that look like landforms on Mars or the Moon, each backed by published sources. Pick a landform to filter, then select a site to fly to it.',
   },
 
   compare: {
@@ -135,13 +138,19 @@ export const site = {
     challenge:
       'Scientists test rovers, instruments and crews at places on Earth that resemble Mars, called terrestrial analogs. Finding the right analog for a given Martian landscape usually means searching scattered research papers by hand.',
     solution:
-      'Mars Among Us does two things. Analyze turns a Mars orbital image into the places on Earth that look like it: a ConvNeXt-Nano image classifier, fine-tuned on 16,150 labelled Context Camera images (DoMars16k), names the landform with 93.8% accuracy on held-out test images, then scans satellite images of every Earth analog site and boxes the areas that look most alike. Compare starts from a place on the Moon (the nine Artemis III landing regions) or Mars and ranks Earth analog sites for a purpose such as rover testing or a base, factor by factor (slope, rock type, temperature, aridity), following the NASA-led analog framework of Stern et al. (2025), with a source for every number and the orbital image of the target next to the Earth site. The model runs entirely in the browser with ONNX Runtime Web, so images are never uploaded. Built with React, TypeScript, Tailwind CSS and Leaflet; the model was trained with PyTorch on a free Kaggle GPU.',
+      'Mars Among Us does two things. Analyze turns a Moon or Mars orbital image into the places on Earth that look like it: a ConvNeXt-Nano image classifier, fine-tuned on 19,971 labelled NASA images (16,150 Mars Context Camera tiles from DoMars16k and 3,821 Lunar Reconnaissance Orbiter images from LROCNet and a lunar rockfall dataset), tells the Moon from Mars and names one of 19 landforms with 89.4% accuracy on 2,430 held-out test images, then scans satellite images of every Earth analog site and boxes the areas that look most alike. Compare starts from a place on the Moon (the nine Artemis III landing regions) or Mars and ranks Earth analog sites for a purpose such as rover testing or a base, factor by factor (slope, rock type, temperature, aridity), following the NASA-led analog framework of Stern et al. (2025), with a source for every number and the orbital image of the target next to the Earth site. The model runs entirely in the browser with ONNX Runtime Web, so images are never uploaded. Built with React, TypeScript, Tailwind CSS and Leaflet; the model was trained with PyTorch on a free Kaggle GPU.',
     nasaData: [
       {
         name: 'Mars Reconnaissance Orbiter Context Camera (via DoMars16k)',
         url: 'https://doi.org/10.5281/zenodo.4291940',
         howWeUseIt:
-          'The 16,150 labelled CTX image tiles the landform model was trained and tested on.',
+          'The 16,150 labelled CTX image tiles of Mars the landform model was trained and tested on.',
+      },
+      {
+        name: 'Lunar Reconnaissance Orbiter Camera NAC images (via LROCNet and a lunar rockfall dataset)',
+        url: 'https://doi.org/10.5281/zenodo.7041842',
+        howWeUseIt:
+          'The 3,821 labelled Moon images (fresh craters, old craters, plain surface, rockfalls) the model was trained and tested on.',
       },
       {
         name: 'NASA Earth Observatory',

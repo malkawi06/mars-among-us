@@ -3,7 +3,7 @@
  * of them. Made at deploy time by scripts/fetch_earth_images.py and scripts/scan_earth_images.py.
  */
 
-import type { LandformCode } from '../data/analogs'
+import { bodyOf, type Body, type LandformCode } from '../data/analogs'
 
 export const EARTH_URL = `${import.meta.env.BASE_URL}earth/`
 export const TARGETS_URL = `${import.meta.env.BASE_URL}targets/`
@@ -88,12 +88,16 @@ export function visualMatch(scan: EarthScan, siteId: string, code: LandformCode)
 }
 
 /**
- * The landform the model is most sure of anywhere in an image: the class with the highest
- * single-square probability (a crater fills only a few squares, so an average would hide it).
+ * The landform of one world the model is most sure of anywhere in an image: the class with the
+ * highest single-square probability (a crater fills only a few squares, so an average would hide it).
  */
-export function strongestLandform(windows: Windows | undefined, classes: string[]) {
+export function strongestLandform(windows: Windows | undefined, classes: string[], body: Body) {
   if (!windows?.length) return null
-  const best = classes.map((_, i) => Math.max(...windows.map((w) => w.p[i])))
-  const index = best.indexOf(Math.max(...best))
-  return { code: classes[index], probability: best[index] }
+  let best = { code: '', probability: -1 }
+  classes.forEach((code, i) => {
+    if (bodyOf(code as LandformCode) !== body) return
+    const probability = Math.max(...windows.map((w) => w.p[i]))
+    if (probability > best.probability) best = { code, probability }
+  })
+  return best.code ? best : null
 }

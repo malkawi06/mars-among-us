@@ -1,4 +1,4 @@
-import type { AnalogSite } from '../data/analogs'
+import { bodyOf, landformInText, type AnalogSite } from '../data/analogs'
 import { EARTH_SITES } from '../data/compare'
 import { CLEAR, EARTH_URL, percent, strength, topSpots, type EarthScan } from '../lib/earthScan'
 import type { LandformPrediction } from '../lib/landformModel'
@@ -30,8 +30,9 @@ export function SimilarSpots({
   const image = scan?.earthImages[site.id]
   const spots = scan && image ? topSpots(scan.sites[site.id], scan.classes, landform.code) : []
   const climate = EARTH_SITES.find((s) => s.id === site.id)
-  const name = landform.name.toLowerCase()
+  const name = landformInText(landform.code)
   const best = spots[0]
+  const moon = bodyOf(landform.code) === 'Moon'
 
   return (
     <div className="space-y-4">
@@ -70,7 +71,7 @@ export function SimilarSpots({
             <li>
               <span className="font-medium text-fg">2. Where it looks the same on Earth: </span>
               {autoPicked && candidates > 1
-                ? `Of the ${candidates} sourced Earth sites for ${name}, this satellite image looks most like yours. `
+                ? `Of the ${candidates} sourced Earth sites for ${moon ? 'the Moon' : name}, this satellite image looks most like yours. `
                 : ''}
               {best.probability >= CLEAR ? (
                 <>
@@ -92,6 +93,8 @@ export function SimilarSpots({
           )}
           <li>
             <span className="font-medium text-fg">3. Why scientists compare them: </span>
+            {moon &&
+              'A recognised Moon analog site in general (no published Earth analog list exists for this Moon landform yet). '}
             {site.why}
           </li>
           {climate && (
@@ -99,12 +102,12 @@ export function SimilarSpots({
               <span className="font-medium text-fg">4. Environment at the site: </span>
               mean {climate.meanTempC.toFixed(1)} °C, about {climate.precipMmYr} mm of rain a year
               {climate.slopeDeg !== null && `, slope ${climate.slopeDeg.toFixed(1)}°`} (NASA POWER
-              2001–2020; ASTER 30 m elevation model). Mars today is about −65 °C with no rain
-              (NASA).
+              2001–2020; ASTER 30 m elevation model).
+              {!moon && ' Mars today is about −65 °C with no rain (NASA).'}
             </li>
           )}
           <li className="text-xs text-muted">
-            The model learned from Mars images, so on Earth images the boxes point to
+            The model learned from Moon and Mars images, so on Earth images the boxes point to
             similar-looking areas; they are not proof on their own. The sources are the evidence.
           </li>
         </ul>

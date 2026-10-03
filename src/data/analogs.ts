@@ -1,10 +1,11 @@
 /**
- * Earth analog sites for the 15 DoMars16k landform classes (see ml/train_mars_landforms.ipynb).
+ * Earth analog sites for the landform classes of the Moon + Mars model
+ * (ml/train_moon_mars_landforms.ipynb): 15 Mars classes from DoMars16k, 4 Moon classes.
  *
- * Every site cites at least one source that explicitly compares it with Mars.
+ * Every site cites at least one source that explicitly compares it with Mars or the Moon.
  * - landforms maps each landform this site is an analog for to a confidence:
  *     'strong'   = peer-reviewed study of this site as an analog for this landform
- *     'moderate' = recognised Mars analog site; the landform match is general
+ *     'moderate' = recognised Mars or Moon analog site; the landform match is general
  *     'weak'     = no close Earth analog exists for this landform; nearest candidate only
  * - precision:  'site'   = coordinates point at the feature itself
  *               'region' = approximate centre of the area, good for a map pin, not for fieldwork
@@ -20,6 +21,10 @@ export type LandformCode =
   | 'fsg'
   | 'fss'
   | 'mix'
+  | 'moon_fresh'
+  | 'moon_none'
+  | 'moon_old'
+  | 'moon_rockfall'
   | 'rid'
   | 'rou'
   | 'sfe'
@@ -40,6 +45,10 @@ export const LANDFORM_NAMES: Record<LandformCode, string> = {
   fsg: 'Gullies',
   fss: 'Mass Wasting',
   mix: 'Mixed Terrain',
+  moon_fresh: 'Fresh Crater (Moon)',
+  moon_none: 'Plain Surface (Moon)',
+  moon_old: 'Old Crater (Moon)',
+  moon_rockfall: 'Rockfall (Moon)',
   rid: 'Ridge',
   rou: 'Rough Terrain',
   sfe: 'Mounds',
@@ -47,6 +56,15 @@ export const LANDFORM_NAMES: Record<LandformCode, string> = {
   smo: 'Smooth Terrain',
   tex: 'Textured Terrain',
 }
+
+export type Body = 'Mars' | 'Moon'
+
+/** Which world a landform class belongs to. */
+export const bodyOf = (code: LandformCode): Body => (code.startsWith('moon_') ? 'Moon' : 'Mars')
+
+/** A landform's name for use inside a sentence: lower case, without the "(Moon)" tag. */
+export const landformInText = (code: LandformCode) =>
+  LANDFORM_NAMES[code].replace(' (Moon)', '').toLowerCase()
 
 export interface Source {
   title: string
@@ -62,11 +80,18 @@ export interface AnalogSite {
   precision: 'site' | 'region'
   landforms: Partial<Record<LandformCode, Confidence>>
   climate: string
-  /** Why it resembles Mars, in one or two sentences, backed by the sources. */
+  /** Why it resembles Mars or the Moon, in one or two sentences, backed by the sources. */
   why: string
   /** Hand-picked NASA image (public domain). The map shows Sentinel-2 imagery for every site. */
   image?: { url: string; credit: string; page: string }
   sources: Source[]
+}
+
+const MOON_GENERAL: AnalogSite['landforms'] = {
+  moon_fresh: 'moderate',
+  moon_none: 'moderate',
+  moon_old: 'moderate',
+  moon_rockfall: 'moderate',
 }
 
 export const ANALOG_SITES: AnalogSite[] = [
@@ -507,6 +532,82 @@ export const ANALOG_SITES: AnalogSite[] = [
         title:
           'The high elevation Dry Valleys as analog sites for subsurface ice on Mars (Planet. Space Sci., 2013)',
         url: 'https://www.sciencedirect.com/science/article/abs/pii/S0032063313001360',
+      },
+    ],
+  },
+  // ---- Moon ------------------------------------------------------------------------------
+  // Recognised Moon analog sites. Their sources compare them with the Moon in general, not with
+  // one Moon landform, so every Moon class lists them as 'moderate'.
+  {
+    id: 'ries',
+    name: 'Nördlinger Ries crater',
+    country: 'Germany',
+    lat: 48.88,
+    lon: 10.58,
+    precision: 'region',
+    landforms: MOON_GENERAL,
+    climate: 'Mean 8.7 °C, 748 mm of rain a year (NASA POWER 2001–2020)',
+    why: 'A 25 km, well-preserved impact crater where the Apollo 14 and 17 crews trained in 1970; ESA astronauts now study its impact rocks to prepare for the Moon.',
+    sources: [
+      {
+        title: 'The astronauts are back! (ESA Pangaea training, 2017)',
+        url: 'https://blogs.esa.int/caves/2017/09/18/the-astronauts-are-back/',
+      },
+    ],
+  },
+  {
+    id: 'mistastin',
+    name: 'Mistastin Lake impact structure',
+    country: 'Canada (Labrador)',
+    lat: 55.88,
+    lon: -63.3,
+    precision: 'region',
+    landforms: MOON_GENERAL,
+    climate: 'Mean −5.9 °C, 949 mm of rain a year (NASA POWER 2001–2020)',
+    why: 'A 28 km impact crater in anorthosite, the rock of the lunar highlands, studied as a geological analogue for lunar highland craters.',
+    sources: [
+      {
+        title:
+          'Mistastin Impact Structure, Labrador: A Geological Analogue for Lunar Highland Craters',
+        url: 'https://www.researchgate.net/publication/241208537_Mistastin_Impact_Structure_Labrador_A_Geological_Analogue_for_Lunar_Highland_Craters',
+      },
+      {
+        title: 'Mistastin impact crater (Crater Explorer)',
+        url: 'https://craterexplorer.ca/mistastin-impact-crater/',
+      },
+    ],
+  },
+  {
+    id: 'lofoten',
+    name: 'Lofoten anorthosite',
+    country: 'Norway',
+    lat: 68.1,
+    lon: 13.5,
+    precision: 'region',
+    landforms: MOON_GENERAL,
+    climate: 'Mean 6.0 °C, 1,212 mm of rain a year (NASA POWER 2001–2020)',
+    why: 'One of the finest exposures of anorthosite on Earth, a rock rare here but common in the bright lunar highlands; ESA astronauts learn Moon geology there.',
+    sources: [
+      {
+        title: 'Astronauts learn Moon geology in a fjord (ESA Pangaea, 2025)',
+        url: 'https://blogs.esa.int/caves/2025/07/28/astronauts-learn-moon-geology-in-a-fjord/',
+      },
+    ],
+  },
+  {
+    id: 'craters-of-the-moon',
+    name: 'Craters of the Moon lava field',
+    country: 'USA (Idaho)',
+    lat: 43.46,
+    lon: -113.51,
+    precision: 'region',
+    landforms: MOON_GENERAL,
+    climate: 'Mean 5.7 °C, 416 mm of rain a year (NASA POWER 2001–2020)',
+    why: 'Apollo 14 astronauts trained here in 1969 to learn volcanic geology, since much of the Moon is covered by volcanic rock; NASA still uses it as a research site.',
+    sources: [
+      {
+        title: 'Space Exploration Research and Astronaut Training (US National Park Service)',
+        url: 'https://www.nps.gov/crmo/learn/historyculture/space-exploration-research-and-astronaut-training.htm',
       },
     ],
   },
