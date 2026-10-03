@@ -5,9 +5,9 @@
 - Mars targets: Global CTX Mosaic of Mars V01, NASA/JPL/MSSS/The Murray Lab (free use for all purposes).
 - Moon targets: LRO LROC NAC south-pole mosaic (LMMP/USGS, via NASA Moon Trek); covers 85.5°S–90°S only.
 
-Each image is 768 x 768 px at roughly 8 m/px, close to the ~6 m/px of the model's training images.
-The Analyze and Compare pages scan them with the landform model (scripts/scan_earth_images.py).
-Serving them from the site avoids cross-origin limits and keeps the demo working offline.
+Each image is 768 x 768 px at roughly 8 m/px, so a Moon or Mars target and an Earth site can be shown
+side by side at the same scale on the Compare page. Serving them from the site avoids cross-origin
+limits and keeps the demo working offline.
 Run before `npm run build` (the deploy workflow does): needs Pillow.
 """
 

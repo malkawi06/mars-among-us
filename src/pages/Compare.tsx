@@ -6,7 +6,7 @@ import { site as siteConfig } from '../config/site'
 import { EARTH_SITES, TARGETS } from '../data/compare'
 import { useAsync } from '../hooks/useAsync'
 import { usePageTitle } from '../hooks/usePageTitle'
-import { loadEarthScan } from '../lib/earthScan'
+import { loadOrbitalImages } from '../lib/orbitalImages'
 import {
   PURPOSES,
   rank,
@@ -50,7 +50,7 @@ export default function Compare() {
   const matches = rank(target, purpose, EARTH_SITES)
   const selected = matches.find((m) => m.site.id === params.get('site')) ?? matches[0]
   const view = params.get('view') === 'images' ? 'images' : 'scores'
-  const { data: scan } = useAsync('earth-scan', loadEarthScan)
+  const { data: images } = useAsync('orbital-images', loadOrbitalImages)
   const [showAll, setShowAll] = useState(false)
   const details = useRef<HTMLDivElement>(null)
 
@@ -214,7 +214,7 @@ export default function Compare() {
 
             <div role="tabpanel" className="p-5">
               {view === 'images' ? (
-                <TargetImages target={target} site={selected.site} scan={scan} />
+                <TargetImages target={target} site={selected.site} images={images} />
               ) : (
                 <Factors match={selected} targetName={target.name} />
               )}

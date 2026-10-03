@@ -7,7 +7,6 @@ import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 
 // Heavier pages load on demand, so the home page stays fast.
-const Analyze = lazy(() => import('./pages/Analyze'))
 const Analogs = lazy(() => import('./pages/Analogs'))
 const Compare = lazy(() => import('./pages/Compare'))
 const About = lazy(() => import('./pages/About'))
@@ -22,7 +21,6 @@ const router = createBrowserRouter(
           errorElement: <ErrorPage />,
           children: [
             { index: true, element: <Home /> },
-            { path: 'analyze', element: <Analyze /> },
             { path: 'analogs', element: <Analogs /> },
             { path: 'compare', element: <Compare /> },
             { path: 'about', element: <About /> },
