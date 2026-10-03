@@ -18,7 +18,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / 'public'
-MODEL = ROOT / 'public' / 'models' / 'mars_landforms.int8.onnx'
+MODEL = ROOT / 'public' / 'models' / 'planet_landforms.int8.onnx'
 WINDOW_M = 1500  # close to the ~1.2 km tiles the model was trained on
 SIZE = 224
 MEAN = np.array([0.485, 0.456, 0.406], dtype=np.float32)

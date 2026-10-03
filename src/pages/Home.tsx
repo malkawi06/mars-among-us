@@ -59,7 +59,7 @@ export default function Home() {
           {home.stats.map((stat) => (
             <StatTile key={stat.label} label={stat.label} value={stat.value} />
           ))}
-          <StatTile label="Mars landforms recognised" value={LANDFORMS.length} />
+          <StatTile label="Moon and Mars landforms recognised" value={LANDFORMS.length} />
           <StatTile label="Earth analog sites, all sourced" value={ANALOG_SITES.length} />
         </div>
       </section>

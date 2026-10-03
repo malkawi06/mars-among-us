@@ -9,13 +9,30 @@ import { LoadingState } from '../components/LoadingState'
 import { PageHeader } from '../components/PageHeader'
 import { SimilarSpots } from '../components/SimilarSpots'
 import { site as siteConfig } from '../config/site'
-import { analogsFor, LANDFORM_NAMES, type LandformCode } from '../data/analogs'
+import {
+  analogsFor,
+  bodyOf,
+  LANDFORM_NAMES,
+  landformInText,
+  type Body,
+  type LandformCode,
+} from '../data/analogs'
 import { useAsync } from '../hooks/useAsync'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { loadEarthScan, visualMatch } from '../lib/earthScan'
-import { classifyLandform, loadLandformModel, type LandformPrediction } from '../lib/landformModel'
+import {
+  classifyLandform,
+  loadLandformModel,
+  moonProbability,
+  onlyBody,
+  type LandformPrediction,
+} from '../lib/landformModel'
 
 const LOW_CONFIDENCE = 0.5
+/** Above this, the model's own Moon-or-Mars call is shown as a hint when the user picked the other. */
+const SURE_OF_BODY = 0.9
+
+type BodyChoice = 'auto' | Body
 const SAMPLES_URL = `${import.meta.env.BASE_URL}samples/`
 
 /** One entry of public/samples/index.json (written by the last cell of the Kaggle notebook). */
@@ -33,6 +50,7 @@ export default function Analyze() {
   const [knownLandform, setKnownLandform] = useState<LandformCode>()
   const [selectedId, setSelectedId] = useState<string>()
   const [dragging, setDragging] = useState(false)
+  const [bodyChoice, setBodyChoice] = useState<BodyChoice>('auto')
   const { data, error, loading, reload } = useAsync(imageUrl ?? null, () => classify(imageUrl!))
   const { data: samples } = useAsync('samples', loadSamples)
   const { data: earthScan } = useAsync('earth-scan', loadEarthScan)
@@ -57,7 +75,9 @@ export default function Analyze() {
     pickFile(event.dataTransfer.files[0])
   }
 
-  const top = data?.[0]
+  // "Mars" or "Moon" keeps that world's landforms only; the model runs once either way.
+  const predictions = data && (bodyChoice === 'auto' ? data : onlyBody(data, bodyChoice))
+  const top = predictions?.[0]
   const analogs = top ? analogsFor(top.code) : []
   const selected = analogs.find(({ site }) => site.id === selectedId)?.site
   const lookAlike = (id: string) => (top && earthScan ? visualMatch(earthScan, id, top.code) : null)
@@ -83,9 +103,11 @@ export default function Analyze() {
             }`}
           >
             {imageUrl ? (
-              <img src={imageUrl} alt="Uploaded Mars image" className="max-h-72 rounded-lg" />
+              <img src={imageUrl} alt="Uploaded image" className="max-h-72 rounded-lg" />
             ) : (
-              <span className="py-8 font-medium">Drop a Mars image here, or click to choose</span>
+              <span className="py-8 font-medium">
+                Drop a Moon or Mars image here, or click to choose
+              </span>
             )}
             <span className="text-sm text-accent">
               {imageUrl ? 'Choose another image' : 'PNG or JPG'}
@@ -97,15 +119,18 @@ export default function Analyze() {
               onChange={(event) => pickFile(event.target.files?.[0])}
             />
           </label>
+          <BodyPicker value={bodyChoice} onChange={setBodyChoice} />
           <p className="text-xs text-muted">{page.scaleNote}</p>
 
           {loading && <LoadingState label="Analyzing… (the first run downloads the 15 MB model)" />}
           {error && (
             <ErrorState title="Could not analyze the image" error={error} onRetry={reload} />
           )}
-          {data && (
+          {data && predictions && (
             <Predictions
-              predictions={data}
+              predictions={predictions}
+              moon={moonProbability(data)}
+              bodyChoice={bodyChoice}
               knownLandform={knownLandform}
               lowConfidenceNote={page.lowConfidence}
             />
@@ -143,7 +168,9 @@ export default function Analyze() {
           {top ? (
             <>
               <h2 className="text-xl font-semibold">
-                Places on Earth with {top.name.toLowerCase()} like this
+                {bodyOf(top.code) === 'Moon'
+                  ? `Places on Earth that resemble the Moon (${landformInText(top.code)})`
+                  : `Places on Earth with ${landformInText(top.code)} like this`}
               </h2>
               {imageUrl && focus && (
                 <SimilarSpots
@@ -215,18 +242,77 @@ export default function Analyze() {
   )
 }
 
+function BodyPicker({
+  value,
+  onChange,
+}: {
+  value: BodyChoice
+  onChange: (value: BodyChoice) => void
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-2 text-sm">
+      <span className="text-fg-2">Image from:</span>
+      <div
+        role="group"
+        aria-label="Image from"
+        className="flex gap-1 rounded-full bg-surface-2 p-1"
+      >
+        {(['auto', 'Mars', 'Moon'] as const).map((option) => (
+          <button
+            key={option}
+            type="button"
+            aria-pressed={value === option}
+            onClick={() => onChange(option)}
+            className={`rounded-full px-3 py-1 font-medium transition-colors ${
+              value === option ? 'bg-accent text-accent-fg' : 'text-fg-2 hover:text-fg'
+            }`}
+          >
+            {option === 'auto' ? 'Auto' : option}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function Predictions({
   predictions,
+  moon,
+  bodyChoice,
   knownLandform,
   lowConfidenceNote,
 }: {
   predictions: LandformPrediction[]
+  /** The model's probability that the image shows the Moon, over all classes. */
+  moon: number
+  bodyChoice: BodyChoice
   knownLandform?: LandformCode
   lowConfidenceNote: string
 }) {
   const [top] = predictions
+  const looksLike: Body = moon >= 0.5 ? 'Moon' : 'Mars'
+  const sureness = looksLike === 'Moon' ? moon : 1 - moon
+  const scope = bodyChoice === 'auto' ? 'Moon and Mars' : bodyChoice
   return (
-    <Card title="What the model sees" subtitle="Top 3 of 15 Mars landforms">
+    <Card
+      title="What the model sees"
+      subtitle={`Top 3 of ${predictions.length} ${scope} landforms`}
+    >
+      {bodyChoice === 'auto' ? (
+        <p className="mb-4 text-sm text-fg-2">
+          Looks like{' '}
+          <span className="font-medium text-fg">{looksLike === 'Moon' ? 'the Moon' : 'Mars'}</span>{' '}
+          ({(sureness * 100).toFixed(1)}%)
+        </p>
+      ) : (
+        looksLike !== bodyChoice &&
+        sureness >= SURE_OF_BODY && (
+          <p className="mb-4 rounded-lg border border-warning/40 bg-warning/10 p-3 text-sm text-fg-2">
+            The model thinks this image looks like {looksLike === 'Moon' ? 'the Moon' : 'Mars'} (
+            {(sureness * 100).toFixed(1)}%). Choose Auto to let it decide.
+          </p>
+        )
+      )}
       <ul className="space-y-3">
         {predictions.slice(0, 3).map((p) => (
           <li key={p.code}>

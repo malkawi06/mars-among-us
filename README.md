@@ -5,12 +5,12 @@
 
 Live: **https://malkawi06.github.io/mars-among-us/**
 
-| Page                           | What it does                                                                                                                                                                                                                                    |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Analyze** (`/analyze`)       | Upload a Mars orbital image. An in-browser model names the landform (15 classes), picks the Earth analog site whose satellite image looks most alike, boxes the matching areas and explains the match with sources.                             |
-| **Compare** (`/compare`)       | Pick a place on the Moon (the nine Artemis III regions) or Mars and a purpose (rover testing, base, local resources, search for life, training). Every Earth site is scored factor by factor, with the target's orbital image next to the site. |
-| **Earth Analogs** (`/analogs`) | The analog sites on a satellite map, filtered by landform, each with the published research behind it.                                                                                                                                          |
-| **About** (`/about`)           | The challenge, the solution, the data used and the team: the sections of the Space Apps submission form.                                                                                                                                        |
+| Page                           | What it does                                                                                                                                                                                                                                          |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Analyze** (`/analyze`)       | Upload a Moon or Mars orbital image. An in-browser model tells the Moon from Mars, names the landform (19 classes), picks the Earth analog site whose satellite image looks most alike, boxes the matching areas and explains the match with sources. |
+| **Compare** (`/compare`)       | Pick a place on the Moon (the nine Artemis III regions) or Mars and a purpose (rover testing, base, local resources, search for life, training). Every Earth site is scored factor by factor, with the target's orbital image next to the site.       |
+| **Earth Analogs** (`/analogs`) | The analog sites on a satellite map, filtered by landform, each with the published research behind it.                                                                                                                                                |
+| **About** (`/about`)           | The challenge, the solution, the data used and the team: the sections of the Space Apps submission form.                                                                                                                                              |
 
 Images never leave the browser: the model runs locally with ONNX Runtime Web.
 
@@ -23,12 +23,16 @@ PyTorch (training) · Python (data scripts).
 
 ### Landform model
 
-A ConvNeXt-Nano classifier fine-tuned on DoMars16k (16,150 labelled Mars Context Camera tiles,
-15 landforms): 93.8% accuracy on held-out test images. It is quantised to int8 (~15 MB) and served from
-`public/models/`.
+A ConvNeXt-Nano classifier fine-tuned on 19,971 labelled NASA images: 16,150 Mars Context Camera tiles
+(DoMars16k, 15 landforms) and 3,821 Lunar Reconnaissance Orbiter images (LROCNet and lunar rockfalls,
+4 Moon classes). On 2,430 held-out test images: 89.4% overall (int8), 93.5% on Mars, 79.9% on the Moon,
+and 99.96% at telling the Moon from Mars. It is quantised to int8 (~15 MB) and served from
+`public/models/planet_landforms.int8.onnx`. Users can say whether an image is from the Moon or Mars;
+the page then ranks only that world's landforms.
 
-- Training notebook: `ml/train_mars_landforms.ipynb` (Kaggle, free GPU).
-- Next model: `ml/train_moon_mars_landforms.ipynb` adds the Moon (LROCNet and lunar rockfalls, 19 classes).
+- Training notebook: `ml/train_moon_mars_landforms.ipynb` (Kaggle, free GPU).
+- Earlier Mars-only model (15 classes, 93.8%): `ml/train_mars_landforms.ipynb`, kept in
+  `public/models/mars_landforms.int8.onnx` as a fallback.
 
 ### Orbital images and scan (at deploy time)
 

@@ -39,7 +39,7 @@ export default function Analogs() {
 
         <div className="space-y-4 lg:col-span-2">
           <label className="block text-sm text-fg-2">
-            Mars landform
+            Landform
             <select
               value={landform}
               onChange={(event) => setLandform(event.target.value as LandformCode | 'all')}

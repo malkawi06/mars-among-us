@@ -1,12 +1,13 @@
 /**
- * Runs the Mars landform classifier (ml/train_mars_landforms.ipynb) in the browser with onnxruntime-web.
- * The int8 model lives at public/models/mars_landforms.int8.onnx (~15 MB) and is downloaded once.
+ * Runs the Moon + Mars landform classifier (ml/train_moon_mars_landforms.ipynb) in the browser with
+ * onnxruntime-web. The int8 model lives at public/models/planet_landforms.int8.onnx (~15 MB) and is
+ * downloaded once.
  */
 
 import type { InferenceSession } from 'onnxruntime-web/wasm'
-import { LANDFORM_NAMES, type LandformCode } from '../data/analogs'
+import { bodyOf, LANDFORM_NAMES, type Body, type LandformCode } from '../data/analogs'
 
-const MODEL_URL = `${import.meta.env.BASE_URL}models/mars_landforms.int8.onnx`
+const MODEL_URL = `${import.meta.env.BASE_URL}models/planet_landforms.int8.onnx`
 const SIZE = 224
 const MEAN = [0.485, 0.456, 0.406]
 const STD = [0.229, 0.224, 0.225]
@@ -33,7 +34,7 @@ async function createSession(): Promise<InferenceSession> {
   // The SPA fallback answers missing files with index.html, so check the type as well as the status.
   if (!response.ok || response.headers.get('content-type')?.includes('text/html')) {
     throw new Error(
-      `The model file is missing. Add mars_landforms.int8.onnx from Kaggle to public/models/ and redeploy.`,
+      `The model file is missing. Add planet_landforms.int8.onnx from Kaggle to public/models/ and redeploy.`,
     )
   }
   const ort = await import('onnxruntime-web/wasm')
@@ -57,6 +58,17 @@ export async function classifyLandform(
     .map((probability, i) => ({ code: CLASSES[i], name: LANDFORM_NAMES[CLASSES[i]], probability }))
     .sort((a, b) => b.probability - a.probability)
 }
+
+/** Keeps one world's landforms and rescales them to sum to 1, when the user says where the image is from. */
+export function onlyBody(predictions: LandformPrediction[], body: Body): LandformPrediction[] {
+  const kept = predictions.filter((p) => bodyOf(p.code) === body)
+  const total = kept.reduce((sum, p) => sum + p.probability, 0)
+  return kept.map((p) => ({ ...p, probability: p.probability / total }))
+}
+
+/** How sure the model is that the image shows the Moon: the summed probability of the Moon classes. */
+export const moonProbability = (predictions: LandformPrediction[]) =>
+  predictions.reduce((sum, p) => sum + (bodyOf(p.code) === 'Moon' ? p.probability : 0), 0)
 
 async function logitsFor(image: HTMLImageElement, square: Square): Promise<number[]> {
   const model = await loadLandformModel()

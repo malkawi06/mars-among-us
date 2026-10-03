@@ -1,4 +1,4 @@
-import { LANDFORM_NAMES, type LandformCode } from '../data/analogs'
+import { landformInText, type LandformCode } from '../data/analogs'
 import {
   CLEAR,
   EARTH_URL,
@@ -47,9 +47,9 @@ export function TargetImages({
     )
   }
 
-  const landform = strongestLandform(scan.targets[target.id], scan.classes)
+  const landform = strongestLandform(scan.targets[target.id], scan.classes, target.body)
   if (!landform) return null
-  const name = LANDFORM_NAMES[landform.code as LandformCode].toLowerCase()
+  const name = landformInText(landform.code as LandformCode)
   const targetSpots = topSpots(scan.targets[target.id], scan.classes, landform.code, 1)
   // Only clear matches are boxed: a 2% box is noise, not likeness.
   const earthSpots = topSpots(scan.sites[site.id], scan.classes, landform.code).filter(
@@ -84,8 +84,9 @@ export function TargetImages({
         {best
           ? ` In the ${site.name} satellite image the closest ${name} area reaches ${percent(best.probability)} (${strength(best.probability)}).`
           : ` The ${site.name} satellite image has no clear ${name} area at this scale, so its match rests on the scores.`}
-        {target.body === 'Moon' &&
-          ' The model learned from Mars images, so on Moon images this is a visual hint, not a measurement.'}
+        {
+          ' The model learned from Moon and Mars images, so on Earth images the boxes are a visual hint, not a measurement.'
+        }
       </p>
     </div>
   )
