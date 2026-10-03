@@ -13,7 +13,9 @@ import { loadEarthScan } from '../lib/earthScan'
 import { PURPOSES, rank, type FactorResult, type Match, type Score } from '../lib/similarity'
 
 /** Sites shown before "Show all". */
-const TOP = 8
+const TOP = 5
+/** Fewer scored factors than this and the percentage is flagged as low confidence. */
+const MIN_FACTORS = 2
 const SCORE_BADGE: Record<Score, Confidence> = { 3: 'strong', 2: 'moderate', 1: 'weak' }
 
 const selectClass =
@@ -31,6 +33,7 @@ export default function Compare() {
   const matches = rank(target, purpose, EARTH_SITES)
   const selected = matches.find((m) => m.site.id === params.get('site')) ?? matches[0]
   const { data: scan } = useAsync('earth-scan', loadEarthScan)
+  const view = params.get('view') === 'images' ? 'images' : 'scores'
   const [showAll, setShowAll] = useState(false)
   const details = useRef<HTMLDivElement>(null)
 
@@ -154,8 +157,37 @@ export default function Compare() {
           ref={details}
           className="order-first scroll-mt-20 space-y-4 lg:order-none lg:sticky lg:top-20 lg:col-span-3 lg:self-start"
         >
-          <TargetImages target={target} site={selected.site} scan={scan} />
-          <MatchDetails match={selected} targetName={target.name} purposeLabel={purpose.label} />
+          <div
+            role="tablist"
+            aria-label="Comparison view"
+            className="flex gap-1 rounded-lg bg-surface-2 p-1"
+          >
+            {(['scores', 'images'] as const).map((id) => (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                aria-selected={view === id}
+                onClick={() => update({ view: id === 'images' ? id : undefined })}
+                className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                  view === id ? 'bg-surface text-fg shadow-sm' : 'text-muted hover:text-fg'
+                }`}
+              >
+                {id === 'scores' ? 'Scores' : 'Images'}
+              </button>
+            ))}
+          </div>
+          <div role="tabpanel">
+            {view === 'images' ? (
+              <TargetImages target={target} site={selected.site} scan={scan} />
+            ) : (
+              <MatchDetails
+                match={selected}
+                targetName={target.name}
+                purposeLabel={purpose.label}
+              />
+            )}
+          </div>
           <p className="text-xs text-muted">
             {page.method}{' '}
             <a
@@ -190,10 +222,12 @@ function MatchBar({ match }: { match: Match }) {
           style={{ width: `${match.percent ?? 0}%` }}
         />
       </span>
-      <span className="mt-1 block text-xs text-muted">
+      <span
+        className={`mt-1 block text-xs ${!match.fails && match.scored < MIN_FACTORS ? 'text-warning' : 'text-muted'}`}
+      >
         {match.fails
           ? 'Too steep for a landing site (8° or more)'
-          : `Based on ${match.scored} of ${match.factors.length} factors`}
+          : `${match.scored < MIN_FACTORS ? 'Low confidence: based on only' : 'Based on'} ${match.scored} of ${match.factors.length} factors`}
       </span>
     </>
   )
