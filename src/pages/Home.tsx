@@ -1,12 +1,9 @@
 import { Link } from 'react-router'
 import { StatTile } from '../components/StatTile'
 import { site } from '../config/site'
-import { ANALOG_SITES, LANDFORM_NAMES, type LandformCode } from '../data/analogs'
-import { EARTH_SITES, TARGETS } from '../data/compare'
-import { PURPOSES } from '../lib/similarity'
 import { usePageTitle } from '../hooks/usePageTitle'
 
-const LANDFORMS = Object.entries(LANDFORM_NAMES) as [LandformCode, string][]
+const stats = __HOME_STATS__
 
 export default function Home() {
   usePageTitle()
@@ -58,13 +55,10 @@ export default function Home() {
         </ol>
 
         <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <StatTile label="Places on the Moon and Mars to compare" value={TARGETS.length} />
-          <StatTile label="Earth sites scored factor by factor" value={EARTH_SITES.length} />
-          <StatTile label="Analog purposes" value={PURPOSES.length} />
-          <StatTile
-            label="Earth analog sites on the map, all sourced"
-            value={ANALOG_SITES.length}
-          />
+          <StatTile label="Places on the Moon and Mars to compare" value={stats.targets} />
+          <StatTile label="Earth sites scored factor by factor" value={stats.earthSites} />
+          <StatTile label="Analog purposes" value={stats.purposes} />
+          <StatTile label="Earth analog sites on the map, all sourced" value={stats.analogSites} />
         </div>
       </section>
 
@@ -75,7 +69,7 @@ export default function Home() {
             Pick one to see where on Earth it can be found.
           </p>
           <ul className="mt-6 flex flex-wrap gap-2">
-            {LANDFORMS.map(([code, name]) => (
+            {stats.landforms.map(([code, name]) => (
               <li key={code}>
                 <Link
                   to={`/analogs?landform=${code}`}
