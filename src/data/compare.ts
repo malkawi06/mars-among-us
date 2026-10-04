@@ -551,7 +551,7 @@ export const TARGETS: Target[] = [
     landforms: ['impact'],
     slopeMaxDeg: 5,
     precipMmYr: 0,
-    iceAccess: true,
+    iceAccess: false,
     note: 'Artemis III candidate region. Centre = mean of 8 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',

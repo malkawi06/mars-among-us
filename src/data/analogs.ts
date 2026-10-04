@@ -82,7 +82,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -72.0,
     precision: 'region',
     landforms: { aec: 'strong' },
-    climate: 'Hyper-arid coastal desert',
+    climate: 'Mean 16.1 °C, 99 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'One of the best-studied barchan (crescent) dune corridors on Earth; its hyper-arid soils are also studied as Mars-like soil.',
     sources: [
       {
@@ -103,7 +103,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -106.17,
     precision: 'site',
     landforms: { aec: 'strong' },
-    climate: 'Arid, semi-desert basin',
+    climate: 'Mean 16.3 °C, 274 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'Gypsum dunes studied as an analog for the gypsum-rich dunes of Olympia Undae near the Martian north pole.',
     sources: [
       {
@@ -121,7 +121,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: 15.4,
     precision: 'region',
     landforms: { ael: 'moderate' },
-    climate: 'Hyper-arid coastal desert',
+    climate: 'Mean 22.4 °C, 80 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'Classic linear (longitudinal) dunes. Martian linear dunes grow from a fixed sand source and elongate parallel to their crests, like those on Earth.',
     sources: [
       {
@@ -140,7 +140,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -110.7919,
     precision: 'site',
     landforms: { cli: 'moderate', mix: 'moderate', rid: 'moderate' },
-    climate: 'Cold desert',
+    climate: 'Mean 11.8 °C, 241 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'Mesas and scarp-bounded surfaces in layered clay and sandstone, concretions like those at Meridiani Planum, and inverted paleochannels.',
     sources: [
       {
@@ -161,7 +161,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: 35.42,
     precision: 'region',
     landforms: { cli: 'weak', mix: 'weak' },
-    climate: 'Hot desert',
+    climate: 'Mean 18.1 °C, 40 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'Red sandstone cliffs and sandy valleys used as a Mars film set and as the site of Mars analog missions. No peer-reviewed landform-analog study was found.',
     sources: [
       {
@@ -182,8 +182,8 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -110.24,
     precision: 'region',
     landforms: { rid: 'strong' },
-    climate: 'Cold desert',
-    why: 'Old river channels cemented and left standing as sinuous ridges after the surrounding rock eroded: the reference analog for sinuous ridges on Mars.',
+    climate: 'Mean 11.7 °C, 234 mm of precipitation a year (NASA POWER 2001–2020)',
+    why: 'Old river channels cemented and left standing as sinuous ridges after the surrounding rock eroded, studied as terrestrial analogs for sinuous ridges on Mars.',
     sources: [
       {
         title:
@@ -204,8 +204,8 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: 92.3,
     precision: 'region',
     landforms: { rid: 'strong', tex: 'strong', fsg: 'moderate', smo: 'moderate', fse: 'weak' },
-    climate: 'Cold, hyper-arid, high-UV plateau desert',
-    why: 'Dry, cold, high-UV basin with yardang ridges, polygons, playas, gullies, brain-terrain-like textures and slope streaks, all with counterparts on Mars.',
+    climate: 'Mean 4.2 °C, 33 mm of precipitation a year (NASA POWER 2001–2020)',
+    why: 'Dry, cold, high-UV basin with yardangs, polygons, playas, gullies and dark slope streaks, all with counterparts on Mars.',
     sources: [
       {
         title:
@@ -235,8 +235,8 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -119.364,
     precision: 'site',
     landforms: { fsf: 'strong' },
-    climate: 'Semi-arid steppe',
-    why: 'Carved by the largest known floods on Earth; the standard analog for the giant outflow channels on Mars.',
+    climate: 'Mean 9.7 °C, 310 mm of precipitation a year (NASA POWER 2001–2020)',
+    why: 'Carved by what were likely the largest floods in Earth’s history; an often-used analog for the giant outflow channels on Mars.',
     image: {
       url: 'https://science.nasa.gov/wp-content/uploads/2025/10/scablands_oli_2013-2018_render.jpg',
       credit: 'NASA Earth Observatory, Landsat 8 OLI mosaic (2013–2018) over SRTM topography',
@@ -261,7 +261,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -133.08,
     precision: 'region',
     landforms: { sfe: 'strong' },
-    climate: 'Arctic tundra, permafrost',
+    climate: 'Mean −8.4 °C, 307 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'Ice-cored mounds (pingos) with summit depressions; used to interpret possible pingos in Utopia Planitia, Mars.',
     sources: [
       {
@@ -284,8 +284,8 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: 164.13,
     precision: 'region',
     landforms: { fsg: 'strong' },
-    climate: 'Polar desert, hyper-arid and below freezing',
-    why: 'Gullies forming in buried ice in one of the most Mars-like climates on Earth.',
+    climate: 'Mean −25.1 °C, 88 mm of precipitation a year (NASA POWER 2001–2020)',
+    why: 'Mars-analog gullies forming rapidly in buried ice, in a cold polar desert.',
     sources: [
       {
         title:
@@ -302,7 +302,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: 163.0,
     precision: 'region',
     landforms: { fse: 'weak' },
-    climate: 'Polar desert',
+    climate: 'Mean −21.9 °C, 66 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'Slope streaks are a specifically Martian phenomenon with no direct Earth analog; water tracks here are among the closest proposed candidates.',
     image: {
       url: 'https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/82000/82524/taylorglacier_pho_2013_studinger.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg',
@@ -325,8 +325,8 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -116.8,
     precision: 'region',
     landforms: { fss: 'strong' },
-    climate: 'Hot desert (Mojave)',
-    why: 'Long-runout dry rock avalanche; "Blackhawk-like" landslides are a recognised class on Mars and Ceres.',
+    climate: 'Mean 16.1 °C, 164 mm of precipitation a year (NASA POWER 2001–2020)',
+    why: 'Long-runout landslide that slid as a nearly monolithic sheet at over 100 km/h; long landslides like it also occur on Mars, where there is almost no air to ride on.',
     sources: [
       {
         title: 'Blackhawk Landslide, California (NASA JPL, PIA21008)',
@@ -348,8 +348,8 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -111.0225,
     precision: 'site',
     landforms: { cra: 'strong' },
-    climate: 'Semi-arid plateau',
-    why: 'Exceptionally well-preserved simple impact crater, used for decades to train astronauts and scientists in planetary geology.',
+    climate: 'Mean 11.4 °C, 416 mm of precipitation a year (NASA POWER 2001–2020)',
+    why: 'Impact crater used, with other Arizona sites, to teach the Apollo astronauts planetary geology before they went to the Moon.',
     image: {
       url: 'https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/148000/148384/arizona_oli_2021135.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg',
       credit:
@@ -371,7 +371,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -89.683,
     precision: 'site',
     landforms: { cra: 'strong', mix: 'moderate' },
-    climate: 'Polar desert: cold, dry, windy, nearly unvegetated',
+    climate: 'Mean −14.4 °C, 310 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'The only known impact structure in a cold, dry, windy, nearly unvegetated polar desert; home of the NASA Haughton-Mars Project.',
     image: {
       url: 'https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/2000/2585/PIA03714.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg',
@@ -394,8 +394,8 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: 76.508,
     precision: 'site',
     landforms: { cra: 'strong' },
-    climate: 'Tropical semi-arid',
-    why: 'Best-preserved bowl-shaped impact crater in basalt, the dominant rock on the Martian surface.',
+    climate: 'Mean 26.0 °C, 843 mm of precipitation a year (NASA POWER 2001–2020)',
+    why: 'A 1.88 km bowl-shaped impact crater in Deccan basalt, described as an excellent terrestrial analog of bowl-shaped impact craters on Mars.',
     sources: [
       {
         title:
@@ -412,7 +412,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: 133.148,
     precision: 'site',
     landforms: { sfx: 'strong' },
-    climate: 'Hot arid',
+    climate: 'Mean 22.5 °C, 237 mm of precipitation a year (NASA POWER 2001–2020)',
     why: '13–14 small craters from one fragmented iron meteoroid, including the only rayed crater known on Earth; a similar rayed crater was imaged by HiRISE on Mars.',
     sources: [
       {
@@ -435,8 +435,8 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -70.01,
     precision: 'region',
     landforms: { mix: 'moderate', smo: 'moderate' },
-    climate: 'Hyper-arid, the driest non-polar place on Earth',
-    why: 'Soils closest in chemistry to Martian soils: nearly sterile, with nitrate and perchlorate build-up like that measured by Phoenix.',
+    climate: 'Mean 17.1 °C, 7 mm of precipitation a year (NASA POWER 2001–2020)',
+    why: 'One of the driest, most UV-irradiated places on Earth, with highly oxidizing soils, very little organic matter and few microbes; a well-known Mars analog for its hyper-aridity and Mars-like salts and clays.',
     sources: [
       {
         title:
@@ -453,8 +453,8 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -67.49,
     precision: 'region',
     landforms: { smo: 'moderate', fse: 'weak' },
-    climate: 'High-altitude cold desert',
-    why: 'The flattest large surface on Earth (under 1 m relief over 10,000 km²); its seasonal brines are studied as an analog for slope features on Mars.',
+    climate: 'Mean 7.5 °C, 332 mm of precipitation a year (NASA POWER 2001–2020)',
+    why: 'A vast salt flat high in the Andes; its seasonal brine streaks are studied as an analog for slope streaks on Mars.',
     sources: [
       {
         title: 'Bolivian salt flats (NASA Earth Observatory)',
@@ -475,8 +475,8 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -16.83,
     precision: 'region',
     landforms: { rou: 'strong' },
-    climate: 'Subarctic, unvegetated highland',
-    why: 'Fresh 2014–2015 rubbly and spiny lava, studied as an analog for Elysium Planitia, the youngest volcanic terrain on Mars.',
+    climate: 'Mean −2.8 °C, 861 mm of precipitation a year (NASA POWER 2001–2020)',
+    why: 'Fresh 2014–2015 rubbly and spiny lava, studied as an analog for the volcanic terrains of Elysium Planitia on Mars.',
     image: {
       url: 'https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/84000/84316/holuhraun_oli_2014249.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg',
       credit:
@@ -499,7 +499,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: 160.6,
     precision: 'region',
     landforms: { tex: 'strong' },
-    climate: 'Polar desert, mean annual temperature below -21 °C',
+    climate: 'Mean −33.7 °C, 142 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'Sublimation polygons over buried ice, the dominant polygon type on Mars.',
     sources: [
       {
@@ -524,7 +524,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: 10.58,
     precision: 'region',
     landforms: { moon: 'moderate' },
-    climate: 'Mean 8.7 °C, 748 mm of rain a year (NASA POWER 2001–2020)',
+    climate: 'Mean 8.7 °C, 748 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'A 25 km, well-preserved impact crater where the Apollo 14 and 17 crews trained in 1970; ESA astronauts now study its impact rocks to prepare for the Moon.',
     sources: [
       {
@@ -541,7 +541,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -63.3,
     precision: 'region',
     landforms: { moon: 'moderate' },
-    climate: 'Mean −5.9 °C, 949 mm of rain a year (NASA POWER 2001–2020)',
+    climate: 'Mean −5.9 °C, 949 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'A 28 km impact crater in anorthosite, the rock of the lunar highlands, studied as a geological analogue for lunar highland craters.',
     sources: [
       {
@@ -563,7 +563,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: 13.5,
     precision: 'region',
     landforms: { moon: 'moderate' },
-    climate: 'Mean 6.0 °C, 1,212 mm of rain a year (NASA POWER 2001–2020)',
+    climate: 'Mean 6.0 °C, 1,212 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'One of the finest exposures of anorthosite on Earth, a rock rare here but common in the bright lunar highlands; ESA astronauts learn Moon geology there.',
     sources: [
       {
@@ -580,7 +580,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     lon: -113.51,
     precision: 'region',
     landforms: { moon: 'moderate' },
-    climate: 'Mean 5.7 °C, 416 mm of rain a year (NASA POWER 2001–2020)',
+    climate: 'Mean 5.7 °C, 416 mm of precipitation a year (NASA POWER 2001–2020)',
     why: 'Apollo 14 astronauts trained here in 1969 to learn volcanic geology, since much of the Moon is covered by volcanic rock; NASA still uses it as a research site.',
     sources: [
       {

@@ -68,9 +68,10 @@ EARTH = [
 
 JGR = 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434'
 LPI_HIGHLANDS = 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf'
-# name, accessible cold trap (< 110 K) from a landing site (JGR Planets 2025)
+# name, accessible cold trap (< 110 K) from a landing site (Wueller et al., JGR Planets 2025/2026).
+# Nobile Rim 2: the paper only reports PSRs that "may maintain surface temperatures below 125 K".
 MOON = [('Peak near Cabeus B', False), ('Haworth', True), ('Malapert Massif', False), ('Mons Mouton Plateau', True),
-        ('Mons Mouton', True), ('Nobile Rim 1', False), ('Nobile Rim 2', True), ('de Gerlache Rim 2', False),
+        ('Mons Mouton', True), ('Nobile Rim 1', False), ('Nobile Rim 2', False), ('de Gerlache Rim 2', False),
         ('Slater Plain', True)]
 # id, name, lat, lon, materials, landforms, reachable ice, note, sources, sourced measurements.
 # Slopes only when measured over hundreds of metres, like the Earth slopes (landing limits over
