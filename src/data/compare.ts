@@ -602,10 +602,12 @@ export const TARGETS: Target[] = [
     landforms: ['lake-sediment'],
     precipMmYr: 0,
     iceAccess: false,
-    note: 'Perseverance landing site (Octavia E. Butler Landing).',
+    dailyRangeC: 61,
+    note: 'Perseverance landing site (Octavia E. Butler Landing). Day–night swing: one sample day (sols 43–44), high −22 °C, low −83 °C, measured by MEDA.',
     sources: [
       'https://www.esa.int/ESA_Multimedia/Images/2022/08/Water-rich_minerals_at_Jezero_Crater',
       'https://en.wikipedia.org/wiki/Octavia_E._Butler_Landing',
+      'https://www.jpl.nasa.gov/news/nasas-first-weather-report-from-jezero-crater-on-mars/',
     ],
   },
   {
@@ -618,10 +620,12 @@ export const TARGETS: Target[] = [
     landforms: ['lake-sediment'],
     precipMmYr: 0,
     iceAccess: false,
-    note: 'Curiosity landing site (Bradbury Landing).',
+    dailyRangeC: 70,
+    note: 'Curiosity landing site (Bradbury Landing). Day–night swing: daily highs about 0 °C and lows about −70 °C, measured by REMS.',
     sources: [
       'https://www.jpl.nasa.gov/news/nasas-curiosity-rover-finds-patches-of-rock-record-erased-revealing-clues/',
       'https://en.wikipedia.org/wiki/Bradbury_Landing',
+      'https://www.jpl.nasa.gov/images/pia16913-steady-temperatures-at-mars-gale-crater/',
     ],
   },
   {
@@ -634,7 +638,8 @@ export const TARGETS: Target[] = [
     landforms: ['lake-sediment'],
     precipMmYr: 0,
     iceAccess: false,
-    note: 'Centre of the ExoMars Rosalind Franklin landing area (18.20°N, 335.45°E).',
+    slopeMaxDeg: 8,
+    note: 'Centre of the ExoMars Rosalind Franklin landing area (18.20°N, 335.45°E). The landing ellipse avoids slopes above 8° at the MOLA sub-kilometre scale.',
     sources: [
       'https://pmc.ncbi.nlm.nih.gov/articles/PMC7987365/',
       'https://www.tandfonline.com/doi/full/10.1080/17445647.2024.2302361',

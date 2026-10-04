@@ -40,6 +40,8 @@ export interface Target {
   landforms: string[]
   slopeMaxDeg?: number
   meanTempC?: number
+  /** Near-surface air temperature, daily high minus low, °C. */
+  dailyRangeC?: number
   precipMmYr?: number
   iceAccess: boolean
   note: string
@@ -248,8 +250,19 @@ export function scoreFactor(factor: FactorId, target: Target, site: EarthSite): 
     }
     case 'relief':
       return noData(factor, site.reliefM === null ? 'not measured' : `${site.reliefM} m`)
-    case 'dailyRange':
-      return noData(factor, `${site.dailyRangeC.toFixed(1)} °C`)
+    case 'dailyRange': {
+      const earth = `${site.dailyRangeC.toFixed(1)} °C`
+      if (target.dailyRangeC === undefined) return noData(factor, earth)
+      const diff = Math.abs(site.dailyRangeC - target.dailyRangeC)
+      const score: Score = diff <= 10 ? 3 : diff <= 30 ? 2 : 1
+      return result(
+        factor,
+        score,
+        `${target.dailyRangeC} °C`,
+        earth,
+        `${Math.round(diff)} °C apart.`,
+      )
+    }
     case 'sunlight':
     case 'radiation':
       return noData(factor)
