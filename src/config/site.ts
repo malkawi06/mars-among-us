@@ -41,9 +41,9 @@ export const site = {
 
   challenge: {
     /** Leave empty to hide. */
-    name: '',
+    name: 'Identify Earth Locations that Analog the Permanent Moon Base Locations and Mars',
     /** Link to the challenge page on spaceappschallenge.org. */
-    url: '',
+    url: 'https://www.spaceappschallenge.org/2026/challenges/identify-earth-locations-that-analog-the-permanent-moon-base-locations-and-mars/',
   },
 
   team: {
@@ -73,6 +73,7 @@ export const site = {
 
   nav: [
     { to: '/', label: 'Home' },
+    { to: '/analyze', label: 'Analyze' },
     { to: '/analogs', label: 'Earth Analogs' },
     { to: '/compare', label: 'Compare' },
     { to: '/about', label: 'About' },
@@ -93,6 +94,28 @@ export const site = {
       {
         title: 'See the closest places on Earth',
         body: 'Earth sites are scored factor by factor, with a source for every number, next to real orbital images at the same scale.',
+      },
+    ],
+  },
+
+  analyze: {
+    title: 'Analyze a Moon or Mars image',
+    intro:
+      'Upload an orbital image of the Moon or Mars. A landform model will name what it shows and find the places on Earth that look like it, with sources.',
+    notReady:
+      'The landform model is being retrained on the Space Apps challenge data, so this page does not analyze images yet. Your image stays in your browser.',
+    steps: [
+      {
+        title: 'Upload a Moon or Mars image',
+        body: 'Drop an orbital image. It stays in your browser and is never uploaded.',
+      },
+      {
+        title: 'Name the landform',
+        body: 'An image model trained on labelled NASA Moon and Mars images names the landform it sees.',
+      },
+      {
+        title: 'Find it on Earth',
+        body: 'See the places on Earth with the same landform, next to their satellite images and the research behind them.',
       },
     ],
   },
