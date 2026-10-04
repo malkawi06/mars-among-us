@@ -4,6 +4,7 @@ Sourced data behind the Compare page (`/compare`). `src/data/compare.ts` is gene
 
 ```bash
 python3 analysis/build_compare_data.py
+npx prettier --write src/data/compare.ts   # the script output is not Prettier-formatted
 ```
 
 | File                             | What it is                                                                             | How it was made                                                                                        |
