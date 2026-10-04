@@ -78,7 +78,7 @@ export default function About() {
               </span>
               <span className="min-w-0">
                 <span className="block font-medium">{member.name}</span>
-                <span className="block text-sm text-muted">{member.role}</span>
+                {member.role && <span className="block text-sm text-muted">{member.role}</span>}
                 <span className="mt-1 flex gap-3 text-sm">
                   {member.github && (
                     <a

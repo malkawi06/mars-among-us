@@ -21,15 +21,17 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm run lint
+      - run: npm test
       # Orbital images of the Earth analog sites and the Moon/Mars targets, shown on the Compare page.
       # Optional: if EOX is unreachable the page explains the images are missing.
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Download orbital images
@@ -37,13 +39,21 @@ jobs:
         run: |
           pip install --quiet pillow
           python scripts/fetch_earth_images.py
+      # The download step may fail without stopping the deploy; make a missing set visible.
+      - name: Check orbital images
+        run: |
+          for folder in earth targets; do
+            count=$(python -c "import json,sys; print(len(json.load(open(sys.argv[1]))))" public/$folder/index.json 2>/dev/null || echo 0)
+            echo "$folder: $count images"
+            if [ "$count" = 0 ]; then echo "::warning::No $folder images: the Compare page will show them as unavailable."; fi
+          done
       - run: npm run build
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
       # GitHub Pages answers unknown paths with 404.html; make it the app so /compare etc. survive a refresh.
       - run: cp dist/index.html dist/404.html
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

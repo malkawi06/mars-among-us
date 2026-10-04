@@ -42,6 +42,10 @@ NAC_NORTH_LIMIT = -85.5
 MOON_RADIUS = 1_737_400
 
 
+class OutsideCoverage(ValueError):
+    """The mosaic does not cover this place: expected, not an error."""
+
+
 def fetch(url):
     request = urllib.request.Request(url, headers={'User-Agent': 'mars-among-us'})
     with urllib.request.urlopen(request, timeout=30) as response:
@@ -86,7 +90,7 @@ def mars_image(lat, lon):
 
 def moon_image(lat, lon):
     if lat > NAC_NORTH_LIMIT:
-        raise ValueError(f'outside the south-pole mosaic (north of {NAC_NORTH_LIMIT}°)')
+        raise OutsideCoverage(f'outside the south-pole mosaic (north of {NAC_NORTH_LIMIT}°)')
     # South polar stereographic, true scale at the pole (Snyder 1987): x = ρ sin λ, y = ρ cos λ.
     rho = 2 * MOON_RADIUS * math.tan(math.pi / 4 + math.radians(lat) / 2)
     x, y = rho * math.sin(math.radians(lon)), rho * math.cos(math.radians(lon))
@@ -114,8 +118,11 @@ def save_all(entries, render_for, folder):
     for sid, body, lat, lon in entries:
         try:
             image, m_per_px = render_for(body)(lat, lon)
-        except Exception as error:  # one missing site must not stop the others
-            print(f'skip {sid}: {error}')
+        except OutsideCoverage as reason:
+            print(f'skip {sid}: {reason}')
+            continue
+        except Exception as error:  # one failed download must not stop the others
+            print(f'::warning::No image for {sid}: {error}')
             continue
         image.save(out / f'{sid}.jpg', quality=85)
         index[sid] = {'file': f'{sid}.jpg', 'size': SIZE, 'metersPerPixel': round(m_per_px, 2)}

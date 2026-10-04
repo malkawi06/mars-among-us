@@ -8,6 +8,7 @@
 
 export interface TeamMember {
   name: string
+  /** Leave empty to hide. */
   role: string
   /** Optional profile links. Leave empty to hide. */
   github?: string
@@ -57,6 +58,11 @@ export const site = {
         github: 'https://github.com/malkawi06',
         linkedin: '',
       },
+      { name: 'Nour Oqaily', role: '' },
+      { name: 'Mohammad Kilany', role: '' },
+      { name: 'Aisha', role: '' },
+      { name: 'Hadeel Abuqhazleh', role: '' },
+      { name: 'Hadeel Qamar', role: '' },
     ] satisfies TeamMember[],
   },
 

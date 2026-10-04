@@ -4,7 +4,7 @@ import { PageHeader } from '../components/PageHeader'
 import { site as siteConfig } from '../config/site'
 import { usePageTitle } from '../hooks/usePageTitle'
 
-type BodyChoice = 'auto' | 'Mars' | 'Moon'
+type Body = 'Mars' | 'Moon'
 
 /**
  * Upload page for a Moon or Mars orbital image. The landform model is being retrained on the
@@ -16,7 +16,9 @@ export default function Analyze() {
 
   const [imageUrl, setImageUrl] = useState<string>()
   const [dragging, setDragging] = useState(false)
-  const [bodyChoice, setBodyChoice] = useState<BodyChoice>('auto')
+  // Which world the image shows, as decided by the landform model. Stays undefined ("Auto") until
+  // the model is added and has analyzed an image.
+  const [detected] = useState<Body>()
 
   // Release the uploaded image's object URL when it is replaced or the page closes.
   useEffect(
@@ -67,7 +69,7 @@ export default function Analyze() {
               onChange={(event) => pickFile(event.target.files?.[0])}
             />
           </label>
-          <BodyPicker value={bodyChoice} onChange={setBodyChoice} />
+          <BodyStatus detected={detected} />
           {imageUrl && (
             <p className="rounded-lg border border-warning/40 bg-warning/10 p-3 text-sm text-fg-2">
               {page.notReady}
@@ -97,35 +99,19 @@ export default function Analyze() {
   )
 }
 
-function BodyPicker({
-  value,
-  onChange,
-}: {
-  value: BodyChoice
-  onChange: (value: BodyChoice) => void
-}) {
+/** Where the image is from: "Auto" until the model has looked at it, then Mars or Moon. */
+function BodyStatus({ detected }: { detected?: Body }) {
   return (
-    <div className="flex flex-wrap items-center gap-2 text-sm">
+    <p className="flex flex-wrap items-center gap-2 text-sm" aria-live="polite">
       <span className="text-fg-2">Image from:</span>
-      <div
-        role="group"
-        aria-label="Image from"
-        className="flex gap-1 rounded-full bg-surface-2 p-1"
+      <span
+        className={`rounded-full px-3 py-1 font-medium ${
+          detected ? 'bg-accent text-accent-fg' : 'bg-surface-2 text-fg-2'
+        }`}
       >
-        {(['auto', 'Mars', 'Moon'] as const).map((option) => (
-          <button
-            key={option}
-            type="button"
-            aria-pressed={value === option}
-            onClick={() => onChange(option)}
-            className={`rounded-full px-3 py-1 font-medium transition-colors ${
-              value === option ? 'bg-accent text-accent-fg' : 'text-fg-2 hover:text-fg'
-            }`}
-          >
-            {option === 'auto' ? 'Auto' : option}
-          </button>
-        ))}
-      </div>
-    </div>
+        {detected ?? 'Auto'}
+      </span>
+      {!detected && <span className="text-xs text-muted">The model decides: Mars or Moon</span>}
+    </p>
   )
 }
