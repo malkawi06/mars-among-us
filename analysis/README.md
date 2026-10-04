@@ -27,5 +27,12 @@ sourced value for the target are left out and shown as "no data". The thresholds
 - Slope and relief describe a 0.6 km window around the coordinates. For Lonar and Mistastin the
   coordinates fall on a lake, for Tuktoyaktuk on the sea, so slope and relief are left unmeasured there
   (neutral in the score) rather than using the water surface.
-- Moon and Mars targets have no sourced site temperature or sunlight values yet, so those factors are
-  left out. The planet-wide average is not used as a site value.
+- Moon targets have no sourced temperature or sunlight values yet, and Mars targets no sourced mean
+  temperature, so those factors are left out. The planet-wide average is not used as a site value.
+- Mars day–night swing (near-surface air, like NASA POWER's): Gale about 70 °C (REMS), Jezero 61 °C on
+  one sample day (MEDA). Oxia Planum, Victoria and Arcadia have no published value, so it is left out.
+- Mars slopes: only Oxia Planum has one at a scale comparable to the Earth slopes (landing ellipse avoids
+  slopes above 8° at the MOLA sub-kilometre scale). Published rover landing limits are measured over
+  2–5 m, so they are not used. No Mars target has a comparable local relief value yet.
+- Day–night swing scores 3 within 10 °C, 2 within 30 °C, else 1. No Earth site comes within 30 °C of
+  Mars, so this factor lowers every Mars match: that is the real difference, not a data gap.
