@@ -147,11 +147,6 @@ export const site = {
         howWeUseIt: 'Images of Earth analog sites such as Meteor Crater, Haughton and Holuhraun.',
       },
       {
-        name: 'NASA GIBS (Global Imagery Browse Services)',
-        url: 'https://nasa-gibs.github.io/gibs-api-docs/',
-        howWeUseIt: 'Satellite imagery layer on the Earth analog maps.',
-      },
-      {
         name: 'Artemis III candidate landing regions',
         url: 'https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/',
         howWeUseIt: 'The nine Moon south-pole regions on the Compare page.',

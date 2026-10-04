@@ -8,6 +8,7 @@ import { useAsync } from '../hooks/useAsync'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { loadOrbitalImages } from '../lib/orbitalImages'
 import {
+  NO_DATA,
   PURPOSES,
   rank,
   type FactorResult,
@@ -124,7 +125,7 @@ export default function Compare() {
       {selected.scored < MIN_FACTORS && (
         <p className="mt-4 rounded-xl border border-warning/40 bg-warning/10 px-4 py-3 text-sm text-fg-2">
           <span className="font-medium text-fg">Rough scores: </span>
-          only {selected.scored} of {selected.factors.length} factors have sourced data for{' '}
+          only {selected.scored} of {selected.factors.length} factors can be scored for{' '}
           {target.name}, so many sites tie. Check the orbital images too.
         </p>
       )}
@@ -139,6 +140,7 @@ export default function Compare() {
                   <li key={match.site.id}>
                     <SiteButton
                       match={match}
+                      maxSlopeDeg={purpose.maxSlopeDeg}
                       rank={i + 1}
                       selected={match === selected}
                       onSelect={() => select(match.site.id)}
@@ -184,8 +186,9 @@ export default function Compare() {
 
             {selected.fails && (
               <p className="mx-5 mb-4 rounded-lg border border-danger/40 bg-danger/10 p-3 text-sm text-fg-2">
-                This site is {selected.site.slopeDeg?.toFixed(1)}° steep. NASA requires landing
-                slopes under 8°, so it is ranked last for this purpose.
+                This site is {selected.site.slopeDeg?.toFixed(1)}° steep. NASA&apos;s Artemis lunar
+                lander requires landing slopes under {purpose.maxSlopeDeg}°, so it is ranked last
+                for this purpose.
               </p>
             )}
 
@@ -296,11 +299,13 @@ function TargetSummary({ target }: { target: Target }) {
 
 function SiteButton({
   match,
+  maxSlopeDeg,
   rank,
   selected,
   onSelect,
 }: {
   match: Match
+  maxSlopeDeg?: number
   rank: number
   selected: boolean
   onSelect: () => void
@@ -318,7 +323,7 @@ function SiteButton({
       <span className="min-w-0 flex-1">
         <span className="block truncate font-medium">{match.site.name}</span>
         <span className="block truncate text-xs text-muted">
-          {match.fails ? 'Too steep to land (8° or more)' : match.site.country}
+          {match.fails ? `Too steep to land (${maxSlopeDeg}° or more)` : match.site.country}
         </span>
         <span className="mt-2 block h-1 rounded-full bg-surface-2">
           <span
@@ -336,7 +341,8 @@ function SiteButton({
 
 function Factors({ match, targetName }: { match: Match; targetName: string }) {
   const scored = match.factors.filter((f) => f.score !== null)
-  const left = match.factors.filter((f) => f.score === null)
+  const noData = match.factors.filter((f) => f.score === null && f.target === NO_DATA)
+  const leftOut = match.factors.filter((f) => f.score === null && f.target !== NO_DATA)
   return (
     <>
       <ul className="divide-y divide-border">
@@ -344,12 +350,17 @@ function Factors({ match, targetName }: { match: Match; targetName: string }) {
           <FactorRow key={f.factor} factor={f} targetName={targetName} />
         ))}
       </ul>
-      {left.length > 0 && (
+      {noData.length > 0 && (
         <p className="mt-3 text-xs text-muted">
           Not scored (no sourced value for {targetName} yet):{' '}
-          {left.map((f) => f.label.toLowerCase()).join(', ')}.
+          {noData.map((f) => f.label.toLowerCase()).join(', ')}.
         </p>
       )}
+      {leftOut.map((f) => (
+        <p key={f.factor} className="mt-3 text-xs text-muted">
+          {f.label}: {f.reason}
+        </p>
+      ))}
     </>
   )
 }

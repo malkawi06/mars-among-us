@@ -16,7 +16,7 @@ export default function Analogs() {
   const [params] = useSearchParams()
   const [landform, setLandform] = useState<LandformCode | 'all'>(() => {
     const code = params.get('landform')
-    return code && code in LANDFORM_NAMES ? (code as LandformCode) : 'all'
+    return code && Object.hasOwn(LANDFORM_NAMES, code) ? (code as LandformCode) : 'all'
   })
   const [selectedId, setSelectedId] = useState(() => params.get('site') ?? undefined)
 

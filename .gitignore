@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# Environment variables (keep secrets out of git; .env.example is the template)
+# Environment variables (keep secrets out of git)
 .env
 .env.*
 !.env.example
