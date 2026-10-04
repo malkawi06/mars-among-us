@@ -14,7 +14,7 @@ interface AnalogMapProps {
 export function AnalogMap({ sites, selectedId, onSelect, className }: AnalogMapProps) {
   const selected = sites.find((s) => s.id === selectedId)
   return (
-    <MapView basemap="satellite" gibsLayer={null} center={[20, 0]} zoom={2} className={className}>
+    <MapView basemap="satellite" center={[20, 0]} zoom={2} className={className}>
       {sites.map((s) => (
         <CircleMarker
           key={s.id}

@@ -57,14 +57,21 @@ def mosaic(url, z, left, top, width, height, tile=TILE):
     return canvas
 
 
+def resampled(url, z, px, py, m_per_px, tile=TILE):
+    """The SIZE x SIZE image centred on (px, py) at exactly TARGET_M_PER_PX, from tiles at m_per_px."""
+    window = round(SIZE * TARGET_M_PER_PX / m_per_px)
+    image = mosaic(url, z, int(px - window / 2), int(py - window / 2), window, window, tile)
+    return image.resize((SIZE, SIZE), Image.LANCZOS), TARGET_M_PER_PX
+
+
 def earth_image(lat, lon):
     cos_lat = math.cos(math.radians(lat))
-    zoom = min(16, max(1, round(math.log2(EARTH_M_PER_PX_Z0 * cos_lat / TARGET_M_PER_PX))))
+    # The first zoom level at least as fine as the target scale; resampled down to it exactly.
+    zoom = min(16, max(1, math.ceil(math.log2(EARTH_M_PER_PX_Z0 * cos_lat / TARGET_M_PER_PX))))
     world = TILE * 2**zoom
     px = (lon + 180) / 360 * world
     py = (1 - math.log(math.tan(math.radians(lat)) + 1 / cos_lat) / math.pi) / 2 * world
-    image = mosaic(EOX_URL, zoom, int(px - SIZE / 2), int(py - SIZE / 2), SIZE, SIZE)
-    return image, EARTH_M_PER_PX_Z0 * cos_lat / 2**zoom
+    return resampled(EOX_URL, zoom, px, py, EARTH_M_PER_PX_Z0 * cos_lat / 2**zoom)
 
 
 def mars_image(lat, lon):
@@ -84,7 +91,7 @@ def moon_image(lat, lon):
     rho = 2 * MOON_RADIUS * math.tan(math.pi / 4 + math.radians(lat) / 2)
     x, y = rho * math.sin(math.radians(lon)), rho * math.cos(math.radians(lon))
     px, py = (x - NAC_ORIGIN) / NAC_M_PER_PX, (-NAC_ORIGIN - y) / NAC_M_PER_PX
-    return mosaic(NAC_URL, NAC_LEVEL, int(px - SIZE / 2), int(py - SIZE / 2), SIZE, SIZE), NAC_M_PER_PX
+    return resampled(NAC_URL, NAC_LEVEL, px, py, NAC_M_PER_PX)
 
 
 def sites(array_name):

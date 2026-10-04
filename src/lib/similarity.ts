@@ -77,7 +77,11 @@ export interface Purpose {
   label: string
   bodies: Body[]
   factors: FactorId[]
-  /** Landing-slope rule: Earth sites steeper than this fail (NASA HLS requires < 8°). */
+  /**
+   * Landing-slope rule for Moon targets: Earth sites this steep or steeper fail. The Artemis Human
+   * Landing System requires landing slopes of 0–8° (NASA 2019, quoted in JGR Planets 2025,
+   * doi 10.1029/2025JE009434). There is no equivalent sourced rule for Mars, so it is not applied there.
+   */
   maxSlopeDeg?: number
 }
 
@@ -156,8 +160,10 @@ const result = (
   earth,
   reason,
 })
+/** The target value shown for a factor left out because the target has no sourced value. */
+export const NO_DATA = 'no data'
 const noData = (factor: FactorId, earth = '—') =>
-  result(factor, null, 'no data', earth, 'Left out: no sourced value for the target yet.')
+  result(factor, null, NO_DATA, earth, 'Left out: no sourced value for the target yet.')
 
 export function scoreFactor(factor: FactorId, target: Target, site: EarthSite): FactorResult {
   switch (factor) {
@@ -292,6 +298,7 @@ export function compare(target: Target, purpose: Purpose, site: EarthSite): Matc
     scored: scores.length,
     fails:
       purpose.maxSlopeDeg !== undefined &&
+      target.body === 'Moon' &&
       site.slopeDeg !== null &&
       site.slopeDeg >= purpose.maxSlopeDeg,
   }

@@ -1,4 +1,4 @@
-import { useState, type DragEvent } from 'react'
+import { useEffect, useState, type DragEvent } from 'react'
 import { Card } from '../components/Card'
 import { PageHeader } from '../components/PageHeader'
 import { site as siteConfig } from '../config/site'
@@ -18,10 +18,16 @@ export default function Analyze() {
   const [dragging, setDragging] = useState(false)
   const [bodyChoice, setBodyChoice] = useState<BodyChoice>('auto')
 
+  // Release the uploaded image's object URL when it is replaced or the page closes.
+  useEffect(
+    () => () => {
+      if (imageUrl) URL.revokeObjectURL(imageUrl)
+    },
+    [imageUrl],
+  )
+
   const pickFile = (file: File | undefined) => {
-    if (!file?.type.startsWith('image/')) return
-    if (imageUrl) URL.revokeObjectURL(imageUrl)
-    setImageUrl(URL.createObjectURL(file))
+    if (file?.type.startsWith('image/')) setImageUrl(URL.createObjectURL(file))
   }
   const onDrop = (event: DragEvent) => {
     event.preventDefault()

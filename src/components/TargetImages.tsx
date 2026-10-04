@@ -1,4 +1,4 @@
-import { EARTH_URL, TARGETS_URL, type OrbitalImages } from '../lib/orbitalImages'
+import { EARTH_URL, TARGETS_URL, type OrbitalImage, type OrbitalImages } from '../lib/orbitalImages'
 import type { EarthSite, Target } from '../lib/similarity'
 
 const CREDITS = {
@@ -9,7 +9,7 @@ const EARTH_CREDIT =
   'Earth: Sentinel-2 cloudless 2024 by EOX IT Services GmbH (contains modified Copernicus Sentinel data 2024).'
 const MOON_MOSAIC_LIMIT = -85.5
 
-/** A Moon or Mars target's orbital image next to an Earth analog's satellite image, at the same scale. */
+/** A Moon or Mars target's orbital image next to an Earth analog's satellite image (both 8 m/pixel). */
 export function TargetImages({
   target,
   site,
@@ -33,7 +33,11 @@ export function TargetImages({
     )
   }
 
-  const km = (targetImage.size * targetImage.metersPerPixel) / 1000
+  const widthKm = (image: OrbitalImage) => ((image.size * image.metersPerPixel) / 1000).toFixed(1)
+  const scale =
+    widthKm(targetImage) === widthKm(earthImage)
+      ? `Both images about ${widthKm(targetImage)} km across.`
+      : `${target.body} image about ${widthKm(targetImage)} km across, Earth image about ${widthKm(earthImage)} km.`
   return (
     <div className="space-y-3">
       <div className="grid grid-cols-2 gap-3">
@@ -52,7 +56,7 @@ export function TargetImages({
         ))}
       </div>
       <p className="text-xs text-muted">
-        Both images about {km.toFixed(1)} km across. {CREDITS[target.body]} {EARTH_CREDIT}
+        {scale} {CREDITS[target.body]} {EARTH_CREDIT}
       </p>
     </div>
   )

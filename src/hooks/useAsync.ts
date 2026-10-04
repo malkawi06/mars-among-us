@@ -19,7 +19,7 @@ interface Settled<T> {
  * `key` identifies the request: include every input the request depends on.
  * Pass `null` to skip loading (e.g. until the user clicks a button).
  *
- *   const { data, error, loading, reload } = useAsync(`apod:${date}`, () => apod({ date }))
+ *   const { data, error, loading, reload } = useAsync('orbital-images', loadOrbitalImages)
  */
 export function useAsync<T>(key: string | null, load: () => Promise<T>): AsyncState<T> {
   const [attempt, setAttempt] = useState(0)
