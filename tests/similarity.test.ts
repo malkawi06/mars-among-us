@@ -98,6 +98,21 @@ describe('scoreFactor', () => {
     assert.equal(scoreFactor('ice', target({ iceAccess: true }), site()).score, 1)
   })
 
+  it('scores mean temperature by its difference', () => {
+    const t = target({ meanTempC: -60 })
+    assert.equal(scoreFactor('meanTemp', t, site({ meanTempC: -40 })).score, 3)
+    assert.equal(scoreFactor('meanTemp', t, site({ meanTempC: -15 })).score, 2)
+    assert.equal(scoreFactor('meanTemp', t, site({ meanTempC: -14 })).score, 1)
+    assert.equal(scoreFactor('meanTemp', target(), site()).target, NO_DATA)
+  })
+
+  it('scores landform as same or different', () => {
+    const t = target({ landforms: ['impact'] })
+    assert.equal(scoreFactor('landform', t, site({ landforms: ['dunes', 'impact'] })).score, 3)
+    assert.equal(scoreFactor('landform', t, site({ landforms: ['dunes'] })).score, 1)
+    assert.equal(scoreFactor('landform', target({ landforms: [] }), site()).target, NO_DATA)
+  })
+
   it('scores dryness by Earth rainfall', () => {
     const t = target({ body: 'Mars', precipMmYr: 0 })
     assert.equal(scoreFactor('aridity', t, site({ precipMmYr: 25 })).score, 3)
@@ -119,6 +134,13 @@ describe('compare', () => {
   it('gives no percentage when nothing can be scored', () => {
     const t = target({ materials: [], landforms: [] })
     assert.equal(compare(t, purpose('training'), site()).percent, null)
+  })
+
+  it('compares sunlight for Moon targets only', () => {
+    const factors = (body: 'Moon' | 'Mars') =>
+      compare(target({ body }), purpose('base'), site()).factors.map((f) => f.factor)
+    assert.ok(factors('Moon').includes('sunlight'))
+    assert.ok(!factors('Mars').includes('sunlight'))
   })
 
   it('applies the 8° landing rule to Moon targets only', () => {
@@ -182,8 +204,16 @@ describe('data files', () => {
     }
   })
 
-  it('Earth Analogs: every landform has at least one site', () => {
-    for (const code of Object.keys(LANDFORM_NAMES) as (keyof typeof LANDFORM_NAMES)[])
-      assert.ok(analogsFor(code).length > 0, code)
+  it('Earth Analogs: every landform has at least one site, strongest evidence first', () => {
+    const order = ['strong', 'moderate', 'weak']
+    for (const code of Object.keys(LANDFORM_NAMES) as (keyof typeof LANDFORM_NAMES)[]) {
+      const ranks = analogsFor(code).map(({ confidence }) => order.indexOf(confidence))
+      assert.ok(ranks.length > 0, code)
+      assert.deepEqual(
+        ranks,
+        [...ranks].sort((a, b) => a - b),
+        code,
+      )
+    }
   })
 })
