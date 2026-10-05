@@ -16,6 +16,7 @@ export default function Analyze() {
 
   const [imageUrl, setImageUrl] = useState<string>()
   const [dragging, setDragging] = useState(false)
+  const [fileError, setFileError] = useState<string>()
   // Which world the image shows, as decided by the landform model. Stays undefined ("Auto") until
   // the model is added and has analyzed an image.
   const [detected] = useState<Body>()
@@ -28,8 +29,25 @@ export default function Analyze() {
     [imageUrl],
   )
 
+  // A file dropped outside the drop zone would make the browser open it and leave the page.
+  useEffect(() => {
+    const stop = (event: globalThis.DragEvent) => event.preventDefault()
+    window.addEventListener('dragover', stop)
+    window.addEventListener('drop', stop)
+    return () => {
+      window.removeEventListener('dragover', stop)
+      window.removeEventListener('drop', stop)
+    }
+  }, [])
+
   const pickFile = (file: File | undefined) => {
-    if (file?.type.startsWith('image/')) setImageUrl(URL.createObjectURL(file))
+    if (!file) return
+    if (!file.type.startsWith('image/')) {
+      setFileError(`"${file.name}" is not an image. Choose a PNG or JPG file.`)
+      return
+    }
+    setFileError(undefined)
+    setImageUrl(URL.createObjectURL(file))
   }
   const onDrop = (event: DragEvent) => {
     event.preventDefault()
@@ -69,6 +87,14 @@ export default function Analyze() {
               onChange={(event) => pickFile(event.target.files?.[0])}
             />
           </label>
+          {fileError && (
+            <p
+              role="alert"
+              className="rounded-lg border border-danger/40 bg-danger/10 p-3 text-sm text-fg-2"
+            >
+              {fileError}
+            </p>
+          )}
           <BodyStatus detected={detected} />
           {imageUrl && (
             <p className="rounded-lg border border-warning/40 bg-warning/10 p-3 text-sm text-fg-2">

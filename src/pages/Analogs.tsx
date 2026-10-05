@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { AnalogMap } from '../components/AnalogMap'
 import { AnalogSiteDetails } from '../components/AnalogSiteDetails'
@@ -13,12 +12,20 @@ export default function Analogs() {
   usePageTitle(page.title)
 
   // ?landform=cra&site=meteor-crater links straight to a landform and site (the Home page uses it).
-  const [params] = useSearchParams()
-  const [landform, setLandform] = useState<LandformCode | 'all'>(() => {
-    const code = params.get('landform')
-    return code && Object.hasOwn(LANDFORM_NAMES, code) ? (code as LandformCode) : 'all'
-  })
-  const [selectedId, setSelectedId] = useState(() => params.get('site') ?? undefined)
+  // The filter and the selected site live in the URL, so the current view can be shared.
+  const [params, setParams] = useSearchParams()
+  const code = params.get('landform')
+  const landform = code && Object.hasOwn(LANDFORM_NAMES, code) ? (code as LandformCode) : 'all'
+  const selectedId = params.get('site') ?? undefined
+  const update = (key: 'landform' | 'site', value: string | undefined) => {
+    const next = new URLSearchParams(params)
+    if (value) next.set(key, value)
+    else next.delete(key)
+    setParams(next, { replace: true })
+  }
+  const setLandform = (value: LandformCode | 'all') =>
+    update('landform', value === 'all' ? undefined : value)
+  const setSelectedId = (id: string | undefined) => update('site', id)
 
   const sites = landform === 'all' ? ANALOG_SITES : analogsFor(landform).map(({ site }) => site)
   const selected = sites.find((s) => s.id === selectedId)

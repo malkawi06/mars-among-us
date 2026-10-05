@@ -9,6 +9,7 @@ Live: **https://malkawi06.github.io/mars-among-us/**
 | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Compare** (`/compare`)       | Pick a place on the Moon (the nine Artemis III regions) or Mars and a purpose (rover testing, base, local resources, search for life, training). Every Earth site is scored factor by factor, with the target's orbital image next to the site. |
 | **Earth Analogs** (`/analogs`) | The analog sites on a satellite map, filtered by landform, each with the published research behind it.                                                                                                                                          |
+| **Analyze** (`/analyze`)       | Upload a Moon or Mars orbital image. The landform model is being retrained on the challenge data, so for now the page only shows the image.                                                                                                     |
 | **About** (`/about`)           | The challenge, the solution, the data used and the team: the sections of the Space Apps submission form.                                                                                                                                        |
 
 **Stack:** Vite · React 19 · TypeScript · Tailwind CSS v4 · React Router · Leaflet · Python (data scripts).
@@ -62,6 +63,7 @@ python scripts/fetch_earth_images.py
 | `npm run build`        | Type-check (`tsc -b`) and production build |
 | `npm run preview`      | Serve the production build locally         |
 | `npm run lint`         | ESLint                                     |
+| `npm test`             | Unit tests (Node's built-in test runner)   |
 | `npm run format`       | Format everything with Prettier            |
 | `npm run format:check` | Check formatting without writing           |
 
@@ -83,7 +85,7 @@ src/
 │   ├── orbitalImages.ts ← reads the deploy-time orbital images
 │   └── similarity.ts    ← Compare scoring
 ├── components/          ← shared UI (TargetImages, AnalogMap, …)
-├── pages/               ← Home, Analogs, Compare, About
+├── pages/               ← Home, Analogs, Compare, Analyze, About
 └── index.css            ← Tailwind + light/dark color tokens
 analysis/                ← sourced data and method for Compare
 scripts/                 ← deploy-time image download
