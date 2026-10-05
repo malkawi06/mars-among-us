@@ -51,7 +51,7 @@ export default function Compare() {
   const matches = rank(target, purpose, EARTH_SITES)
   const selected = matches.find((m) => m.site.id === params.get('site')) ?? matches[0]
   const view = params.get('view') === 'images' ? 'images' : 'scores'
-  const { data: images } = useAsync('orbital-images', loadOrbitalImages)
+  const { data: images, error: imagesError } = useAsync('orbital-images', loadOrbitalImages)
   const [showAll, setShowAll] = useState(false)
   const details = useRef<HTMLDivElement>(null)
 
@@ -81,7 +81,10 @@ export default function Compare() {
             <StepLabel number={1}>Place on the Moon or Mars</StepLabel>
             <select
               value={target.id}
-              onChange={(event) => update({ target: event.target.value, site: undefined })}
+              onChange={(event) => {
+                update({ target: event.target.value, site: undefined })
+                setShowAll(false)
+              }}
               className="mt-2 block h-10 w-full rounded-lg border border-border bg-bg px-3 text-sm text-fg"
             >
               {(['Moon', 'Mars'] as const).map((body) => (
@@ -106,7 +109,10 @@ export default function Compare() {
                   key={p.id}
                   type="button"
                   aria-pressed={p === purpose}
-                  onClick={() => update({ purpose: p.id, site: undefined })}
+                  onClick={() => {
+                    update({ purpose: p.id, site: undefined })
+                    setShowAll(false)
+                  }}
                   className={`h-10 rounded-full border px-4 text-sm font-medium transition-colors ${
                     p === purpose
                       ? 'border-accent bg-accent text-accent-fg'
@@ -217,7 +223,11 @@ export default function Compare() {
 
             <div role="tabpanel" className="p-5">
               {view === 'images' ? (
-                <TargetImages target={target} site={selected.site} images={images} />
+                <TargetImages
+                  target={target}
+                  site={selected.site}
+                  images={imagesError ? null : images}
+                />
               ) : (
                 <Factors match={selected} targetName={target.name} />
               )}

@@ -10,11 +10,14 @@ export default function ErrorPage() {
       ? error.message
       : 'Unknown error'
 
+  // After a new deploy, an open tab may ask for page files that no longer exist.
+  const outdated = /dynamically imported module|module script failed/i.test(message)
+
   return (
     <div className="mx-auto max-w-xl px-4 py-16">
       <ErrorState
-        title="This page crashed"
-        error={message}
+        title={outdated ? 'The site was updated' : 'This page crashed'}
+        error={outdated ? 'A new version is out. Reload the page to get it.' : message}
         onRetry={() => window.location.reload()}
       />
     </div>
