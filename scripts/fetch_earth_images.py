@@ -8,13 +8,13 @@
 Each image is 768 x 768 px at roughly 8 m/px, so a Moon or Mars target and an Earth site can be shown
 side by side at the same scale on the Compare page. Serving them from the site avoids cross-origin
 limits and keeps the demo working offline.
-Run before `npm run build` (the deploy workflow does): needs Pillow.
+Run before `npm run build` (the deploy workflow does): needs Pillow and Node.js 22.
 """
 
 import io
 import json
 import math
-import re
+import subprocess
 import urllib.request
 from pathlib import Path
 
@@ -99,16 +99,18 @@ def moon_image(lat, lon):
 
 
 def sites(array_name):
-    """(id, body, lat, lon) of each entry of EARTH_SITES or TARGETS in src/data/compare.ts."""
-    text = (ROOT / 'src' / 'data' / 'compare.ts').read_text()
-    start = text.index(f'export const {array_name}')
-    end = text.find('export const', start + 1)
-    for block in re.split(r'\n  \{\n', text[start:end if end > 0 else None])[1:]:
-        sid = re.search(r"id: '([^']+)'", block).group(1)
-        body = re.search(r"body: '(\w+)'", block)
-        lat = float(re.search(r'\blat: (-?[\d.]+)', block).group(1))
-        lon = float(re.search(r'\blon: (-?[\d.]+)', block).group(1))
-        yield sid, body.group(1) if body else 'Earth', lat, lon
+    """(id, body, lat, lon) of each entry of EARTH_SITES or TARGETS in src/data/compare.ts.
+
+    The file is loaded with Node, so its formatting does not matter.
+    """
+    url = (ROOT / 'src' / 'data' / 'compare.ts').as_uri()
+    code = f'const data = await import({json.dumps(url)}); console.log(JSON.stringify(data.{array_name}))'
+    output = subprocess.run(
+        ['node', '--experimental-strip-types', '--no-warnings', '--input-type=module', '-e', code],
+        capture_output=True, text=True, check=True,
+    ).stdout
+    for entry in json.loads(output):
+        yield entry['id'], entry.get('body', 'Earth'), entry['lat'], entry['lon']
 
 
 def save_all(entries, render_for, folder):
