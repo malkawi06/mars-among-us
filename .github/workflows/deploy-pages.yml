@@ -28,6 +28,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+      - run: npm run format:check
       - run: npm test
       # Orbital images of the Earth analog sites and the Moon/Mars targets, shown on the Compare page.
       # Optional: if EOX is unreachable the page explains the images are missing.
