@@ -262,7 +262,7 @@ export const ANALOG_SITES: AnalogSite[] = [
     precision: 'region',
     landforms: { sfe: 'strong' },
     climate: 'Mean −8.4 °C, 307 mm of precipitation a year (NASA POWER 2001–2020)',
-    why: 'Ice-cored mounds (pingos) with summit depressions; used to interpret possible pingos in Utopia Planitia, Mars.',
+    why: 'Ice-cored mounds (pingos), often split by a crack across the summit; used to interpret possible pingos in Utopia Planitia, Mars.',
     sources: [
       {
         title: 'Possible pingos and a periglacial landscape in northwest Utopia Planitia (USGS)',
@@ -271,6 +271,10 @@ export const ANALOG_SITES: AnalogSite[] = [
       {
         title: 'Pingos on Earth and Mars',
         url: 'https://www.researchgate.net/publication/223774403_Pingos_on_Earth_and_Mars',
+      },
+      {
+        title: 'HiRISE observations of fractured mounds: possible Martian pingos (GRL, 2008)',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2007GL031798',
       },
     ],
   },
