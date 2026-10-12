@@ -3,7 +3,7 @@ import type { EarthSite, Target } from '../lib/similarity'
 
 const CREDITS = {
   Mars: 'Mars: Global CTX Mosaic, NASA/JPL/MSSS/The Murray Lab.',
-  Moon: 'Moon: LROC NAC south-pole mosaic (NASA/GSFC/Arizona State University; LMMP/USGS via NASA Moon Trek).',
+  Moon: 'Moon: LROC NAC south-pole mosaic and Artemis III site mosaics (NASA/GSFC/Arizona State University; LMMP/USGS via NASA Moon Trek).',
 }
 const EARTH_CREDIT =
   'Earth: Sentinel-2 cloudless 2024 by EOX IT Services GmbH (contains modified Copernicus Sentinel data 2024).'
@@ -27,7 +27,7 @@ export function TargetImages({
     return (
       <p className="rounded-xl border border-dashed border-border p-4 text-sm text-muted">
         {target.body === 'Moon' && target.lat > MOON_MOSAIC_LIMIT
-          ? `No close-up image of ${target.name} yet: the 1 m/pixel LROC south-pole mosaic covers 85.5°S to the pole, and this region is at ${Math.abs(target.lat).toFixed(1)}°S.`
+          ? `No close-up image of ${target.name} in this build: it lies outside the LROC south-pole mosaic (85.5°S to the pole), and its LROC site mosaic could not be loaded.`
           : 'Images for this comparison are not available in this build.'}
       </p>
     )

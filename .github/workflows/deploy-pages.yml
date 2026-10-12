@@ -38,7 +38,7 @@ jobs:
       - name: Download orbital images
         continue-on-error: true
         run: |
-          pip install --quiet pillow
+          pip install --quiet pillow numpy rasterio pyproj
           python scripts/fetch_earth_images.py
       # The download step may fail without stopping the deploy; make a missing set visible.
       - name: Check orbital images

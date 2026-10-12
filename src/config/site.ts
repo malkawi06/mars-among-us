@@ -163,6 +163,12 @@ export const site = {
         howWeUseIt: 'Orbital images of the Artemis III regions on the Compare page.',
       },
       {
+        name: 'LROC NAC controlled mosaics of the Artemis III candidate sites',
+        url: 'https://data.lroc.im-ldi.com/lroc/rdr_product_select',
+        howWeUseIt:
+          'Orbital images of the five Artemis III regions north of 85.5°S, where the south-pole mosaic ends.',
+      },
+      {
         name: 'Global CTX Mosaic of Mars (NASA/JPL/MSSS/The Murray Lab)',
         url: 'https://murray-lab.caltech.edu/CTX/',
         howWeUseIt: 'Orbital images of the Mars targets on the Compare page.',

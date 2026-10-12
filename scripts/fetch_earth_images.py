@@ -3,7 +3,8 @@
 - Earth analog sites (src/data/compare.ts EARTH_SITES): Sentinel-2 cloudless 2024 by EOX IT Services
   GmbH (contains modified Copernicus Sentinel data 2024), CC BY-NC-SA 4.0.
 - Mars targets: Global CTX Mosaic of Mars V01, NASA/JPL/MSSS/The Murray Lab (free use for all purposes).
-- Moon targets: LRO LROC NAC south-pole mosaic (LMMP/USGS, via NASA Moon Trek); covers 85.5°S–90°S only.
+- Moon targets: LRO LROC NAC south-pole mosaic (LMMP/USGS, via NASA Moon Trek), which covers 85.5°S–90°S;
+  north of that, the LROC NAC Artemis III site mosaics (scripts/lroc_roi.py, needs rasterio and pyproj).
 
 Each image is 768 x 768 px at roughly 8 m/px, so a Moon or Mars target and an Earth site can be shown
 side by side at the same scale on the Compare page. Serving them from the site avoids cross-origin
@@ -98,6 +99,22 @@ def moon_image(lat, lon):
     return resampled(NAC_URL, NAC_LEVEL, px, py, NAC_M_PER_PX)
 
 
+def moon_render(sid):
+    """South-pole mosaic where it reaches; the LROC Artemis III site mosaics further north."""
+
+    def render(lat, lon):
+        if lat <= NAC_NORTH_LIMIT:
+            return moon_image(lat, lon)
+        from lroc_roi import PRODUCTS, roi_image  # imported here: it imports this module
+
+        if sid not in PRODUCTS:
+            raise OutsideCoverage(f'outside the south-pole mosaic (north of {NAC_NORTH_LIMIT}°)')
+        image, m_per_px, _empty = roi_image(sid, lat, lon)
+        return image, m_per_px
+
+    return render
+
+
 def sites(array_name):
     """(id, body, lat, lon) of each entry of EARTH_SITES or TARGETS in src/data/compare.ts.
 
@@ -119,7 +136,7 @@ def save_all(entries, render_for, folder):
     index = {}
     for sid, body, lat, lon in entries:
         try:
-            image, m_per_px = render_for(body)(lat, lon)
+            image, m_per_px = render_for(sid, body)(lat, lon)
         except OutsideCoverage as reason:
             print(f'skip {sid}: {reason}')
             continue
@@ -134,8 +151,12 @@ def save_all(entries, render_for, folder):
 
 
 def main():
-    save_all(sites('EARTH_SITES'), lambda body: earth_image, 'earth')
-    save_all(sites('TARGETS'), lambda body: mars_image if body == 'Mars' else moon_image, 'targets')
+    save_all(sites('EARTH_SITES'), lambda sid, body: earth_image, 'earth')
+    save_all(
+        sites('TARGETS'),
+        lambda sid, body: mars_image if body == 'Mars' else moon_render(sid),
+        'targets',
+    )
 
 
 if __name__ == '__main__':
