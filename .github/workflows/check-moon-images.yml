@@ -21,6 +21,17 @@ jobs:
           python-version: '3.12'
       - run: pip install --quiet pillow numpy rasterio pyproj
       - run: python scripts/lroc_roi.py moon-check
+      # Small previews in the log, for reviewers who cannot download the artifact.
+      - name: Print previews
+        run: |
+          python - <<'EOF'
+          import base64, io, pathlib
+          from PIL import Image
+          for path in sorted(pathlib.Path('moon-check').glob('*.jpg')):
+              buffer = io.BytesIO()
+              Image.open(path).resize((256, 256)).save(buffer, 'JPEG', quality=70)
+              print(f'PREVIEW {path.stem} {base64.b64encode(buffer.getvalue()).decode()}')
+          EOF
       - uses: actions/upload-artifact@v5
         with:
           name: moon-check
