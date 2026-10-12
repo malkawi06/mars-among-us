@@ -1,0 +1,27 @@
+name: Check LROC Moon images
+
+# Manual check only: builds the close-up Moon images from the LROC Artemis III mosaics and uploads
+# them as an artifact. It does not deploy anything.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: pip install --quiet pillow numpy rasterio pyproj
+      - run: python scripts/lroc_roi.py moon-check
+      - uses: actions/upload-artifact@v5
+        with:
+          name: moon-check
+          path: moon-check
