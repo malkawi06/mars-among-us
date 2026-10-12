@@ -1,0 +1,52 @@
+name: Check orbital images
+
+# Manual check only: downloads the orbital images like the deploy does and uploads them as an
+# artifact. It does not deploy anything.
+on:
+  workflow_dispatch:
+    inputs:
+      preview_size:
+        description: Size in pixels of the previews printed in the log (0 = none)
+        default: '256'
+      only:
+        description: Space-separated image names to preview, e.g. "wadi-rum mars-gale" (empty = all)
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: pip install --quiet pillow numpy rasterio pyproj
+      - run: python scripts/fetch_earth_images.py
+      # Previews in the log, for reviewers who cannot download the artifact.
+      - name: Print previews
+        env:
+          SIZE: ${{ inputs.preview_size }}
+          ONLY: ${{ inputs.only }}
+        run: |
+          python - <<'EOF'
+          import base64, io, os, pathlib
+          from PIL import Image
+          size, only = int(os.environ['SIZE'] or 0), os.environ['ONLY'].split()
+          for path in sorted(pathlib.Path('public').glob('*/*.jpg')):
+              if size and (not only or path.stem in only):
+                  buffer = io.BytesIO()
+                  Image.open(path).resize((size, size)).save(buffer, 'JPEG', quality=80)
+                  print(f'PREVIEW {path.stem} {base64.b64encode(buffer.getvalue()).decode()}')
+          EOF
+      - uses: actions/upload-artifact@v5
+        with:
+          name: orbital-images
+          path: |
+            public/earth
+            public/targets
