@@ -4,7 +4,7 @@ Run from the repo root:  python3 analysis/build_compare_data.py
 Inputs (see analysis/README.md for how each was made):
   data/power.csv           NASA POWER climatology 2001-2020 per Earth site
   data/dem.csv             ASTER GDEM elevation, slope and relief per Earth site
-  data/moon_centroids.json Artemis III region centres (mean of published landing sites)
+  data/moon_centroids.json Artemis region centres (mean of published landing sites)
 """
 
 import csv
@@ -138,7 +138,7 @@ for i, (name, cold_trap) in enumerate(MOON, 1):
     targets.append({
         'id': f'moon-{i}', 'name': name, 'body': 'Moon', 'lat': lat, 'lon': lon,
         'materials': ['anorthosite'], 'landforms': ['impact'], 'slopeMaxDeg': 5, 'precipMmYr': 0, 'iceAccess': cold_trap,
-        'note': f'Artemis III candidate region. Centre = mean of {n} published landing sites; most landing sites have slopes under 5°.',
+        'note': f'Artemis candidate landing region. Centre = mean of {n} published landing sites; most landing sites have slopes under 5°.',
         'sources': [JGR, LPI_HIGHLANDS],
     })
 for sid, name, lat, lon, materials, landforms, ice, note, sources, measured in MARS:

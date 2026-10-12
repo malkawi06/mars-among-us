@@ -90,7 +90,7 @@ export default function Compare() {
               {(['Moon', 'Mars'] as const).map((body) => (
                 <optgroup
                   key={body}
-                  label={body === 'Moon' ? 'Moon: Artemis III landing regions' : 'Mars'}
+                  label={body === 'Moon' ? 'Moon: Artemis landing regions' : 'Mars'}
                 >
                   {TARGETS.filter((t) => t.body === body).map((t) => (
                     <option key={t.id} value={t.id}>

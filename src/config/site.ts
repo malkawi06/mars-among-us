@@ -91,7 +91,7 @@ export const site = {
     steps: [
       {
         title: 'Pick a place on the Moon or Mars',
-        body: 'One of the nine Artemis III landing regions near the lunar south pole, or a landing site on Mars.',
+        body: 'One of the nine Artemis landing regions near the lunar south pole, or a landing site on Mars.',
       },
       {
         title: 'Say what the analog is for',
@@ -145,7 +145,7 @@ export const site = {
     challenge:
       'Scientists test rovers, instruments and crews at places on Earth that resemble the Moon or Mars, called terrestrial analogs. Finding the right analog for a given landing site and purpose usually means searching scattered research papers by hand.',
     solution:
-      'Mars Among Us ranks places on Earth by how well they match a place on the Moon or Mars for a given purpose. Pick one of the nine Artemis III landing regions or a Mars landing site, and a purpose such as rover testing, a base or astronaut training. Every Earth analog site is scored factor by factor (slope, rock type, temperature, dryness, ice), following the NASA-led analog framework of Stern et al. (2025), with a source for every number; factors without sourced data are left out rather than guessed. Real orbital images of the target and the Earth site are shown side by side at the same scale, and the Earth Analogs map groups sourced analog sites by landform. Built with React, TypeScript, Tailwind CSS and Leaflet.',
+      'Mars Among Us ranks places on Earth by how well they match a place on the Moon or Mars for a given purpose. Pick one of the nine Artemis landing regions or a Mars landing site, and a purpose such as rover testing, a base or astronaut training. Every Earth analog site is scored factor by factor (slope, rock type, temperature, dryness, ice), following the NASA-led analog framework of Stern et al. (2025), with a source for every number; factors without sourced data are left out rather than guessed. Real orbital images of the target and the Earth site are shown side by side at the same scale, and the Earth Analogs map groups sourced analog sites by landform. Built with React, TypeScript, Tailwind CSS and Leaflet.',
     nasaData: [
       {
         name: 'NASA Earth Observatory',
@@ -153,20 +153,21 @@ export const site = {
         howWeUseIt: 'Images of Earth analog sites such as Meteor Crater, Haughton and Holuhraun.',
       },
       {
-        name: 'Artemis III candidate landing regions',
+        name: 'Artemis candidate landing regions',
         url: 'https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/',
-        howWeUseIt: 'The nine Moon south-pole regions on the Compare page.',
+        howWeUseIt:
+          'The nine Moon south-pole regions on the Compare page: NASA’s candidate regions for the first crewed Artemis landing.',
       },
       {
         name: 'LRO LROC NAC south-pole mosaic (via NASA Moon Trek)',
         url: 'https://trek.nasa.gov/moon/',
-        howWeUseIt: 'Orbital images of the Artemis III regions on the Compare page.',
+        howWeUseIt: 'Orbital images of the Artemis regions on the Compare page.',
       },
       {
-        name: 'LROC NAC controlled mosaics of the Artemis III candidate sites',
+        name: 'LROC NAC controlled mosaics of the Artemis candidate sites',
         url: 'https://data.lroc.im-ldi.com/lroc/rdr_product_select',
         howWeUseIt:
-          'Orbital images of the five Artemis III regions north of 85.5°S, where the south-pole mosaic ends.',
+          'Orbital images of the five Artemis regions north of 85.5°S, where the south-pole mosaic ends.',
       },
       {
         name: 'Global CTX Mosaic of Mars (NASA/JPL/MSSS/The Murray Lab)',

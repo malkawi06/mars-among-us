@@ -4,7 +4,7 @@
   GmbH (contains modified Copernicus Sentinel data 2024), CC BY-NC-SA 4.0.
 - Mars targets: Global CTX Mosaic of Mars V01, NASA/JPL/MSSS/The Murray Lab (free use for all purposes).
 - Moon targets: LRO LROC NAC south-pole mosaic (LMMP/USGS, via NASA Moon Trek), which covers 85.5°S–90°S;
-  north of that, the LROC NAC Artemis III site mosaics (scripts/lroc_roi.py, needs rasterio and pyproj).
+  north of that, the LROC NAC Artemis site mosaics (scripts/lroc_roi.py, needs rasterio and pyproj).
 
 Each image is 768 x 768 px at roughly 8 m/px, so a Moon or Mars target and an Earth site can be shown
 side by side at the same scale on the Compare page. Serving them from the site avoids cross-origin
@@ -100,7 +100,7 @@ def moon_image(lat, lon):
 
 
 def moon_render(sid):
-    """South-pole mosaic where it reaches; the LROC Artemis III site mosaics further north."""
+    """South-pole mosaic where it reaches; the LROC Artemis site mosaics further north."""
 
     def render(lat, lon):
         if lat <= NAC_NORTH_LIMIT:

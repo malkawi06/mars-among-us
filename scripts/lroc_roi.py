@@ -1,4 +1,4 @@
-"""Close-up images of the Artemis III regions outside the LROC south-pole mosaic (north of 85.5°S).
+"""Close-up images of the Artemis regions outside the LROC south-pole mosaic (north of 85.5°S).
 
 Source: LROC NAC controlled mosaics of the candidate Artemis III landing sites, 5 m/px browse
 GeoTIFFs (NASA/GSFC/Arizona State University; Henriksen et al. 2023, European Lunar Symposium).

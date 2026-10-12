@@ -5,12 +5,12 @@
 
 Live: **https://malkawi06.github.io/mars-among-us/**
 
-| Page                           | What it does                                                                                                                                                                                                                                    |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Compare** (`/compare`)       | Pick a place on the Moon (the nine Artemis III regions) or Mars and a purpose (rover testing, base, local resources, search for life, training). Every Earth site is scored factor by factor, with the target's orbital image next to the site. |
-| **Earth Analogs** (`/analogs`) | The analog sites on a satellite map, filtered by landform, each with the published research behind it.                                                                                                                                          |
-| **Analyze** (`/analyze`)       | Upload a Moon or Mars orbital image. The landform model is being retrained on the challenge data, so for now the page only shows the image.                                                                                                     |
-| **About** (`/about`)           | The challenge, the solution, the data used and the team: the sections of the Space Apps submission form.                                                                                                                                        |
+| Page                           | What it does                                                                                                                                                                                                                                        |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Compare** (`/compare`)       | Pick a place on the Moon (the nine Artemis landing regions) or Mars and a purpose (rover testing, base, local resources, search for life, training). Every Earth site is scored factor by factor, with the target's orbital image next to the site. |
+| **Earth Analogs** (`/analogs`) | The analog sites on a satellite map, filtered by landform, each with the published research behind it.                                                                                                                                              |
+| **Analyze** (`/analyze`)       | Upload a Moon or Mars orbital image. The landform model is being retrained on the challenge data, so for now the page only shows the image.                                                                                                         |
+| **About** (`/about`)           | The challenge, the solution, the data used and the team: the sections of the Space Apps submission form.                                                                                                                                            |
 
 **Stack:** Vite · React 19 · TypeScript · Tailwind CSS v4 · React Router · Leaflet · Python (data scripts).
 
@@ -26,7 +26,7 @@ the same scale, so the Compare page can show a target and an Earth site side by 
 - Earth: Sentinel-2 cloudless 2024 (EOX).
 - Mars: Global CTX Mosaic (Murray Lab).
 - Moon: LROC NAC south-pole mosaic (Moon Trek), which covers 85.5°S to the pole (4 of the 9 Artemis regions), and the
-  LROC NAC Artemis III site mosaics for the other 5 (`scripts/lroc_roi.py`, needs rasterio and pyproj).
+  LROC NAC Artemis site mosaics for the other 5 (`scripts/lroc_roi.py`, needs rasterio and pyproj).
 
 These files are built on every deploy and are not committed.
 
@@ -97,8 +97,8 @@ scripts/                 ← deploy-time image download
 - **Mars landform classes (Earth Analogs filter):** DoMars16k, Wilhelm et al. 2020, doi 10.5281/zenodo.4291940.
 - **Global CTX Mosaic of Mars:** NASA/JPL/MSSS/The Murray Lab.
 - **LROC NAC south-pole mosaic:** NASA/GSFC/Arizona State University, via NASA Moon Trek.
-- **LROC NAC Artemis III site mosaics:** NASA/GSFC/Arizona State University; Henriksen et al. 2023, European Lunar Symposium.
-- **Artemis III candidate regions:** NASA, October 28, 2024. Region centres from JGR Planets 2025, doi 10.1029/2025JE009434.
+- **LROC NAC Artemis site mosaics:** NASA/GSFC/Arizona State University; Henriksen et al. 2023, European Lunar Symposium.
+- **Artemis candidate landing regions:** NASA, October 28, 2024 (announced for Artemis III; since February 2026 NASA plans the first crewed landing for Artemis IV). Region centres from JGR Planets 2025, doi 10.1029/2025JE009434.
 - **Climate:** NASA POWER, 2001–2020.
 - **Elevation and slope:** ASTER GDEM (NASA/METI).
 - **Earth satellite images:** Sentinel-2 cloudless 2024 by EOX IT Services GmbH (contains modified Copernicus Sentinel data 2024).

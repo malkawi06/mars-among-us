@@ -450,7 +450,7 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: false,
-    note: 'Artemis III candidate region. Centre = mean of 5 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of 5 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
       'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
@@ -467,7 +467,7 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: true,
-    note: 'Artemis III candidate region. Centre = mean of 10 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of 10 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
       'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
@@ -484,7 +484,7 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: false,
-    note: 'Artemis III candidate region. Centre = mean of 4 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of 4 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
       'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
@@ -501,7 +501,7 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: true,
-    note: 'Artemis III candidate region. Centre = mean of 11 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of 11 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
       'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
@@ -518,7 +518,7 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: true,
-    note: 'Artemis III candidate region. Centre = mean of 10 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of 10 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
       'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
@@ -535,7 +535,7 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: false,
-    note: 'Artemis III candidate region. Centre = mean of 9 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of 9 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
       'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
@@ -552,7 +552,7 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: false,
-    note: 'Artemis III candidate region. Centre = mean of 8 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of 8 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
       'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
@@ -569,7 +569,7 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: false,
-    note: 'Artemis III candidate region. Centre = mean of 6 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of 6 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
       'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
@@ -586,7 +586,7 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: true,
-    note: 'Artemis III candidate region. Centre = mean of 11 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of 11 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
       'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
