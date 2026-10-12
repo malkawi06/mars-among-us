@@ -6,13 +6,17 @@ import { ANALOG_SITES, LANDFORM_NAMES } from './src/data/analogs.ts'
 import { EARTH_SITES, TARGETS } from './src/data/compare.ts'
 import { PURPOSES } from './src/lib/similarity.ts'
 
-// Fills %SITE_NAME% and %SITE_DESCRIPTION% in index.html from src/config/site.ts,
+// Fills %SITE_NAME%, %SITE_DESCRIPTION% and %SITE_URL% in index.html from src/config/site.ts,
 // so the browser tab and link previews stay in sync with the rest of the app.
 function siteMeta(): Plugin {
   return {
     name: 'site-meta',
     transformIndexHtml: (html) =>
-      html.replaceAll('%SITE_NAME%', site.name).replaceAll('%SITE_DESCRIPTION%', site.pitch),
+      html
+        .replaceAll('%SITE_NAME%', site.name)
+        .replaceAll('%SITE_DESCRIPTION%', site.pitch)
+        // Link previews need an absolute URL for the image.
+        .replaceAll('%SITE_URL%', site.links.demo),
   }
 }
 

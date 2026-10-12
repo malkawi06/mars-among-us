@@ -136,7 +136,7 @@ export default function Compare() {
         </p>
       )}
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-5">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-5">
         <div className="lg:col-span-2">
           <h2 className="mb-3 text-sm font-medium text-muted">Earth sites, best match first</h2>
           <ol className="space-y-2">
@@ -159,7 +159,7 @@ export default function Compare() {
             <button
               type="button"
               onClick={() => setShowAll((value) => !value)}
-              className="mt-3 text-sm font-medium text-accent hover:underline"
+              className="mt-1 py-2 text-sm font-medium text-accent hover:underline"
             >
               {showAll ? `Show top ${TOP} only` : `Show all ${matches.length} Earth sites`}
             </button>

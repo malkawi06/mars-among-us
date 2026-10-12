@@ -16,7 +16,7 @@ export function AnalogSiteDetails({ site, onBack }: { site: AnalogSite; onBack: 
         site.precision === 'site' ? 'exact site' : 'approximate area centre'
       })`}
       actions={
-        <button type="button" onClick={onBack} className="text-sm text-accent hover:underline">
+        <button type="button" onClick={onBack} className="py-2 text-sm text-accent hover:underline">
           ← All sites
         </button>
       }
