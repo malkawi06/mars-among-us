@@ -88,6 +88,16 @@ export const site = {
   home: {
     primaryCta: { label: 'Compare with the Moon and Mars', to: '/compare' },
     secondaryCta: { label: 'Browse Earth analogs', to: '/analogs' },
+    /** Short promises under the buttons. */
+    promises: [
+      'A source for every number',
+      'Orbital images at the same scale',
+      'Scoring after a NASA-led method',
+    ],
+    scoring:
+      'Each factor scores 3 (strong), 2 (partial) or 1 (weak), and all factors count the same. The match is the average turned into a percentage: all 3s give 100%, all 1s give 0%. The method follows the NASA-led analog framework of Stern et al. (2025).',
+    noData:
+      'Some values are not published yet, such as the mean temperature at most Mars sites. Those factors are left out of the score instead of guessed, and the page says so. When fewer than two factors can be scored, the page warns that the result is rough.',
     steps: [
       {
         title: 'Pick a place on the Moon or Mars',

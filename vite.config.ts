@@ -4,7 +4,12 @@ import { defineConfig, type Plugin } from 'vite'
 import { site } from './src/config/site.ts'
 import { ANALOG_SITES, LANDFORM_NAMES } from './src/data/analogs.ts'
 import { EARTH_SITES, TARGETS } from './src/data/compare.ts'
-import { PURPOSES } from './src/lib/similarity.ts'
+import { PURPOSES, rank } from './src/lib/similarity.ts'
+
+// The home page's worked example: the best Earth match for a Moon region, computed from the real data.
+const exampleTarget = TARGETS.find((t) => t.id === 'moon-2')!
+const examplePurpose = PURPOSES.find((p) => p.id === 'training')!
+const exampleMatch = rank(exampleTarget, examplePurpose, EARTH_SITES)[0]
 
 // Fills %SITE_NAME%, %SITE_DESCRIPTION% and %SITE_URL% in index.html from src/config/site.ts,
 // so the browser tab and link previews stay in sync with the rest of the app.
@@ -34,6 +39,20 @@ export default defineConfig({
       purposes: PURPOSES.length,
       analogSites: ANALOG_SITES.length,
       landforms: Object.entries(LANDFORM_NAMES),
+      example: {
+        targetId: exampleTarget.id,
+        targetName: exampleTarget.name,
+        purposeId: examplePurpose.id,
+        purposeLabel: examplePurpose.label,
+        siteId: exampleMatch.site.id,
+        siteName: exampleMatch.site.name,
+        siteCountry: exampleMatch.site.country,
+        percent: exampleMatch.percent,
+        factors: exampleMatch.factors
+          .filter((f) => f.score !== null)
+          .map((f) => ({ label: f.label, score: f.score, reason: f.reason })),
+        notScored: exampleMatch.factors.filter((f) => f.score === null).map((f) => f.label),
+      },
     }),
   },
 })
