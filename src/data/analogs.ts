@@ -31,6 +31,13 @@ export type LandformCode =
 
 export type Confidence = 'strong' | 'moderate' | 'weak'
 
+/** What each confidence level means, strongest first. */
+export const CONFIDENCE_MEANING: [Confidence, string][] = [
+  ['strong', 'A published study compares this site with the landform.'],
+  ['moderate', 'A known Mars or Moon analog site; the landform match is general.'],
+  ['weak', 'No close analog exists on Earth; this is the nearest candidate.'],
+]
+
 /** Display names. */
 export const LANDFORM_NAMES: Record<LandformCode, string> = {
   aec: 'Aeolian Curved',
