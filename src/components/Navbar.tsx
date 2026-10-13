@@ -27,7 +27,7 @@ export function Navbar() {
                     end={item.to === '/'}
                     title={item.description}
                     className={({ isActive }) =>
-                      `flex w-24 flex-col items-center gap-1 rounded-lg px-2 py-1.5 text-xs font-medium transition-colors ${
+                      `flex min-w-24 flex-col items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-colors ${
                         isActive
                           ? 'bg-surface-2 text-accent'
                           : 'text-fg-2 hover:bg-surface-2 hover:text-fg'

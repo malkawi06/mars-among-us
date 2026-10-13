@@ -1,6 +1,7 @@
-import { Upload } from 'lucide-react'
+import { GitCompareArrows, Upload } from 'lucide-react'
+import { useEffect, useRef, useState, type DragEvent } from 'react'
+import { Link } from 'react-router'
 import { ANALYZE_STEP_ICONS } from '../lib/icons'
-import { useEffect, useState, type DragEvent } from 'react'
 import { Card } from '../components/Card'
 import { PageHeader } from '../components/PageHeader'
 import { site as siteConfig } from '../config/site'
@@ -19,6 +20,12 @@ export default function Analyze() {
   const [imageUrl, setImageUrl] = useState<string>()
   const [dragging, setDragging] = useState(false)
   const [fileError, setFileError] = useState<string>()
+  // Until the landform model is ready, the page opens with a short note saying so.
+  const comingSoon = useRef<HTMLDialogElement>(null)
+  useEffect(() => {
+    comingSoon.current?.showModal()
+  }, [])
+
   // Which world the image shows, as decided by the landform model. Stays undefined ("Auto") until
   // the model is added and has analyzed an image.
   const [detected] = useState<Body>()
@@ -59,6 +66,32 @@ export default function Analyze() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
+      <dialog
+        ref={comingSoon}
+        aria-labelledby="coming-soon-title"
+        className="m-auto w-[min(26rem,calc(100%-2rem))] rounded-2xl border border-border bg-surface p-6 text-fg shadow-2xl backdrop:bg-black/60 backdrop:backdrop-blur-sm"
+      >
+        <h2 id="coming-soon-title" className="text-xl font-semibold">
+          {page.comingSoon.title}
+        </h2>
+        <p className="mt-2 text-fg-2">{page.comingSoon.body}</p>
+        <form method="dialog" className="mt-5 flex flex-wrap justify-end gap-2">
+          <Link
+            to="/compare"
+            className="inline-flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium hover:border-accent hover:text-accent"
+          >
+            <GitCompareArrows className="size-4" aria-hidden />
+            Try Compare
+          </Link>
+          <button
+            autoFocus
+            className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-accent-fg hover:opacity-90"
+          >
+            Got it
+          </button>
+        </form>
+      </dialog>
+
       <PageHeader title={page.title} intro={page.intro} />
 
       <div className="grid gap-6 lg:grid-cols-5">

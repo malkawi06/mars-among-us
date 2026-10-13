@@ -100,6 +100,12 @@ export const site = {
   nav: [
     { to: '/', label: 'Home', description: 'What the site does and how.' },
     {
+      to: '/analyze',
+      label: 'Analyze',
+      description:
+        'Upload a Moon or Mars image. The landform model is being retrained, so this page does not analyze images yet.',
+    },
+    {
       to: '/compare',
       label: 'Compare',
       description:
@@ -113,12 +119,6 @@ export const site = {
         'A map of places on Earth that look like Moon and Mars landforms, each with its published source.',
     },
     {
-      to: '/analyze',
-      label: 'Analyze',
-      description:
-        'Upload a Moon or Mars image. The landform model is being retrained, so this page does not analyze images yet.',
-    },
-    {
       to: '/about',
       label: 'About',
       description: 'The challenge, the team and every NASA data source used.',
@@ -126,8 +126,8 @@ export const site = {
   ] satisfies NavItem[],
 
   home: {
-    primaryCta: { label: 'Compare with the Moon and Mars', to: '/compare' },
-    secondaryCta: { label: 'Browse Earth analogs', to: '/analogs' },
+    primaryCta: { label: 'Analyze a Moon or Mars image', to: '/analyze' },
+    secondaryCta: { label: 'Compare with the Moon and Mars', to: '/compare' },
     /** Short promises under the buttons. */
     promises: [
       'A source for every number',
@@ -158,6 +158,11 @@ export const site = {
     title: 'Analyze a Moon or Mars image',
     intro:
       'Upload an orbital image of the Moon or Mars. A landform model will name what it shows and find the places on Earth that look like it, with sources.',
+    /** Shown in a pop-up when the page opens, until the landform model is ready. */
+    comingSoon: {
+      title: 'Hold on! 🛠️',
+      body: "Malkawi isn't a robot. He's still working on this page, so check back soon. Meanwhile, Compare already works.",
+    },
     notReady:
       'The landform model is being retrained on the Space Apps challenge data, so this page does not analyze images yet. Your image stays in your browser.',
     steps: [
