@@ -54,15 +54,15 @@ export const site = {
     members: [
       {
         name: 'Mohammad Huseen Malkawi',
-        role: 'Creator · Data and web',
+        role: 'Creator · Data, web, presentation and submission',
         github: 'https://github.com/malkawi06',
         linkedin: '',
       },
-      { name: 'Nour Oqaily', role: '' },
+      { name: 'Nour Oqaily', role: 'Website testing' },
       { name: 'Mohammad Kilany', role: '' },
-      { name: 'Aisha', role: '' },
-      { name: 'Hadeel Abuqhazleh', role: '' },
-      { name: 'Hadeel Qamar', role: '' },
+      { name: 'Aisha', role: 'Source review' },
+      { name: 'Hadeel Abuqhazleh', role: 'Research and ideas' },
+      { name: 'Hadeel Qamar', role: 'Research and ideas' },
     ] satisfies TeamMember[],
   },
 
