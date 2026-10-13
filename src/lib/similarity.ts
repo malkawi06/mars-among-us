@@ -119,7 +119,7 @@ export const PURPOSES: Purpose[] = [
   },
 ]
 
-const LABELS: Record<FactorId, string> = {
+export const FACTOR_LABELS: Record<FactorId, string> = {
   slope: 'Slope',
   rock: 'Rock / surface type',
   landform: 'Landform',
@@ -154,7 +154,7 @@ const result = (
   reason: string,
 ) => ({
   factor,
-  label: LABELS[factor],
+  label: FACTOR_LABELS[factor],
   score,
   target,
   earth,

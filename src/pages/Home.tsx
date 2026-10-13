@@ -1,5 +1,4 @@
 import { Link } from 'react-router'
-import { StatTile } from '../components/StatTile'
 import { site } from '../config/site'
 import { useAsync } from '../hooks/useAsync'
 import { usePageTitle } from '../hooks/usePageTitle'
@@ -12,7 +11,7 @@ const SCORE_LABEL = { 3: 'strong', 2: 'partial', 1: 'weak' } as const
 export default function Home() {
   usePageTitle()
   const { home, about } = site
-  const exampleLink = `/compare?target=${example.targetId}&purpose=${example.purposeId}&site=${example.siteId}&view=images`
+  const exampleLink = `/compare?target=${example.targetId}&purpose=${example.purposeId}&site=${example.siteId}`
 
   return (
     <>
@@ -26,6 +25,10 @@ export default function Home() {
               {site.name}
             </h1>
             <p className="mt-4 max-w-xl text-lg text-pretty text-fg-2 sm:text-xl">{site.pitch}</p>
+            <p className="mt-3 text-sm text-muted">
+              {stats.targets} places on the Moon and Mars · {stats.earthSites} Earth sites ·{' '}
+              {stats.purposes} purposes
+            </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -79,13 +82,6 @@ export default function Home() {
             <h3 className="font-semibold">What “no data” means</h3>
             <p className="mt-1 text-sm text-fg-2">{home.noData}</p>
           </div>
-        </div>
-
-        <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <StatTile label="Places on the Moon and Mars to compare" value={stats.targets} />
-          <StatTile label="Earth sites scored factor by factor" value={stats.earthSites} />
-          <StatTile label="Analog purposes" value={stats.purposes} />
-          <StatTile label="Earth analog sites on the map, all sourced" value={stats.analogSites} />
         </div>
       </section>
 
@@ -154,17 +150,25 @@ function ExampleCard({ link }: { link: string }) {
 
       {targetImage && siteImage && (
         <div className="mt-3 grid grid-cols-2 gap-2">
-          <img
-            src={TARGETS_URL + targetImage.file}
-            alt={`${example.targetName} on the Moon, from orbit`}
-            className="aspect-square w-full rounded-lg object-cover"
-          />
-          <img
-            src={EARTH_URL + siteImage.file}
-            alt={`${example.siteName} on Earth, from orbit`}
-            className="aspect-square w-full rounded-lg object-cover"
-          />
+          {[
+            { src: TARGETS_URL + targetImage.file, label: 'Moon', name: example.targetName },
+            { src: EARTH_URL + siteImage.file, label: 'Earth', name: example.siteName },
+          ].map((image) => (
+            <div key={image.label} className="relative">
+              <img
+                src={image.src}
+                alt={`${image.name} from orbit`}
+                className="aspect-square w-full rounded-lg object-cover"
+              />
+              <span className="absolute bottom-1.5 left-1.5 rounded bg-black/65 px-1.5 py-0.5 text-xs font-medium text-white">
+                {image.label}
+              </span>
+            </div>
+          ))}
         </div>
+      )}
+      {targetImage && siteImage && (
+        <p className="mt-1 text-xs text-muted">Both images about 6 km across.</p>
       )}
 
       <div className="mt-3 flex items-end justify-between gap-4">

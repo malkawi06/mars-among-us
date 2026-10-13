@@ -79,9 +79,9 @@ export const site = {
 
   nav: [
     { to: '/', label: 'Home' },
-    { to: '/analyze', label: 'Analyze' },
-    { to: '/analogs', label: 'Earth Analogs' },
     { to: '/compare', label: 'Compare' },
+    { to: '/analogs', label: 'Earth Analogs' },
+    { to: '/analyze', label: 'Analyze' },
     { to: '/about', label: 'About' },
   ] satisfies NavItem[],
 
@@ -139,7 +139,7 @@ export const site = {
   analogs: {
     title: 'Earth Analogs',
     intro:
-      'Places on Earth that look like landforms on Mars or the Moon, each backed by published sources. Pick a landform to filter, then select a site to fly to it.',
+      'Places on Earth that look like landforms on Mars or the Moon, each backed by published sources. Pick a landform, then select a site on the list or the map to see why it counts and where that comes from.',
   },
 
   compare: {

@@ -60,6 +60,13 @@ export default function Analogs() {
               ))}
             </select>
           </label>
+          <p className="text-xs text-muted">
+            <span className="font-medium text-fg-2">strong</span>: a published study compares this
+            site with the landform · <span className="font-medium text-fg-2">moderate</span>: a
+            known Mars or Moon analog site, general match ·{' '}
+            <span className="font-medium text-fg-2">weak</span>: no close analog on Earth, nearest
+            candidate
+          </p>
 
           {selected ? (
             <AnalogSiteDetails site={selected} onBack={() => setSelectedId(undefined)} />

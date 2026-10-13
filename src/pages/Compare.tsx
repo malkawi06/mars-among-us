@@ -8,6 +8,7 @@ import { useAsync } from '../hooks/useAsync'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { loadOrbitalImages } from '../lib/orbitalImages'
 import {
+  FACTOR_LABELS,
   NO_DATA,
   PURPOSES,
   rank,
@@ -43,14 +44,13 @@ export default function Compare() {
   const { compare: page } = siteConfig
   usePageTitle(page.title)
 
-  // ?target=moon-2&purpose=training&site=mistastin&view=images makes every comparison shareable.
+  // ?target=moon-2&purpose=training&site=mistastin makes every comparison shareable.
   const [params, setParams] = useSearchParams()
   const target = TARGETS.find((t) => t.id === params.get('target')) ?? TARGETS[0]
   const purposes = PURPOSES.filter((p) => p.bodies.includes(target.body))
   const purpose = purposes.find((p) => p.id === params.get('purpose')) ?? purposes[0]
   const matches = rank(target, purpose, EARTH_SITES)
   const selected = matches.find((m) => m.site.id === params.get('site')) ?? matches[0]
-  const view = params.get('view') === 'images' ? 'images' : 'scores'
   const { data: images, error: imagesError } = useAsync('orbital-images', loadOrbitalImages)
   const [showAll, setShowAll] = useState(false)
   const details = useRef<HTMLDivElement>(null)
@@ -78,7 +78,7 @@ export default function Compare() {
       <section className="rounded-2xl border border-border bg-surface p-4 sm:p-5">
         <div className="grid gap-5 lg:grid-cols-[minmax(0,20rem)_1fr]">
           <label className="block">
-            <StepLabel number={1}>Place on the Moon or Mars</StepLabel>
+            <StepLabel number={1}>Choose a place on the Moon or Mars</StepLabel>
             <select
               value={target.id}
               onChange={(event) => {
@@ -102,8 +102,12 @@ export default function Compare() {
             </select>
           </label>
           <div>
-            <StepLabel number={2}>Analog needed for</StepLabel>
-            <div role="group" aria-label="Analog needed for" className="mt-2 flex flex-wrap gap-2">
+            <StepLabel number={2}>What will the Earth site be used for?</StepLabel>
+            <div
+              role="group"
+              aria-label="What will the Earth site be used for?"
+              className="mt-2 flex flex-wrap gap-2"
+            >
               {purposes.map((p) => (
                 <button
                   key={p.id}
@@ -123,6 +127,14 @@ export default function Compare() {
                 </button>
               ))}
             </div>
+            <p className="mt-2 text-xs text-muted">
+              {purpose.label} compares:{' '}
+              {purpose.factors
+                .filter((f) => f !== 'sunlight' || target.body === 'Moon')
+                .map((f) => FACTOR_LABELS[f].toLowerCase())
+                .join(', ')}
+              .
+            </p>
           </div>
         </div>
         <TargetSummary target={target} />
@@ -187,6 +199,9 @@ export default function Compare() {
                   {selected.percent === null ? '—' : `${selected.percent}%`}
                 </p>
                 <p className="text-sm text-muted">{verdict(selected)}</p>
+                <p className="text-xs text-muted">
+                  based on {selected.scored} of {selected.factors.length} factors
+                </p>
               </div>
             </header>
 
@@ -198,39 +213,18 @@ export default function Compare() {
               </p>
             )}
 
-            <div
-              role="tablist"
-              aria-label="Comparison view"
-              className="flex border-b border-border px-5"
-            >
-              {(['scores', 'images'] as const).map((id) => (
-                <button
-                  key={id}
-                  type="button"
-                  role="tab"
-                  aria-selected={view === id}
-                  onClick={() => update({ view: id === 'images' ? id : undefined })}
-                  className={`-mb-px border-b-2 px-3 py-2 text-sm font-medium transition-colors ${
-                    view === id
-                      ? 'border-accent text-fg'
-                      : 'border-transparent text-muted hover:text-fg'
-                  }`}
-                >
-                  {id === 'scores' ? 'Why it matches' : 'Seen from orbit'}
-                </button>
-              ))}
+            <div className="border-t border-border p-5">
+              <h3 className="mb-3 text-sm font-semibold">Why it matches</h3>
+              <Factors match={selected} targetName={target.name} />
             </div>
 
-            <div role="tabpanel" className="p-5">
-              {view === 'images' ? (
-                <TargetImages
-                  target={target}
-                  site={selected.site}
-                  images={imagesError ? null : images}
-                />
-              ) : (
-                <Factors match={selected} targetName={target.name} />
-              )}
+            <div className="border-t border-border p-5">
+              <h3 className="mb-3 text-sm font-semibold">Seen from orbit, at the same scale</h3>
+              <TargetImages
+                target={target}
+                site={selected.site}
+                images={imagesError ? null : images}
+              />
             </div>
 
             <footer className="space-y-2 border-t border-border p-5 text-xs text-muted">
@@ -362,7 +356,7 @@ function Factors({ match, targetName }: { match: Match; targetName: string }) {
       </ul>
       {noData.length > 0 && (
         <p className="mt-3 text-xs text-muted">
-          Not scored (no sourced value for {targetName} yet):{' '}
+          Not scored, because no published value exists for {targetName} yet:{' '}
           {noData.map((f) => f.label.toLowerCase()).join(', ')}.
         </p>
       )}
@@ -382,7 +376,7 @@ function FactorRow({ factor, targetName }: { factor: FactorResult; targetName: s
       <div className="min-w-0">
         <p className="font-medium">{factor.label}</p>
         <p className="mt-0.5 text-sm text-fg-2">
-          {targetName}: {factor.target} · This site: {factor.earth}
+          {targetName}: {factor.target} · Earth site: {factor.earth}
         </p>
         <p className="mt-0.5 text-xs text-muted">{factor.reason}</p>
       </div>
