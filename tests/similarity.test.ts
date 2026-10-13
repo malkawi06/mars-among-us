@@ -7,6 +7,7 @@ import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { ANALOG_SITES, LANDFORM_NAMES, analogsFor } from '../src/data/analogs.ts'
 import { EARTH_SITES, TARGETS } from '../src/data/compare.ts'
+import { GLOSSARY } from '../src/data/glossary.ts'
 import {
   FACTOR_LABELS,
   NO_DATA,
@@ -200,6 +201,14 @@ describe('data files', () => {
       assert.ok(validLatLon(t.lat, t.lon), t.id)
       assert.ok(t.sources.length > 0 && t.sources.every((src) => isUrl(src.url) && src.title), t.id)
     }
+  })
+
+  it('Compare: every rock and landform word has a sourced meaning', () => {
+    for (const item of [...EARTH_SITES, ...TARGETS])
+      for (const term of [...item.materials, ...item.landforms]) {
+        assert.ok(GLOSSARY[term], `${item.id}: ${term}`)
+        assert.ok(isUrl(GLOSSARY[term].source.url), term)
+      }
   })
 
   it('Compare: every purpose has a target body that offers it', () => {

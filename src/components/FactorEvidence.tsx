@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { ExternalLink } from 'lucide-react'
 import type { AnalogSite } from '../data/analogs'
+import { GLOSSARY } from '../data/glossary'
 import {
   MATERIAL_GROUP,
   scoreLevels,
@@ -83,6 +84,48 @@ export function FactorEvidence({ factor, target, site, analog }: Props) {
           {factor.factor === 'rock' && <RockKinds factor={factor} target={target} site={site} />}
         </div>
       )}
+
+      {(factor.factor === 'rock' || factor.factor === 'landform' || factor.factor === 'ice') && (
+        <Glossary
+          terms={
+            factor.factor === 'landform'
+              ? [...target.landforms, ...site.landforms]
+              : factor.factor === 'ice'
+                ? ['ice']
+                : [...target.materials, ...site.materials]
+          }
+        />
+      )}
+    </div>
+  )
+}
+
+/** What each rock or landform word means, with the source of the meaning. */
+function Glossary({ terms }: { terms: string[] }) {
+  const entries = [...new Set(terms)].flatMap((term) => GLOSSARY[term] ?? [])
+  if (!entries.length) return null
+  return (
+    <div>
+      <p className="text-xs font-medium tracking-wide text-muted uppercase">What the words mean</p>
+      <dl className="mt-2 space-y-3">
+        {entries.map((entry) => (
+          <div key={entry.name}>
+            <dt className="font-medium text-fg">{entry.name}</dt>
+            <dd className="text-fg-2">
+              {entry.meaning} <SourceLink title={entry.source.title} url={entry.source.url} />
+              {entry.onMarsOrMoon && (
+                <span className="mt-1 block">
+                  {entry.onMarsOrMoon.text}{' '}
+                  <SourceLink
+                    title={entry.onMarsOrMoon.source.title}
+                    url={entry.onMarsOrMoon.source.url}
+                  />
+                </span>
+              )}
+            </dd>
+          </div>
+        ))}
+      </dl>
     </div>
   )
 }
