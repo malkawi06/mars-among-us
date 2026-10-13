@@ -8,12 +8,15 @@ import { describe, it } from 'node:test'
 import { ANALOG_SITES, LANDFORM_NAMES, analogsFor } from '../src/data/analogs.ts'
 import { EARTH_SITES, TARGETS } from '../src/data/compare.ts'
 import {
+  FACTOR_LABELS,
   NO_DATA,
   PURPOSES,
   compare,
   rank,
   scoreFactor,
+  scoreLevels,
   type EarthSite,
+  type FactorId,
   type Purpose,
   type Target,
 } from '../src/lib/similarity.ts'
@@ -47,7 +50,7 @@ const target = (overrides: Partial<Target> = {}): Target => ({
   landforms: ['impact'],
   iceAccess: false,
   note: '',
-  sources: ['https://example.org'],
+  sources: [{ title: 'Example', url: 'https://example.org' }],
   ...overrides,
 })
 
@@ -121,6 +124,19 @@ describe('scoreFactor', () => {
   })
 })
 
+describe('scoreLevels', () => {
+  it('describes every score that scoreFactor gives, for all real data', () => {
+    for (const target of TARGETS)
+      for (const site of EARTH_SITES)
+        for (const factor of Object.keys(FACTOR_LABELS) as FactorId[]) {
+          const { score } = scoreFactor(factor, target, site)
+          const levels = scoreLevels(factor, target).map((level) => level.score)
+          if (score !== null && levels.length)
+            assert.ok(levels.includes(score), `${factor} ${target.id} ${site.id}`)
+        }
+  })
+})
+
 describe('compare', () => {
   it('maps the mean score to 0–100% and ignores factors without data', () => {
     const t = target({ slopeMaxDeg: 5 })
@@ -182,7 +198,7 @@ describe('data files', () => {
     }
     for (const t of TARGETS) {
       assert.ok(validLatLon(t.lat, t.lon), t.id)
-      assert.ok(t.sources.length > 0 && t.sources.every(isUrl), t.id)
+      assert.ok(t.sources.length > 0 && t.sources.every((src) => isUrl(src.url) && src.title), t.id)
     }
   })
 

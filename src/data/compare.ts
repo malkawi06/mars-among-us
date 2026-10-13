@@ -452,8 +452,20 @@ export const TARGETS: Target[] = [
     iceAccess: false,
     note: 'Artemis candidate landing region. Centre = mean of 5 published landing sites; most landing sites have slopes under 5°.',
     sources: [
-      'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
-      'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+      {
+        title:
+          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
+        says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
+        supports: ['slope', 'ice'],
+      },
+      {
+        title:
+          'Gruener et al. (2020), LPSC: Greenland "White Mountain" anorthosite, a new lunar polar regolith simulant',
+        url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+        says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
+        supports: ['rock'],
+      },
     ],
   },
   {
@@ -469,8 +481,20 @@ export const TARGETS: Target[] = [
     iceAccess: true,
     note: 'Artemis candidate landing region. Centre = mean of 10 published landing sites; most landing sites have slopes under 5°.',
     sources: [
-      'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
-      'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+      {
+        title:
+          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
+        says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
+        supports: ['slope', 'ice'],
+      },
+      {
+        title:
+          'Gruener et al. (2020), LPSC: Greenland "White Mountain" anorthosite, a new lunar polar regolith simulant',
+        url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+        says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
+        supports: ['rock'],
+      },
     ],
   },
   {
@@ -486,8 +510,20 @@ export const TARGETS: Target[] = [
     iceAccess: false,
     note: 'Artemis candidate landing region. Centre = mean of 4 published landing sites; most landing sites have slopes under 5°.',
     sources: [
-      'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
-      'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+      {
+        title:
+          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
+        says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
+        supports: ['slope', 'ice'],
+      },
+      {
+        title:
+          'Gruener et al. (2020), LPSC: Greenland "White Mountain" anorthosite, a new lunar polar regolith simulant',
+        url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+        says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
+        supports: ['rock'],
+      },
     ],
   },
   {
@@ -503,8 +539,20 @@ export const TARGETS: Target[] = [
     iceAccess: true,
     note: 'Artemis candidate landing region. Centre = mean of 11 published landing sites; most landing sites have slopes under 5°.',
     sources: [
-      'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
-      'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+      {
+        title:
+          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
+        says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
+        supports: ['slope', 'ice'],
+      },
+      {
+        title:
+          'Gruener et al. (2020), LPSC: Greenland "White Mountain" anorthosite, a new lunar polar regolith simulant',
+        url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+        says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
+        supports: ['rock'],
+      },
     ],
   },
   {
@@ -520,8 +568,20 @@ export const TARGETS: Target[] = [
     iceAccess: true,
     note: 'Artemis candidate landing region. Centre = mean of 10 published landing sites; most landing sites have slopes under 5°.',
     sources: [
-      'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
-      'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+      {
+        title:
+          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
+        says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
+        supports: ['slope', 'ice'],
+      },
+      {
+        title:
+          'Gruener et al. (2020), LPSC: Greenland "White Mountain" anorthosite, a new lunar polar regolith simulant',
+        url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+        says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
+        supports: ['rock'],
+      },
     ],
   },
   {
@@ -537,8 +597,20 @@ export const TARGETS: Target[] = [
     iceAccess: false,
     note: 'Artemis candidate landing region. Centre = mean of 9 published landing sites; most landing sites have slopes under 5°.',
     sources: [
-      'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
-      'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+      {
+        title:
+          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
+        says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
+        supports: ['slope', 'ice'],
+      },
+      {
+        title:
+          'Gruener et al. (2020), LPSC: Greenland "White Mountain" anorthosite, a new lunar polar regolith simulant',
+        url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+        says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
+        supports: ['rock'],
+      },
     ],
   },
   {
@@ -554,8 +626,20 @@ export const TARGETS: Target[] = [
     iceAccess: false,
     note: 'Artemis candidate landing region. Centre = mean of 8 published landing sites; most landing sites have slopes under 5°.',
     sources: [
-      'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
-      'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+      {
+        title:
+          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
+        says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
+        supports: ['slope', 'ice'],
+      },
+      {
+        title:
+          'Gruener et al. (2020), LPSC: Greenland "White Mountain" anorthosite, a new lunar polar regolith simulant',
+        url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+        says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
+        supports: ['rock'],
+      },
     ],
   },
   {
@@ -571,8 +655,20 @@ export const TARGETS: Target[] = [
     iceAccess: false,
     note: 'Artemis candidate landing region. Centre = mean of 6 published landing sites; most landing sites have slopes under 5°.',
     sources: [
-      'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
-      'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+      {
+        title:
+          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
+        says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
+        supports: ['slope', 'ice'],
+      },
+      {
+        title:
+          'Gruener et al. (2020), LPSC: Greenland "White Mountain" anorthosite, a new lunar polar regolith simulant',
+        url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+        says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
+        supports: ['rock'],
+      },
     ],
   },
   {
@@ -588,8 +684,20 @@ export const TARGETS: Target[] = [
     iceAccess: true,
     note: 'Artemis candidate landing region. Centre = mean of 11 published landing sites; most landing sites have slopes under 5°.',
     sources: [
-      'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
-      'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+      {
+        title:
+          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
+        says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
+        supports: ['slope', 'ice'],
+      },
+      {
+        title:
+          'Gruener et al. (2020), LPSC: Greenland "White Mountain" anorthosite, a new lunar polar regolith simulant',
+        url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
+        says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
+        supports: ['rock'],
+      },
     ],
   },
   {
@@ -605,9 +713,20 @@ export const TARGETS: Target[] = [
     dailyRangeC: 61,
     note: 'Perseverance landing site (Octavia E. Butler Landing). Day–night swing: one sample day (sols 43–44), high −22 °C, low −83 °C, measured by MEDA.',
     sources: [
-      'https://www.esa.int/ESA_Multimedia/Images/2022/08/Water-rich_minerals_at_Jezero_Crater',
-      'https://en.wikipedia.org/wiki/Octavia_E._Butler_Landing',
-      'https://www.jpl.nasa.gov/news/nasas-first-weather-report-from-jezero-crater-on-mars/',
+      {
+        title: 'Water-rich minerals at Jezero Crater (ESA, 2022)',
+        url: 'https://www.esa.int/ESA_Multimedia/Images/2022/08/Water-rich_minerals_at_Jezero_Crater',
+        supports: ['rock'],
+      },
+      {
+        title: 'Octavia E. Butler Landing (Wikipedia)',
+        url: 'https://en.wikipedia.org/wiki/Octavia_E._Butler_Landing',
+      },
+      {
+        title: "NASA's first weather report from Jezero Crater on Mars (NASA JPL)",
+        url: 'https://www.jpl.nasa.gov/news/nasas-first-weather-report-from-jezero-crater-on-mars/',
+        supports: ['dailyRange'],
+      },
     ],
   },
   {
@@ -623,9 +742,21 @@ export const TARGETS: Target[] = [
     dailyRangeC: 70,
     note: 'Curiosity landing site (Bradbury Landing). Day–night swing: daily highs about 0 °C and lows about −70 °C, measured by REMS.',
     sources: [
-      'https://www.jpl.nasa.gov/news/nasas-curiosity-rover-finds-patches-of-rock-record-erased-revealing-clues/',
-      'https://en.wikipedia.org/wiki/Bradbury_Landing',
-      'https://www.jpl.nasa.gov/images/pia16913-steady-temperatures-at-mars-gale-crater/',
+      {
+        title:
+          "NASA's Curiosity rover finds patches of rock record erased, revealing clues (NASA JPL)",
+        url: 'https://www.jpl.nasa.gov/news/nasas-curiosity-rover-finds-patches-of-rock-record-erased-revealing-clues/',
+        supports: ['rock'],
+      },
+      {
+        title: 'Bradbury Landing (Wikipedia)',
+        url: 'https://en.wikipedia.org/wiki/Bradbury_Landing',
+      },
+      {
+        title: "PIA16913: Steady temperatures at Mars' Gale Crater (NASA JPL)",
+        url: 'https://www.jpl.nasa.gov/images/pia16913-steady-temperatures-at-mars-gale-crater/',
+        supports: ['dailyRange'],
+      },
     ],
   },
   {
@@ -641,8 +772,19 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 8,
     note: 'Centre of the ExoMars Rosalind Franklin landing area (18.20°N, 335.45°E). The landing ellipse avoids slopes above 8° at the MOLA sub-kilometre scale.',
     sources: [
-      'https://pmc.ncbi.nlm.nih.gov/articles/PMC7987365/',
-      'https://www.tandfonline.com/doi/full/10.1080/17445647.2024.2302361',
+      {
+        title:
+          'Quantin-Nataf et al. (2021), Astrobiology: Oxia Planum, the landing site for the ExoMars "Rosalind Franklin" rover mission',
+        url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7987365/',
+        says: 'Oxia Planum is a 200 km-wide, low-relief terrain with clay-bearing bedrock, chosen by ESA as the landing site of the ExoMars rover.',
+        supports: ['rock'],
+      },
+      {
+        title:
+          'Fawdon et al. (2024), Journal of Maps: the high-resolution map of Oxia Planum, Mars',
+        url: 'https://www.tandfonline.com/doi/full/10.1080/17445647.2024.2302361',
+        says: 'A 1:30,000 geological map of the landing site, with 15 bedrock units in 6 groups.',
+      },
     ],
   },
   {
@@ -657,8 +799,14 @@ export const TARGETS: Target[] = [
     iceAccess: false,
     note: 'Crater explored by the Opportunity rover.',
     sources: [
-      'https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2022JE007374',
-      'https://en.wikipedia.org/wiki/Victoria_(crater)',
+      {
+        title: 'JGR Planets article on Victoria Crater, 2022 (doi 10.1029/2022JE007374)',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2022JE007374',
+      },
+      {
+        title: 'Victoria (crater) (Wikipedia)',
+        url: 'https://en.wikipedia.org/wiki/Victoria_(crater)',
+      },
     ],
   },
   {
@@ -672,6 +820,14 @@ export const TARGETS: Target[] = [
     precipMmYr: 0,
     iceAccess: true,
     note: 'Candidate human landing site AP-1 (39.8°N, 202.1°E), with evidence of near-surface ice.',
-    sources: ['https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2024JE008724'],
+    sources: [
+      {
+        title:
+          'Luzzi et al. (2025), JGR Planets: geomorphological evidence of near-surface ice at candidate landing sites in northern Amazonis Planitia, Mars',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2024JE008724',
+        says: 'Maps about 9,000 thermal contraction polygons at candidate landing sites AP-1, AP-8 and AP-9 and estimates the ice beneath them lies within tens of centimetres of the surface.',
+        supports: ['ice'],
+      },
+    ],
   },
 ]

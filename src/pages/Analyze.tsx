@@ -1,3 +1,5 @@
+import { Upload } from 'lucide-react'
+import { ANALYZE_STEP_ICONS } from '../lib/icons'
 import { useEffect, useState, type DragEvent } from 'react'
 import { Card } from '../components/Card'
 import { PageHeader } from '../components/PageHeader'
@@ -73,7 +75,8 @@ export default function Analyze() {
             {imageUrl ? (
               <img src={imageUrl} alt="Uploaded image" className="max-h-72 rounded-lg" />
             ) : (
-              <span className="py-8 font-medium">
+              <span className="flex flex-col items-center gap-3 py-8 font-medium">
+                <Upload className="size-8 text-accent" aria-hidden />
                 Drop a Moon or Mars image here, or click to choose
               </span>
             )}
@@ -106,17 +109,20 @@ export default function Analyze() {
         <div className="lg:col-span-3">
           <Card title="How it will work">
             <ol className="space-y-4">
-              {page.steps.map((step, i) => (
-                <li key={step.title} className="flex gap-3">
-                  <span className="grid size-7 shrink-0 place-items-center rounded-full bg-accent/15 text-sm font-semibold text-accent">
-                    {i + 1}
-                  </span>
-                  <span>
-                    <span className="block font-medium">{step.title}</span>
-                    <span className="block text-sm text-fg-2">{step.body}</span>
-                  </span>
-                </li>
-              ))}
+              {page.steps.map((step, i) => {
+                const Icon = ANALYZE_STEP_ICONS[i]
+                return (
+                  <li key={step.title} className="flex gap-3">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent/15 text-accent">
+                      <Icon className="size-5" aria-hidden />
+                    </span>
+                    <span>
+                      <span className="block font-medium">{step.title}</span>
+                      <span className="block text-sm text-fg-2">{step.body}</span>
+                    </span>
+                  </li>
+                )
+              })}
             </ol>
           </Card>
         </div>

@@ -1,11 +1,15 @@
 import { useRef, useState } from 'react'
 import { useSearchParams } from 'react-router'
+import { ChevronDown, MapPin } from 'lucide-react'
+import { FactorEvidence, SourceLink } from '../components/FactorEvidence'
 import { PageHeader } from '../components/PageHeader'
 import { TargetImages } from '../components/TargetImages'
 import { site as siteConfig } from '../config/site'
+import { ANALOG_SITES, type AnalogSite } from '../data/analogs'
 import { EARTH_SITES, TARGETS } from '../data/compare'
 import { useAsync } from '../hooks/useAsync'
 import { usePageTitle } from '../hooks/usePageTitle'
+import { FACTOR_ICONS, ListChecks, PURPOSE_ICONS, Satellite } from '../lib/icons'
 import { loadOrbitalImages } from '../lib/orbitalImages'
 import {
   FACTOR_LABELS,
@@ -17,6 +21,8 @@ import {
   type Score,
   type Target,
 } from '../lib/similarity'
+
+const ANALOGS = new Map(ANALOG_SITES.map((site) => [site.id, site]))
 
 /** Sites shown before "Show all". */
 const TOP = 5
@@ -108,32 +114,48 @@ export default function Compare() {
               aria-label="What will the Earth site be used for?"
               className="mt-2 flex flex-wrap gap-2"
             >
-              {purposes.map((p) => (
-                <button
-                  key={p.id}
-                  type="button"
-                  aria-pressed={p === purpose}
-                  onClick={() => {
-                    update({ purpose: p.id, site: undefined })
-                    setShowAll(false)
-                  }}
-                  className={`h-10 rounded-full border px-4 text-sm font-medium transition-colors ${
-                    p === purpose
-                      ? 'border-accent bg-accent text-accent-fg'
-                      : 'border-border bg-bg text-fg-2 hover:border-accent hover:text-fg'
-                  }`}
-                >
-                  {p.label}
-                </button>
-              ))}
+              {purposes.map((p) => {
+                const Icon = PURPOSE_ICONS[p.id]
+                const active = p === purpose
+                const factors = p.factors
+                  .filter((f) => f !== 'sunlight' || target.body === 'Moon')
+                  .map((f) => FACTOR_LABELS[f].toLowerCase())
+                  .join(', ')
+                return (
+                  <button
+                    key={p.id}
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() => {
+                      update({ purpose: p.id, site: undefined })
+                      setShowAll(false)
+                    }}
+                    title={`Compares ${factors}`}
+                    className={`flex w-24 flex-col items-center gap-1.5 rounded-xl border px-2 py-3 text-center text-xs font-medium transition-colors ${
+                      active
+                        ? 'border-accent bg-accent text-accent-fg'
+                        : 'border-border bg-bg text-fg-2 hover:border-accent hover:text-fg'
+                    }`}
+                  >
+                    <Icon className="size-6" aria-hidden />
+                    {p.label}
+                  </button>
+                )
+              })}
             </div>
-            <p className="mt-2 text-xs text-muted">
-              {purpose.label} compares:{' '}
+            <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
+              <span>{purpose.label} compares:</span>
               {purpose.factors
                 .filter((f) => f !== 'sunlight' || target.body === 'Moon')
-                .map((f) => FACTOR_LABELS[f].toLowerCase())
-                .join(', ')}
-              .
+                .map((f) => {
+                  const Icon = FACTOR_ICONS[f]
+                  return (
+                    <span key={f} className="inline-flex items-center gap-1 text-fg-2">
+                      <Icon className="size-3.5 text-accent" aria-hidden />
+                      {FACTOR_LABELS[f]}
+                    </span>
+                  )
+                })}
             </p>
           </div>
         </div>
@@ -213,13 +235,24 @@ export default function Compare() {
               </p>
             )}
 
+            <AboutSite site={selected.site} analog={ANALOGS.get(selected.site.id)} />
+
             <div className="border-t border-border p-5">
-              <h3 className="mb-3 text-sm font-semibold">Why it matches</h3>
-              <Factors match={selected} targetName={target.name} />
+              <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold">
+                <ListChecks className="size-4 text-accent" aria-hidden />
+                Why it matches
+              </h3>
+              <p className="mb-3 text-xs text-muted">
+                Open a factor to see where both values come from and how the score was worked out.
+              </p>
+              <Factors match={selected} target={target} analog={ANALOGS.get(selected.site.id)} />
             </div>
 
             <div className="border-t border-border p-5">
-              <h3 className="mb-3 text-sm font-semibold">Seen from orbit, at the same scale</h3>
+              <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold">
+                <Satellite className="size-4 text-accent" aria-hidden />
+                Seen from orbit, at the same scale
+              </h3>
               <TargetImages
                 target={target}
                 site={selected.site}
@@ -283,20 +316,76 @@ function TargetSummary({ target }: { target: Target }) {
       <span className="text-muted tabular-nums">
         {target.lat.toFixed(2)}, {target.lon.toFixed(2)}
       </span>
-      <p className="w-full text-fg-2">
-        {target.note}{' '}
-        {target.sources.map((url, i) => (
-          <a
-            key={url}
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            className="mr-1 text-accent hover:underline"
-          >
-            [source {i + 1}]
-          </a>
+      <p className="w-full text-fg-2">{target.note}</p>
+      <div className="w-full">
+        <p className="mt-2 text-xs font-medium tracking-wide text-muted uppercase">
+          Where the values for {target.name} come from
+        </p>
+        <ul className="mt-1 space-y-2">
+          {target.sources.map((s) => (
+            <li key={s.url}>
+              <SourceLink title={s.title} url={s.url} />
+              {s.says && <p className="text-xs text-fg-2">{s.says}</p>}
+              {s.supports && (
+                <p className="text-xs text-muted">
+                  Used for: {s.supports.map((f) => FACTOR_LABELS[f].toLowerCase()).join(', ')}
+                </p>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+/** The site's sourced description, how exact its pin is, and its measured climate and terrain. */
+function AboutSite({ site, analog }: { site: Match['site']; analog?: AnalogSite }) {
+  return (
+    <div className="border-t border-border p-5">
+      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold">
+        <MapPin className="size-4 text-accent" aria-hidden />
+        About {site.name}
+      </h3>
+      {analog && <p className="text-sm text-fg-2">{analog.why}</p>}
+      <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm sm:grid-cols-4">
+        <Fact label="Mean temperature" value={`${site.meanTempC.toFixed(1)} °C`} />
+        <Fact label="Day–night swing" value={`${site.dailyRangeC.toFixed(1)} °C`} />
+        <Fact label="Rain and snow" value={`${site.precipMmYr} mm a year`} />
+        <Fact label="Elevation" value={`${site.elevationM} m`} />
+        <Fact
+          label="Slope"
+          value={site.slopeDeg === null ? 'not measured' : `${site.slopeDeg.toFixed(1)}°`}
+        />
+        <Fact
+          label="Local relief"
+          value={site.reliefM === null ? 'not measured' : `${site.reliefM} m`}
+        />
+        <Fact label="Rock / surface" value={site.materials.join(', ') || 'not recorded'} />
+        <Fact label="Landform" value={site.landforms.join(', ') || 'not recorded'} />
+      </dl>
+      {analog?.precision === 'region' && (
+        <p className="mt-3 text-xs text-muted">
+          The pin marks the approximate centre of the area, so the climate and terrain values
+          describe that point.
+        </p>
+      )}
+      <ul className="mt-3 space-y-0.5 text-sm">
+        {(analog?.sources ?? [{ title: 'Source for this site', url: site.source }]).map((s) => (
+          <li key={s.url}>
+            <SourceLink title={s.title} url={s.url} />
+          </li>
         ))}
-      </p>
+      </ul>
+    </div>
+  )
+}
+
+function Fact({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <dt className="text-xs text-muted">{label}</dt>
+      <dd className="font-medium">{value}</dd>
     </div>
   )
 }
@@ -343,20 +432,27 @@ function SiteButton({
   )
 }
 
-function Factors({ match, targetName }: { match: Match; targetName: string }) {
+function Factors({ match, target, analog }: { match: Match; target: Target; analog?: AnalogSite }) {
   const scored = match.factors.filter((f) => f.score !== null)
   const noData = match.factors.filter((f) => f.score === null && f.target === NO_DATA)
   const leftOut = match.factors.filter((f) => f.score === null && f.target !== NO_DATA)
   return (
     <>
       <ul className="divide-y divide-border">
-        {scored.map((f) => (
-          <FactorRow key={f.factor} factor={f} targetName={targetName} />
+        {scored.map((f, i) => (
+          <FactorRow
+            key={f.factor}
+            factor={f}
+            target={target}
+            site={match.site}
+            analog={analog}
+            open={i === 0}
+          />
         ))}
       </ul>
       {noData.length > 0 && (
         <p className="mt-3 text-xs text-muted">
-          Not scored, because no published value exists for {targetName} yet:{' '}
+          Not scored, because no published value exists for {target.name} yet:{' '}
           {noData.map((f) => f.label.toLowerCase()).join(', ')}.
         </p>
       )}
@@ -369,28 +465,57 @@ function Factors({ match, targetName }: { match: Match; targetName: string }) {
   )
 }
 
-function FactorRow({ factor, targetName }: { factor: FactorResult; targetName: string }) {
+function FactorRow({
+  factor,
+  target,
+  site,
+  analog,
+  open,
+}: {
+  factor: FactorResult
+  target: Target
+  site: Match['site']
+  analog?: AnalogSite
+  open: boolean
+}) {
   const style = SCORE_STYLE[factor.score!]
+  const Icon = FACTOR_ICONS[factor.factor]
   return (
-    <li className="flex items-start justify-between gap-4 py-3 first:pt-0">
-      <div className="min-w-0">
-        <p className="font-medium">{factor.label}</p>
-        <p className="mt-0.5 text-sm text-fg-2">
-          {targetName}: {factor.target} · Earth site: {factor.earth}
-        </p>
-        <p className="mt-0.5 text-xs text-muted">{factor.reason}</p>
-      </div>
-      <div className="shrink-0 text-right">
-        <span className="flex gap-1" aria-hidden>
-          {[1, 2, 3].map((n) => (
-            <span
-              key={n}
-              className={`h-1.5 w-5 rounded-full ${n <= factor.score! ? style.bar : 'bg-surface-2'}`}
-            />
-          ))}
-        </span>
-        <span className={`mt-1 block text-xs font-medium ${style.text}`}>{style.label}</span>
-      </div>
+    <li className="py-3 first:pt-0">
+      <details open={open} className="group">
+        <summary className="flex cursor-pointer list-none items-start gap-3 [&::-webkit-details-marker]:hidden">
+          <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-surface-2 text-accent">
+            <Icon className="size-4" aria-hidden />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="font-medium">{factor.label}</p>
+            <p className="mt-0.5 text-sm text-fg-2">
+              {target.name}: {factor.target} · Earth site: {factor.earth}
+            </p>
+            <p className="mt-0.5 text-xs text-muted">{factor.reason}</p>
+            <p className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-accent">
+              <span className="group-open:hidden">Show the evidence</span>
+              <span className="hidden group-open:inline">Hide the evidence</span>
+              <ChevronDown
+                className="size-3.5 transition-transform group-open:rotate-180"
+                aria-hidden
+              />
+            </p>
+          </div>
+          <div className="shrink-0 text-right">
+            <span className="flex gap-1" aria-hidden>
+              {[1, 2, 3].map((n) => (
+                <span
+                  key={n}
+                  className={`h-1.5 w-5 rounded-full ${n <= factor.score! ? style.bar : 'bg-surface-2'}`}
+                />
+              ))}
+            </span>
+            <span className={`mt-1 block text-xs font-medium ${style.text}`}>{style.label}</span>
+          </div>
+        </summary>
+        <FactorEvidence factor={factor} target={target} site={site} analog={analog} />
+      </details>
     </li>
   )
 }

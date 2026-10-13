@@ -25,6 +25,10 @@ export interface NasaDataSource {
 export interface NavItem {
   to: string
   label: string
+  /** Shorter label for the phone tab bar. */
+  shortLabel?: string
+  /** One sentence on what the page does. */
+  description: string
 }
 
 export const site = {
@@ -54,15 +58,31 @@ export const site = {
     members: [
       {
         name: 'Mohammad Huseen Malkawi',
-        role: 'Creator · Data, web, presentation and submission',
+        role: 'Creator · Data, web and submission',
         github: 'https://github.com/malkawi06',
-        linkedin: '',
+        linkedin: 'https://www.linkedin.com/in/mohammad-h-malkawi/',
       },
       { name: 'Nour Oqaily', role: 'Website testing' },
-      { name: 'Mohammad Kilany', role: 'Presentation' },
-      { name: 'Aisha', role: 'Source review' },
-      { name: 'Hadeel Abuqhazleh', role: 'Research and ideas' },
-      { name: 'Hadeel Qamar', role: 'Research and ideas' },
+      {
+        name: 'Mohammad Kilany',
+        role: 'Presentation',
+        linkedin: 'https://www.linkedin.com/in/mohammad-kilani-413317366/',
+      },
+      {
+        name: 'Aisha',
+        role: 'Source review',
+        linkedin: 'https://www.linkedin.com/in/aisha-mohammad-202907416/',
+      },
+      {
+        name: 'Hadeel Abughazleh',
+        role: 'Research and ideas',
+        linkedin: 'https://www.linkedin.com/in/hadeel-abughazleh-89aa0a32b/',
+      },
+      {
+        name: 'Hadeel Qamar',
+        role: 'Research and ideas',
+        linkedin: 'https://www.linkedin.com/in/hadeel-qamar-779241311/',
+      },
     ] satisfies TeamMember[],
   },
 
@@ -78,11 +98,31 @@ export const site = {
   },
 
   nav: [
-    { to: '/', label: 'Home' },
-    { to: '/compare', label: 'Compare' },
-    { to: '/analogs', label: 'Earth Analogs' },
-    { to: '/analyze', label: 'Analyze' },
-    { to: '/about', label: 'About' },
+    { to: '/', label: 'Home', description: 'What the site does and how.' },
+    {
+      to: '/compare',
+      label: 'Compare',
+      description:
+        'Pick a place on the Moon or Mars and a purpose, and see which Earth sites match it best, factor by factor.',
+    },
+    {
+      to: '/analogs',
+      label: 'Earth Analogs',
+      shortLabel: 'Analogs',
+      description:
+        'A map of places on Earth that look like Moon and Mars landforms, each with its published source.',
+    },
+    {
+      to: '/analyze',
+      label: 'Analyze',
+      description:
+        'Upload a Moon or Mars image. The landform model is being retrained, so this page does not analyze images yet.',
+    },
+    {
+      to: '/about',
+      label: 'About',
+      description: 'The challenge, the team and every NASA data source used.',
+    },
   ] satisfies NavItem[],
 
   home: {

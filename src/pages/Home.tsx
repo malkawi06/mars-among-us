@@ -2,11 +2,15 @@ import { Link } from 'react-router'
 import { site } from '../config/site'
 import { useAsync } from '../hooks/useAsync'
 import { usePageTitle } from '../hooks/usePageTitle'
+import { ArrowRight } from 'lucide-react'
+import { HOME_STEP_ICONS, PAGE_ICONS, PROMISE_ICONS, Database } from '../lib/icons'
 import { EARTH_URL, TARGETS_URL, loadOrbitalImages } from '../lib/orbitalImages'
 
 const stats = __HOME_STATS__
 const example = stats.example
 const SCORE_LABEL = { 3: 'strong', 2: 'partial', 1: 'weak' } as const
+/** The pages a visitor can go to from Home, in the order they are used. */
+const START_PAGES = site.nav.filter((item) => item.to !== '/')
 
 export default function Home() {
   usePageTitle()
@@ -33,9 +37,10 @@ export default function Home() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to={home.primaryCta.to}
-                className="rounded-lg bg-accent px-5 py-2.5 font-medium text-accent-fg hover:opacity-90"
+                className="glow inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 font-medium text-accent-fg hover:opacity-90"
               >
                 {home.primaryCta.label}
+                <ArrowRight className="size-4" aria-hidden />
               </Link>
               <Link
                 to={home.secondaryCta.to}
@@ -46,12 +51,15 @@ export default function Home() {
             </div>
 
             <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-fg-2">
-              {home.promises.map((promise) => (
-                <li key={promise} className="flex items-center gap-2">
-                  <span className="size-1.5 rounded-full bg-accent" aria-hidden />
-                  {promise}
-                </li>
-              ))}
+              {home.promises.map((promise, i) => {
+                const Icon = PROMISE_ICONS[i]
+                return (
+                  <li key={promise} className="flex items-center gap-2">
+                    <Icon className="size-4 text-accent" aria-hidden />
+                    {promise}
+                  </li>
+                )
+              })}
             </ul>
           </div>
 
@@ -59,18 +67,28 @@ export default function Home() {
         </div>
       </section>
 
+      <StartHere />
+
       <section className="mx-auto max-w-7xl px-4 py-14">
         <h2 className="text-2xl font-semibold tracking-tight">How it works</h2>
         <ol className="mt-6 grid gap-4 sm:grid-cols-3">
-          {home.steps.map((step, i) => (
-            <li key={step.title} className="rounded-xl border border-border bg-surface p-5">
-              <span className="grid size-8 place-items-center rounded-full bg-accent/15 text-sm font-semibold text-accent">
-                {i + 1}
-              </span>
-              <h3 className="mt-3 font-semibold">{step.title}</h3>
-              <p className="mt-1 text-sm text-fg-2">{step.body}</p>
-            </li>
-          ))}
+          {home.steps.map((step, i) => {
+            const Icon = HOME_STEP_ICONS[i]
+            return (
+              <li key={step.title} className="rounded-xl border border-border bg-surface p-5">
+                <span className="flex items-center gap-3">
+                  <span className="grid size-10 place-items-center rounded-xl bg-accent/15 text-accent">
+                    <Icon className="size-5" aria-hidden />
+                  </span>
+                  <span className="text-xs font-medium tracking-wide text-muted uppercase">
+                    Step {i + 1}
+                  </span>
+                </span>
+                <h3 className="mt-3 font-semibold">{step.title}</h3>
+                <p className="mt-1 text-sm text-fg-2">{step.body}</p>
+              </li>
+            )
+          })}
         </ol>
 
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
@@ -87,7 +105,10 @@ export default function Home() {
 
       <section className="border-t border-border">
         <div className="mx-auto max-w-7xl px-4 py-14">
-          <h2 className="text-2xl font-semibold tracking-tight">Where the data comes from</h2>
+          <h2 className="flex items-center gap-2 text-2xl font-semibold tracking-tight">
+            <Database className="size-6 text-accent" aria-hidden />
+            Where the data comes from
+          </h2>
           <p className="mt-2 max-w-2xl text-fg-2">
             Every number on the site links back to one of these sources or to a published paper.
           </p>
@@ -133,6 +154,56 @@ export default function Home() {
   )
 }
 
+/** Where to go next: every page with its icon and what it does. */
+function StartHere() {
+  return (
+    <section className="mx-auto max-w-7xl px-4 pt-14">
+      <h2 className="text-2xl font-semibold tracking-tight">Start here</h2>
+      <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {START_PAGES.map((item, i) => {
+          const Icon = PAGE_ICONS[item.to]
+          const big = i === 0
+          const wide = i === START_PAGES.length - 1
+          return (
+            <li
+              key={item.to}
+              className={
+                big ? 'sm:col-span-2 lg:col-span-1 lg:row-span-2' : wide ? 'sm:col-span-2' : ''
+              }
+            >
+              <Link
+                to={item.to}
+                className={`group relative flex h-full flex-col justify-end overflow-hidden rounded-2xl border border-border bg-surface p-5 transition-colors hover:border-accent ${
+                  big ? 'hero-sky min-h-64' : 'min-h-36'
+                }`}
+              >
+                <Icon
+                  className={`absolute text-accent/10 ${big ? 'top-4 right-4 size-40' : 'top-3 right-3 size-16'}`}
+                  aria-hidden
+                />
+                <span className="relative flex items-center gap-2 font-semibold">
+                  <Icon className="size-5 text-accent" aria-hidden />
+                  <span className={big ? 'text-2xl' : 'text-lg'}>{item.label}</span>
+                </span>
+                <span className="relative mt-1 max-w-md pr-14 text-sm text-fg-2">
+                  {item.description}
+                </span>
+                <span className="relative mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent">
+                  Open{' '}
+                  <ArrowRight
+                    className="size-3.5 transition-transform group-hover:translate-x-0.5"
+                    aria-hidden
+                  />
+                </span>
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
+    </section>
+  )
+}
+
 /** One real comparison from the data, with its orbital images when the build has them. */
 function ExampleCard({ link }: { link: string }) {
   const { data: images } = useAsync('orbital-images', loadOrbitalImages)
@@ -140,7 +211,7 @@ function ExampleCard({ link }: { link: string }) {
   const siteImage = images?.earth[example.siteId]
 
   return (
-    <figure className="min-w-0 rounded-2xl border border-border bg-surface p-4 shadow-sm">
+    <figure className="glow min-w-0 rounded-2xl border border-border bg-surface p-4 shadow-sm">
       <figcaption className="flex items-baseline justify-between gap-3">
         <span className="text-xs font-medium tracking-wide text-accent uppercase">
           Example · {example.purposeLabel}

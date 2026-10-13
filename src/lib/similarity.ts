@@ -45,7 +45,16 @@ export interface Target {
   precipMmYr?: number
   iceAccess: boolean
   note: string
-  sources: string[]
+  sources: TargetSource[]
+}
+
+export interface TargetSource {
+  title: string
+  url: string
+  /** What the source reports, in one sentence. Only set when checked against the source. */
+  says?: string
+  /** Factors whose target value this source supports. */
+  supports?: FactorId[]
 }
 
 export type FactorId =
@@ -133,7 +142,7 @@ export const FACTOR_LABELS: Record<FactorId, string> = {
 }
 
 /** Materials in the same group are a partial match (e.g. clay vs sandstone). */
-const MATERIAL_GROUP: Record<string, string> = {
+export const MATERIAL_GROUP: Record<string, string> = {
   sand: 'sedimentary',
   sulfate: 'sedimentary',
   salt: 'sedimentary',
@@ -144,6 +153,14 @@ const MATERIAL_GROUP: Record<string, string> = {
   anorthosite: 'igneous',
   ice: 'ice',
 }
+
+/** Earth sites at this slope or steeper are above the Artemis landing limit. */
+const LANDING_LIMIT_DEG = 8
+/** Temperature gaps (°C) for a strong and a partial match. */
+const MEAN_TEMP_GAP = { strong: 20, partial: 45 }
+const DAILY_RANGE_GAP = { strong: 10, partial: 30 }
+/** Yearly precipitation (mm) for hyper-arid and desert. */
+const RAIN = { hyperArid: 25, desert: 250 }
 
 const list = (items: string[]) => items.join(', ') || 'none recorded'
 const result = (
@@ -178,13 +195,14 @@ export function scoreFactor(factor: FactorId, target: Target, site: EarthSite): 
           earth,
           'Not measured: the coordinates fall on water. Neutral.',
         )
-      const score: Score = site.slopeDeg <= target.slopeMaxDeg ? 3 : site.slopeDeg < 8 ? 2 : 1
+      const score: Score =
+        site.slopeDeg <= target.slopeMaxDeg ? 3 : site.slopeDeg < LANDING_LIMIT_DEG ? 2 : 1
       const reason =
         score === 3
           ? `As flat as the target (under ${target.slopeMaxDeg}°).`
           : score === 2
-            ? 'Steeper than the target, but still under the 8° landing limit.'
-            : 'Steeper than the 8° landing limit.'
+            ? `Steeper than the target, but still under the ${LANDING_LIMIT_DEG}° landing limit.`
+            : `Steeper than the ${LANDING_LIMIT_DEG}° landing limit.`
       return result(factor, score, `under ${target.slopeMaxDeg}°`, earth, reason)
     }
     case 'rock': {
@@ -225,18 +243,19 @@ export function scoreFactor(factor: FactorId, target: Target, site: EarthSite): 
       const earth = `${site.meanTempC.toFixed(1)} °C`
       if (target.meanTempC === undefined) return noData(factor, earth)
       const diff = Math.abs(site.meanTempC - target.meanTempC)
-      const score: Score = diff <= 20 ? 3 : diff <= 45 ? 2 : 1
+      const score: Score = diff <= MEAN_TEMP_GAP.strong ? 3 : diff <= MEAN_TEMP_GAP.partial ? 2 : 1
       return result(factor, score, `${target.meanTempC} °C`, earth, `${Math.round(diff)} °C apart.`)
     }
     case 'aridity': {
       const earth = `${site.precipMmYr} mm/yr`
       if (target.precipMmYr === undefined) return noData(factor, earth)
-      const score: Score = site.precipMmYr <= 25 ? 3 : site.precipMmYr <= 250 ? 2 : 1
+      const score: Score =
+        site.precipMmYr <= RAIN.hyperArid ? 3 : site.precipMmYr <= RAIN.desert ? 2 : 1
       const reason =
         score === 3
-          ? 'Hyper-arid (25 mm/yr or less).'
+          ? `Hyper-arid (${RAIN.hyperArid} mm/yr or less).`
           : score === 2
-            ? 'Desert (250 mm/yr or less).'
+            ? `Desert (${RAIN.desert} mm/yr or less).`
             : 'Wetter than a desert.'
       return result(factor, score, 'no rain', earth, reason)
     }
@@ -260,7 +279,8 @@ export function scoreFactor(factor: FactorId, target: Target, site: EarthSite): 
       const earth = `${site.dailyRangeC.toFixed(1)} °C`
       if (target.dailyRangeC === undefined) return noData(factor, earth)
       const diff = Math.abs(site.dailyRangeC - target.dailyRangeC)
-      const score: Score = diff <= 10 ? 3 : diff <= 30 ? 2 : 1
+      const score: Score =
+        diff <= DAILY_RANGE_GAP.strong ? 3 : diff <= DAILY_RANGE_GAP.partial ? 2 : 1
       return result(
         factor,
         score,
@@ -272,6 +292,62 @@ export function scoreFactor(factor: FactorId, target: Target, site: EarthSite): 
     case 'sunlight':
     case 'radiation':
       return noData(factor)
+  }
+}
+
+/** How a factor is scored: what earns 3, 2 and 1, in words. Kept next to scoreFactor so they agree. */
+export function scoreLevels(factor: FactorId, target: Target): { score: Score; text: string }[] {
+  switch (factor) {
+    case 'slope':
+      return [
+        { score: 3, text: `As flat as the target: ${target.slopeMaxDeg ?? '—'}° or less.` },
+        { score: 2, text: `Steeper than the target, but under ${LANDING_LIMIT_DEG}°.` },
+        {
+          score: 1,
+          text: `${LANDING_LIMIT_DEG}° or steeper: above the Artemis lander's landing limit.`,
+        },
+      ]
+    case 'rock':
+      return [
+        { score: 3, text: 'The same material on both.' },
+        {
+          score: 2,
+          text: 'A different material of the same kind (both igneous, or both sedimentary). Also given when the site has no recorded rock type.',
+        },
+        { score: 1, text: 'A different kind of material.' },
+      ]
+    case 'landform':
+      return [
+        { score: 3, text: 'The same landform on both.' },
+        { score: 1, text: 'No landform in common.' },
+      ]
+    case 'meanTemp':
+      return [
+        { score: 3, text: `Within ${MEAN_TEMP_GAP.strong} °C of each other.` },
+        { score: 2, text: `Within ${MEAN_TEMP_GAP.partial} °C.` },
+        { score: 1, text: `More than ${MEAN_TEMP_GAP.partial} °C apart.` },
+      ]
+    case 'dailyRange':
+      return [
+        { score: 3, text: `Within ${DAILY_RANGE_GAP.strong} °C of each other.` },
+        { score: 2, text: `Within ${DAILY_RANGE_GAP.partial} °C.` },
+        { score: 1, text: `More than ${DAILY_RANGE_GAP.partial} °C apart.` },
+      ]
+    case 'aridity':
+      return [
+        { score: 3, text: `Hyper-arid: ${RAIN.hyperArid} mm of rain a year or less.` },
+        { score: 2, text: `Desert: ${RAIN.desert} mm a year or less.` },
+        { score: 1, text: 'Wetter than a desert.' },
+      ]
+    case 'ice':
+      return [
+        { score: 3, text: 'Both have ground ice.' },
+        { score: 1, text: 'The target has reachable ice; the Earth site has none.' },
+      ]
+    case 'relief':
+    case 'sunlight':
+    case 'radiation':
+      return []
   }
 }
 

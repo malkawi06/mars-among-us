@@ -68,6 +68,57 @@ EARTH = [
 
 JGR = 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434'
 LPI_HIGHLANDS = 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf'
+# Title of every target source, what it reports (only when checked against the source) and which
+# factors' target values it supports, so the Compare page can show where each value comes from.
+SOURCE_INFO = {
+    JGR: dict(
+        title='Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and '
+              'accessible permanently shadowed regions within the Artemis candidate landing regions',
+        says='Finds 130 landing sites inside NASA\'s Artemis candidate regions that meet the Human Landing '
+             'System requirements and are within 2 km of a permanently shadowed region.',
+        supports=['slope', 'ice']),
+    LPI_HIGHLANDS: dict(
+        title='Gruener et al. (2020), LPSC: Greenland "White Mountain" anorthosite, a new lunar polar regolith simulant',
+        says='NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar '
+             'south pole, where astronauts are to land.',
+        supports=['rock']),
+    'https://www.esa.int/ESA_Multimedia/Images/2022/08/Water-rich_minerals_at_Jezero_Crater':
+        dict(title='Water-rich minerals at Jezero Crater (ESA, 2022)', supports=['rock']),
+    'https://en.wikipedia.org/wiki/Octavia_E._Butler_Landing': dict(title='Octavia E. Butler Landing (Wikipedia)'),
+    'https://www.jpl.nasa.gov/news/nasas-first-weather-report-from-jezero-crater-on-mars/':
+        dict(title='NASA\'s first weather report from Jezero Crater on Mars (NASA JPL)', supports=['dailyRange']),
+    'https://www.jpl.nasa.gov/news/nasas-curiosity-rover-finds-patches-of-rock-record-erased-revealing-clues/':
+        dict(title='NASA\'s Curiosity rover finds patches of rock record erased, revealing clues (NASA JPL)',
+             supports=['rock']),
+    'https://en.wikipedia.org/wiki/Bradbury_Landing': dict(title='Bradbury Landing (Wikipedia)'),
+    'https://www.jpl.nasa.gov/images/pia16913-steady-temperatures-at-mars-gale-crater/':
+        dict(title='PIA16913: Steady temperatures at Mars\' Gale Crater (NASA JPL)', supports=['dailyRange']),
+    'https://pmc.ncbi.nlm.nih.gov/articles/PMC7987365/': dict(
+        title='Quantin-Nataf et al. (2021), Astrobiology: Oxia Planum, the landing site for the ExoMars '
+              '"Rosalind Franklin" rover mission',
+        says='Oxia Planum is a 200 km-wide, low-relief terrain with clay-bearing bedrock, chosen by ESA as '
+             'the landing site of the ExoMars rover.',
+        supports=['rock']),
+    'https://www.tandfonline.com/doi/full/10.1080/17445647.2024.2302361': dict(
+        title='Fawdon et al. (2024), Journal of Maps: the high-resolution map of Oxia Planum, Mars',
+        says='A 1:30,000 geological map of the landing site, with 15 bedrock units in 6 groups.'),
+    'https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2022JE007374':
+        dict(title='JGR Planets article on Victoria Crater, 2022 (doi 10.1029/2022JE007374)'),
+    'https://en.wikipedia.org/wiki/Victoria_(crater)': dict(title='Victoria (crater) (Wikipedia)'),
+    'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2024JE008724': dict(
+        title='Luzzi et al. (2025), JGR Planets: geomorphological evidence of near-surface ice at candidate '
+              'landing sites in northern Amazonis Planitia, Mars',
+        says='Maps about 9,000 thermal contraction polygons at candidate landing sites AP-1, AP-8 and AP-9 and '
+             'estimates the ice beneath them lies within tens of centimetres of the surface.',
+        supports=['ice']),
+}
+
+
+def cite(url):
+    return {'title': SOURCE_INFO[url]['title'], 'url': url,
+            **{k: SOURCE_INFO[url][k] for k in ('says', 'supports') if k in SOURCE_INFO[url]}}
+
+
 # name, accessible cold trap (< 110 K) from a landing site (Wueller et al., JGR Planets 2025/2026).
 # Nobile Rim 2: the paper only reports PSRs that "may maintain surface temperatures below 125 K".
 MOON = [('Peak near Cabeus B', False), ('Haworth', True), ('Malapert Massif', False), ('Mons Mouton Plateau', True),
@@ -139,7 +190,7 @@ for i, (name, cold_trap) in enumerate(MOON, 1):
         'id': f'moon-{i}', 'name': name, 'body': 'Moon', 'lat': lat, 'lon': lon,
         'materials': ['anorthosite'], 'landforms': ['impact'], 'slopeMaxDeg': 5, 'precipMmYr': 0, 'iceAccess': cold_trap,
         'note': f'Artemis candidate landing region. Centre = mean of {n} published landing sites; most landing sites have slopes under 5°.',
-        'sources': [JGR, LPI_HIGHLANDS],
+        'sources': [cite(JGR), cite(LPI_HIGHLANDS)],
     })
 for sid, name, lat, lon, materials, landforms, ice, note, sources, measured in MARS:
     # No rain falls on Mars today. Site temperatures are left out until a sourced local value is added:
@@ -147,7 +198,7 @@ for sid, name, lat, lon, materials, landforms, ice, note, sources, measured in M
     targets.append({
         'id': f'mars-{sid}', 'name': name, 'body': 'Mars', 'lat': lat, 'lon': lon,
         'materials': materials, 'landforms': landforms, 'precipMmYr': 0, 'iceAccess': ice,
-        **measured, 'note': note, 'sources': sources,
+        **measured, 'note': note, 'sources': [cite(url) for url in sources],
     })
 
 out = f'''// Generated by analysis/build_compare_data.py from analysis/data. Do not edit by hand.

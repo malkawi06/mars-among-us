@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/inter';
 
 /* `dark:` utilities follow the .dark class on <html> (toggled in the navbar). */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -10,42 +11,42 @@
  */
 :root {
   color-scheme: light;
-  --bg: #f7f7f5;
+  --bg: #f5f6fb;
   --surface: #ffffff;
-  --surface-2: #f0efec;
-  --fg: #0b0b0b;
-  --fg-2: #52514e;
-  --muted: #6b6a65;
-  --border: #e1e0d9;
+  --surface-2: #eceef8;
+  --fg: #0d1030;
+  --fg-2: #3d4170;
+  --muted: #626690;
+  --border: #dcdff0;
   /* Mars orange for actions; Earth blue marks the Earth side of a comparison. */
-  --accent: #b93d0c;
+  --accent: #c2410c;
   --accent-fg: #ffffff;
-  --earth: #2563c7;
+  --earth: #1d5fd0;
   --danger: #c22f2f;
   --warning: #8a5a00;
 
   /* Chart palette (colorblind-checked; use in order) and chrome. */
-  --chart-grid: #e1e0d9;
-  --chart-axis: #c3c2b7;
+  --chart-grid: #dcdff0;
+  --chart-axis: #b9bdd8;
 }
 
 .dark {
   color-scheme: dark;
-  --bg: #0b0d12;
-  --surface: #141821;
-  --surface-2: #1c2130;
-  --fg: #f5f5f4;
-  --fg-2: #c3c2b7;
-  --muted: #9a988f;
-  --border: #262b38;
-  --accent: #f28a4f;
-  --accent-fg: #0b0d12;
-  --earth: #7cb3f0;
+  --bg: #070818;
+  --surface: #0e1130;
+  --surface-2: #171b45;
+  --fg: #f2f3ff;
+  --fg-2: #b9bde6;
+  --muted: #8b90c0;
+  --border: #262a5c;
+  --accent: #ff8a4c;
+  --accent-fg: #14081a;
+  --earth: #6fb7ff;
   --danger: #f07a7a;
   --warning: #f5b94a;
 
-  --chart-grid: #232836;
-  --chart-axis: #383d4a;
+  --chart-grid: #1f2350;
+  --chart-axis: #343a72;
 }
 
 @theme inline {
@@ -61,6 +62,11 @@
   --color-earth: var(--earth);
   --color-danger: var(--danger);
   --color-warning: var(--warning);
+
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1.125rem;
+  --radius-2xl: 1.5rem;
 }
 
 @layer base {
@@ -72,6 +78,17 @@
   h2,
   h3 {
     font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .dark body {
+    background-image: radial-gradient(80% 50% at 50% 0%, rgb(80 70 200 / 0.18), transparent 70%);
+    background-attachment: fixed;
+  }
+
+  .dark h1 {
+    background: linear-gradient(90deg, #ffb07a, #ff8a4c 40%, #8fc4ff);
+    background-clip: text;
+    color: transparent;
   }
 
   :focus-visible {
@@ -121,15 +138,23 @@
 .hero-sky {
   background-image:
     radial-gradient(
-      60% 70% at 85% 0%,
-      color-mix(in oklab, var(--accent) 22%, transparent),
+      55% 70% at 88% 5%,
+      color-mix(in oklab, var(--accent) 30%, transparent),
       transparent 70%
     ),
     radial-gradient(
-      40% 50% at 0% 100%,
-      color-mix(in oklab, var(--earth) 14%, transparent),
+      45% 60% at 5% 95%,
+      color-mix(in oklab, var(--earth) 26%, transparent),
       transparent 70%
-    );
+    ),
+    radial-gradient(40% 40% at 50% 50%, rgb(140 80 220 / 0.12), transparent 70%);
+}
+
+/* Glow around the example card and the main buttons in the dark theme. */
+.dark .glow {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--accent) 25%, transparent),
+    0 20px 60px -20px color-mix(in oklab, var(--accent) 35%, transparent);
 }
 
 .dark .hero-sky::before {
