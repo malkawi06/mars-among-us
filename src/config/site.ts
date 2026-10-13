@@ -59,7 +59,7 @@ export const site = {
         linkedin: '',
       },
       { name: 'Nour Oqaily', role: 'Website testing' },
-      { name: 'Mohammad Kilany', role: '' },
+      { name: 'Mohammad Kilany', role: 'Presentation' },
       { name: 'Aisha', role: 'Source review' },
       { name: 'Hadeel Abuqhazleh', role: 'Research and ideas' },
       { name: 'Hadeel Qamar', role: 'Research and ideas' },
