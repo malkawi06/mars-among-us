@@ -446,18 +446,20 @@ export const TARGETS: Target[] = [
     lat: -83.573,
     lon: -69.085,
     materials: ['anorthosite'],
-    landforms: ['impact'],
+    landforms: ['massif'],
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: false,
+    setting:
+      'A peak on a ~6 km high massif between the Cabeus and Drygalski craters, about 35 km southwest of Cabeus B crater.',
     note: 'Artemis candidate landing region. Centre = mean of 5 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       {
         title:
-          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+          'Wueller, Berger & Kring (2026), JGR Planets: Assessing potential landing sites with favorable illumination and accessible, potentially volatile-rich permanently shadowed regions within Artemis candidate landing regions',
         url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
         says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
-        supports: ['slope', 'ice'],
+        supports: ['slope', 'ice', 'landform'],
       },
       {
         title:
@@ -465,6 +467,12 @@ export const TARGETS: Target[] = [
         url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
         says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
         supports: ['rock'],
+      },
+      {
+        title:
+          "Qiao, Head et al. (2024), Nature Communications: geological evidence for extensive basin ejecta as plains terrains in the Moon's south polar region",
+        url: 'https://www.nature.com/articles/s41467-024-50155-w',
+        says: 'The south polar region is highland terrain covered in impact craters of all sizes and ages, next to the South Pole–Aitken basin, the largest and oldest preserved impact basin on the Moon.',
       },
     ],
   },
@@ -479,14 +487,15 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: true,
+    setting: 'Near the rims of the ancient Haworth and Cabeus impact craters.',
     note: 'Artemis candidate landing region. Centre = mean of 10 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       {
         title:
-          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+          'Wueller, Berger & Kring (2026), JGR Planets: Assessing potential landing sites with favorable illumination and accessible, potentially volatile-rich permanently shadowed regions within Artemis candidate landing regions',
         url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
         says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
-        supports: ['slope', 'ice'],
+        supports: ['slope', 'ice', 'landform'],
       },
       {
         title:
@@ -494,6 +503,12 @@ export const TARGETS: Target[] = [
         url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
         says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
         supports: ['rock'],
+      },
+      {
+        title:
+          "Qiao, Head et al. (2024), Nature Communications: geological evidence for extensive basin ejecta as plains terrains in the Moon's south polar region",
+        url: 'https://www.nature.com/articles/s41467-024-50155-w',
+        says: 'The south polar region is highland terrain covered in impact craters of all sizes and ages, next to the South Pole–Aitken basin, the largest and oldest preserved impact basin on the Moon.',
       },
     ],
   },
@@ -504,18 +519,33 @@ export const TARGETS: Target[] = [
     lat: -86.056,
     lon: -0.325,
     materials: ['anorthosite'],
-    landforms: ['impact'],
+    landforms: ['massif'],
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: false,
+    setting:
+      'A massif thought to be a remnant of the rim of the South Pole–Aitken basin, which formed more than 4 billion years ago.',
     note: 'Artemis candidate landing region. Centre = mean of 4 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       {
         title:
-          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+          'Wueller, Berger & Kring (2026), JGR Planets: Assessing potential landing sites with favorable illumination and accessible, potentially volatile-rich permanently shadowed regions within Artemis candidate landing regions',
         url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
         says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
         supports: ['slope', 'ice'],
+      },
+      {
+        title: 'Malapert Massif (NASA, LROC image)',
+        url: 'https://www.nasa.gov/image-detail/malapert-massif-m1432398306-lroc',
+        says: 'Malapert massif is thought to be a remnant of the South Pole–Aitken basin rim, which formed more than 4 billion years ago.',
+        supports: ['landform'],
+      },
+      {
+        title:
+          'Wueller et al. (2025), JGR Planets: geology of Mons Mouton and Mons Malapert (doi 10.1029/2025JE009127)',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009127',
+        says: 'From their location and topography, Mons Mouton and Mons Malapert are interpreted as remnant massifs of the South Pole–Aitken basin rim.',
+        supports: ['landform'],
       },
       {
         title:
@@ -523,6 +553,12 @@ export const TARGETS: Target[] = [
         url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
         says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
         supports: ['rock'],
+      },
+      {
+        title:
+          "Qiao, Head et al. (2024), Nature Communications: geological evidence for extensive basin ejecta as plains terrains in the Moon's south polar region",
+        url: 'https://www.nature.com/articles/s41467-024-50155-w',
+        says: 'The south polar region is highland terrain covered in impact craters of all sizes and ages, next to the South Pole–Aitken basin, the largest and oldest preserved impact basin on the Moon.',
       },
     ],
   },
@@ -533,18 +569,27 @@ export const TARGETS: Target[] = [
     lat: -84.506,
     lon: 30.514,
     materials: ['anorthosite'],
-    landforms: ['impact'],
+    landforms: ['massif'],
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: true,
+    setting:
+      'The largest Artemis region, a plateau on Mons Mouton, a massif interpreted as part of the South Pole–Aitken basin rim.',
     note: 'Artemis candidate landing region. Centre = mean of 11 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       {
         title:
-          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+          'Wueller, Berger & Kring (2026), JGR Planets: Assessing potential landing sites with favorable illumination and accessible, potentially volatile-rich permanently shadowed regions within Artemis candidate landing regions',
         url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
         says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
-        supports: ['slope', 'ice'],
+        supports: ['slope', 'ice', 'landform'],
+      },
+      {
+        title:
+          'Wueller et al. (2025), JGR Planets: geology of Mons Mouton and Mons Malapert (doi 10.1029/2025JE009127)',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009127',
+        says: 'From their location and topography, Mons Mouton and Mons Malapert are interpreted as remnant massifs of the South Pole–Aitken basin rim.',
+        supports: ['landform'],
       },
       {
         title:
@@ -552,6 +597,12 @@ export const TARGETS: Target[] = [
         url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
         says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
         supports: ['rock'],
+      },
+      {
+        title:
+          "Qiao, Head et al. (2024), Nature Communications: geological evidence for extensive basin ejecta as plains terrains in the Moon's south polar region",
+        url: 'https://www.nature.com/articles/s41467-024-50155-w',
+        says: 'The south polar region is highland terrain covered in impact craters of all sizes and ages, next to the South Pole–Aitken basin, the largest and oldest preserved impact basin on the Moon.',
       },
     ],
   },
@@ -562,18 +613,27 @@ export const TARGETS: Target[] = [
     lat: -85.395,
     lon: 31.19,
     materials: ['anorthosite'],
-    landforms: ['impact'],
+    landforms: ['massif'],
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: true,
+    setting:
+      'Near the southern edge of the ~8 km high Mons Mouton, a massif interpreted as part of the South Pole–Aitken basin rim.',
     note: 'Artemis candidate landing region. Centre = mean of 10 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       {
         title:
-          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+          'Wueller, Berger & Kring (2026), JGR Planets: Assessing potential landing sites with favorable illumination and accessible, potentially volatile-rich permanently shadowed regions within Artemis candidate landing regions',
         url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
         says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
-        supports: ['slope', 'ice'],
+        supports: ['slope', 'ice', 'landform'],
+      },
+      {
+        title:
+          'Wueller et al. (2025), JGR Planets: geology of Mons Mouton and Mons Malapert (doi 10.1029/2025JE009127)',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009127',
+        says: 'From their location and topography, Mons Mouton and Mons Malapert are interpreted as remnant massifs of the South Pole–Aitken basin rim.',
+        supports: ['landform'],
       },
       {
         title:
@@ -581,6 +641,12 @@ export const TARGETS: Target[] = [
         url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
         says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
         supports: ['rock'],
+      },
+      {
+        title:
+          "Qiao, Head et al. (2024), Nature Communications: geological evidence for extensive basin ejecta as plains terrains in the Moon's south polar region",
+        url: 'https://www.nature.com/articles/s41467-024-50155-w',
+        says: 'The south polar region is highland terrain covered in impact craters of all sizes and ages, next to the South Pole–Aitken basin, the largest and oldest preserved impact basin on the Moon.',
       },
     ],
   },
@@ -595,14 +661,21 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: false,
+    setting: 'On Mons Mouton, near the western rim of Nobile, an impact crater.',
     note: 'Artemis candidate landing region. Centre = mean of 9 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       {
         title:
-          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+          'Wueller, Berger & Kring (2026), JGR Planets: Assessing potential landing sites with favorable illumination and accessible, potentially volatile-rich permanently shadowed regions within Artemis candidate landing regions',
         url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
         says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
-        supports: ['slope', 'ice'],
+        supports: ['slope', 'ice', 'landform'],
+      },
+      {
+        title: "NASA's Artemis rover to land near Nobile region of Moon's south pole (NASA, 2021)",
+        url: 'https://www.nasa.gov/news-release/nasas-artemis-rover-to-land-near-nobile-region-of-moons-south-pole/',
+        says: 'Nobile Crater is an impact crater, formed by a collision with a smaller body.',
+        supports: ['landform'],
       },
       {
         title:
@@ -610,6 +683,12 @@ export const TARGETS: Target[] = [
         url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
         says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
         supports: ['rock'],
+      },
+      {
+        title:
+          "Qiao, Head et al. (2024), Nature Communications: geological evidence for extensive basin ejecta as plains terrains in the Moon's south polar region",
+        url: 'https://www.nature.com/articles/s41467-024-50155-w',
+        says: 'The south polar region is highland terrain covered in impact craters of all sizes and ages, next to the South Pole–Aitken basin, the largest and oldest preserved impact basin on the Moon.',
       },
     ],
   },
@@ -624,14 +703,27 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: false,
+    setting: 'On the northeastern rim of Nobile, an impact crater.',
     note: 'Artemis candidate landing region. Centre = mean of 8 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       {
         title:
-          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+          'Wueller, Berger & Kring (2026), JGR Planets: Assessing potential landing sites with favorable illumination and accessible, potentially volatile-rich permanently shadowed regions within Artemis candidate landing regions',
         url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
         says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
         supports: ['slope', 'ice'],
+      },
+      {
+        title:
+          'Here are the nine sites where Artemis 3 might land on the Moon (Astronomy magazine)',
+        url: 'https://www.astronomy.com/space-exploration/here-are-the-nine-sites-where-artemis-3-might-land-on-the-moon/',
+        supports: ['landform'],
+      },
+      {
+        title: "NASA's Artemis rover to land near Nobile region of Moon's south pole (NASA, 2021)",
+        url: 'https://www.nasa.gov/news-release/nasas-artemis-rover-to-land-near-nobile-region-of-moons-south-pole/',
+        says: 'Nobile Crater is an impact crater, formed by a collision with a smaller body.',
+        supports: ['landform'],
       },
       {
         title:
@@ -639,6 +731,12 @@ export const TARGETS: Target[] = [
         url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
         says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
         supports: ['rock'],
+      },
+      {
+        title:
+          "Qiao, Head et al. (2024), Nature Communications: geological evidence for extensive basin ejecta as plains terrains in the Moon's south polar region",
+        url: 'https://www.nature.com/articles/s41467-024-50155-w',
+        says: 'The south polar region is highland terrain covered in impact craters of all sizes and ages, next to the South Pole–Aitken basin, the largest and oldest preserved impact basin on the Moon.',
       },
     ],
   },
@@ -653,14 +751,21 @@ export const TARGETS: Target[] = [
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: false,
+    setting: 'Just north of de Gerlache Rim 1, on the rim of de Gerlache, an impact crater.',
     note: 'Artemis candidate landing region. Centre = mean of 6 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       {
         title:
-          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+          'Wueller, Berger & Kring (2026), JGR Planets: Assessing potential landing sites with favorable illumination and accessible, potentially volatile-rich permanently shadowed regions within Artemis candidate landing regions',
         url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
         says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
-        supports: ['slope', 'ice'],
+        supports: ['slope', 'ice', 'landform'],
+      },
+      {
+        title: 'de Gerlache (crater) (Wikipedia)',
+        url: 'https://en.wikipedia.org/wiki/De_Gerlache_(crater)',
+        says: 'de Gerlache is a lunar impact crater.',
+        supports: ['landform'],
       },
       {
         title:
@@ -668,6 +773,12 @@ export const TARGETS: Target[] = [
         url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
         says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
         supports: ['rock'],
+      },
+      {
+        title:
+          "Qiao, Head et al. (2024), Nature Communications: geological evidence for extensive basin ejecta as plains terrains in the Moon's south polar region",
+        url: 'https://www.nature.com/articles/s41467-024-50155-w',
+        says: 'The south polar region is highland terrain covered in impact craters of all sizes and ages, next to the South Pole–Aitken basin, the largest and oldest preserved impact basin on the Moon.',
       },
     ],
   },
@@ -678,18 +789,19 @@ export const TARGETS: Target[] = [
     lat: -87.201,
     lon: 126.571,
     materials: ['anorthosite'],
-    landforms: ['impact'],
+    landforms: ['plain'],
     slopeMaxDeg: 5,
     precipMmYr: 0,
     iceAccess: true,
+    setting: 'A plain about 20 km northeast of Slater crater, on the far side of the Moon.',
     note: 'Artemis candidate landing region. Centre = mean of 11 published landing sites; most landing sites have slopes under 5°.',
     sources: [
       {
         title:
-          'Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and accessible permanently shadowed regions within the Artemis candidate landing regions',
+          'Wueller, Berger & Kring (2026), JGR Planets: Assessing potential landing sites with favorable illumination and accessible, potentially volatile-rich permanently shadowed regions within Artemis candidate landing regions',
         url: 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434',
         says: "Finds 130 landing sites inside NASA's Artemis candidate regions that meet the Human Landing System requirements and are within 2 km of a permanently shadowed region.",
-        supports: ['slope', 'ice'],
+        supports: ['slope', 'ice', 'landform'],
       },
       {
         title:
@@ -697,6 +809,12 @@ export const TARGETS: Target[] = [
         url: 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf',
         says: 'NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar south pole, where astronauts are to land.',
         supports: ['rock'],
+      },
+      {
+        title:
+          "Qiao, Head et al. (2024), Nature Communications: geological evidence for extensive basin ejecta as plains terrains in the Moon's south polar region",
+        url: 'https://www.nature.com/articles/s41467-024-50155-w',
+        says: 'The south polar region is highland terrain covered in impact craters of all sizes and ages, next to the South Pole–Aitken basin, the largest and oldest preserved impact basin on the Moon.',
       },
     ],
   },

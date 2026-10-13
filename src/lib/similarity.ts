@@ -44,6 +44,8 @@ export interface Target {
   dailyRangeC?: number
   precipMmYr?: number
   iceAccess: boolean
+  /** What the place is geologically, in one sentence (Moon regions). */
+  setting?: string
   note: string
   sources: TargetSource[]
 }

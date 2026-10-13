@@ -316,6 +316,7 @@ function TargetSummary({ target }: { target: Target }) {
       <span className="text-muted tabular-nums">
         {target.lat.toFixed(2)}, {target.lon.toFixed(2)}
       </span>
+      {target.setting && <p className="w-full text-fg">{target.setting}</p>}
       <p className="w-full text-fg-2">{target.note}</p>
       <div className="w-full">
         <p className="mt-2 text-xs font-medium tracking-wide text-muted uppercase">

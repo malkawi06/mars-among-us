@@ -68,20 +68,54 @@ EARTH = [
 
 JGR = 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009434'
 LPI_HIGHLANDS = 'https://www.hou.usra.edu/meetings/lpsc2020/pdf/2867.pdf'
+NASA_MALAPERT = 'https://www.nasa.gov/image-detail/malapert-massif-m1432398306-lroc'
+MOUTON_MALAPERT = 'https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JE009127'
+NASA_NOBILE = 'https://www.nasa.gov/news-release/nasas-artemis-rover-to-land-near-nobile-region-of-moons-south-pole/'
+ASTRONOMY_SITES = 'https://www.astronomy.com/space-exploration/here-are-the-nine-sites-where-artemis-3-might-land-on-the-moon/'
+WIKI_DE_GERLACHE = 'https://en.wikipedia.org/wiki/De_Gerlache_(crater)'
+SOUTH_POLE = 'https://www.nature.com/articles/s41467-024-50155-w'
+
 # Title of every target source, what it reports (only when checked against the source) and which
 # factors' target values it supports, so the Compare page can show where each value comes from.
 SOURCE_INFO = {
     JGR: dict(
-        title='Wueller, Berger & Kring (2026), JGR Planets: landing sites with favourable illumination and '
-              'accessible permanently shadowed regions within the Artemis candidate landing regions',
+        title='Wueller, Berger & Kring (2026), JGR Planets: Assessing potential landing sites with favorable '
+              'illumination and accessible, potentially volatile-rich permanently shadowed regions within '
+              'Artemis candidate landing regions',
         says='Finds 130 landing sites inside NASA\'s Artemis candidate regions that meet the Human Landing '
              'System requirements and are within 2 km of a permanently shadowed region.',
-        supports=['slope', 'ice']),
+        supports=['slope', 'ice', 'landform']),
     LPI_HIGHLANDS: dict(
         title='Gruener et al. (2020), LPSC: Greenland "White Mountain" anorthosite, a new lunar polar regolith simulant',
         says='NASA Johnson Space Center uses anorthosite from Greenland to simulate the regolith at the lunar '
              'south pole, where astronauts are to land.',
         supports=['rock']),
+    NASA_MALAPERT: dict(
+        title='Malapert Massif (NASA, LROC image)',
+        says='Malapert massif is thought to be a remnant of the South Pole–Aitken basin rim, which formed '
+             'more than 4 billion years ago.',
+        supports=['landform']),
+    MOUTON_MALAPERT: dict(
+        title='Wueller et al. (2025), JGR Planets: geology of Mons Mouton and Mons Malapert (doi 10.1029/2025JE009127)',
+        says='From their location and topography, Mons Mouton and Mons Malapert are interpreted as remnant '
+             'massifs of the South Pole–Aitken basin rim.',
+        supports=['landform']),
+    NASA_NOBILE: dict(
+        title='NASA\'s Artemis rover to land near Nobile region of Moon\'s south pole (NASA, 2021)',
+        says='Nobile Crater is an impact crater, formed by a collision with a smaller body.',
+        supports=['landform']),
+    ASTRONOMY_SITES: dict(
+        title='Here are the nine sites where Artemis 3 might land on the Moon (Astronomy magazine)',
+        supports=['landform']),
+    WIKI_DE_GERLACHE: dict(
+        title='de Gerlache (crater) (Wikipedia)',
+        says='de Gerlache is a lunar impact crater.',
+        supports=['landform']),
+    SOUTH_POLE: dict(
+        title='Qiao, Head et al. (2024), Nature Communications: geological evidence for extensive basin ejecta '
+              'as plains terrains in the Moon\'s south polar region',
+        says='The south polar region is highland terrain covered in impact craters of all sizes and ages, next '
+             'to the South Pole–Aitken basin, the largest and oldest preserved impact basin on the Moon.'),
     'https://www.esa.int/ESA_Multimedia/Images/2022/08/Water-rich_minerals_at_Jezero_Crater':
         dict(title='Water-rich minerals at Jezero Crater (ESA, 2022)', supports=['rock']),
     'https://en.wikipedia.org/wiki/Octavia_E._Butler_Landing': dict(title='Octavia E. Butler Landing (Wikipedia)'),
@@ -121,9 +155,30 @@ def cite(url):
 
 # name, accessible cold trap (< 110 K) from a landing site (Wueller et al., JGR Planets 2025/2026).
 # Nobile Rim 2: the paper only reports PSRs that "may maintain surface temperatures below 125 K".
-MOON = [('Peak near Cabeus B', False), ('Haworth', True), ('Malapert Massif', False), ('Mons Mouton Plateau', True),
-        ('Mons Mouton', True), ('Nobile Rim 1', False), ('Nobile Rim 2', False), ('de Gerlache Rim 2', False),
-        ('Slater Plain', True)]
+# name, accessible cold trap, landform, geological setting and the sources for it. Only four regions sit on
+# an impact-crater rim; the others are massifs of the South Pole-Aitken basin rim or a plain.
+MOON = [
+    ('Peak near Cabeus B', False, 'massif',
+     'A peak on a ~6 km high massif between the Cabeus and Drygalski craters, about 35 km southwest of Cabeus B crater.',
+     [JGR]),
+    ('Haworth', True, 'impact', 'Near the rims of the ancient Haworth and Cabeus impact craters.', [JGR]),
+    ('Malapert Massif', False, 'massif',
+     'A massif thought to be a remnant of the rim of the South Pole–Aitken basin, which formed more than 4 billion years ago.',
+     [NASA_MALAPERT, MOUTON_MALAPERT]),
+    ('Mons Mouton Plateau', True, 'massif',
+     'The largest Artemis region, a plateau on Mons Mouton, a massif interpreted as part of the South Pole–Aitken basin rim.',
+     [JGR, MOUTON_MALAPERT]),
+    ('Mons Mouton', True, 'massif',
+     'Near the southern edge of the ~8 km high Mons Mouton, a massif interpreted as part of the South Pole–Aitken basin rim.',
+     [JGR, MOUTON_MALAPERT]),
+    ('Nobile Rim 1', False, 'impact', 'On Mons Mouton, near the western rim of Nobile, an impact crater.',
+     [JGR, NASA_NOBILE]),
+    ('Nobile Rim 2', False, 'impact', 'On the northeastern rim of Nobile, an impact crater.',
+     [ASTRONOMY_SITES, NASA_NOBILE]),
+    ('de Gerlache Rim 2', False, 'impact', 'Just north of de Gerlache Rim 1, on the rim of de Gerlache, an impact crater.',
+     [JGR, WIKI_DE_GERLACHE]),
+    ('Slater Plain', True, 'plain', 'A plain about 20 km northeast of Slater crater, on the far side of the Moon.', [JGR]),
+]
 # id, name, lat, lon, materials, landforms, reachable ice, note, sources, sourced measurements.
 # Slopes only when measured over hundreds of metres, like the Earth slopes (landing limits over
 # 2–5 m are not comparable); day–night swing is near-surface air temperature, like NASA POWER's.
@@ -184,13 +239,22 @@ for sid, analog_for, materials, landforms, extra in EARTH:
     earth_rows.append(row)
 
 targets = []
-for i, (name, cold_trap) in enumerate(MOON, 1):
+for i, (name, cold_trap, landform, setting, setting_sources) in enumerate(MOON, 1):
     lat, lon, n = moon_centroids[name]
+    urls = list(dict.fromkeys([JGR, *setting_sources, LPI_HIGHLANDS, SOUTH_POLE]))
+    sources = [cite(url) for url in urls]
+    for src in sources:
+        # A source backs a region's landform only when it is one of the sources for its setting.
+        if src['url'] not in setting_sources and 'landform' in src.get('supports', []):
+            src['supports'] = [f for f in src['supports'] if f != 'landform']
+            if not src['supports']:
+                src.pop('supports')
     targets.append({
         'id': f'moon-{i}', 'name': name, 'body': 'Moon', 'lat': lat, 'lon': lon,
-        'materials': ['anorthosite'], 'landforms': ['impact'], 'slopeMaxDeg': 5, 'precipMmYr': 0, 'iceAccess': cold_trap,
+        'materials': ['anorthosite'], 'landforms': [landform], 'slopeMaxDeg': 5, 'precipMmYr': 0, 'iceAccess': cold_trap,
+        'setting': setting,
         'note': f'Artemis candidate landing region. Centre = mean of {n} published landing sites; most landing sites have slopes under 5°.',
-        'sources': [cite(JGR), cite(LPI_HIGHLANDS)],
+        'sources': sources,
     })
 for sid, name, lat, lon, materials, landforms, ice, note, sources, measured in MARS:
     # No rain falls on Mars today. Site temperatures are left out until a sourced local value is added:

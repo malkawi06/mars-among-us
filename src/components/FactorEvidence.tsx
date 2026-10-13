@@ -155,6 +155,7 @@ function TargetEvidence({ factor, target }: { factor: FactorResult; target: Targ
     )
   return (
     <ul className="space-y-2">
+      {factor.factor === 'landform' && target.setting && <li>{target.setting}</li>}
       {backing.map((s) => (
         <li key={s.url}>
           {s.says && <p>“{s.says}”</p>}

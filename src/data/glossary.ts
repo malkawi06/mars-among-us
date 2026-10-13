@@ -124,6 +124,31 @@ export const GLOSSARY: Record<string, GlossaryEntry> = {
       url: 'https://ntrs.nasa.gov/api/citations/19660006136/downloads/19660006136.pdf',
     },
   },
+  massif: {
+    name: 'Massif',
+    meaning:
+      'A large mountain mass: a compact block of high ground with one or more peaks, moved as a whole by the forces that shaped it.',
+    source: { title: 'Massif (Wikipedia)', url: 'https://en.wikipedia.org/wiki/Massif' },
+    onMarsOrMoon: {
+      text: 'Malapert massif near the lunar south pole is thought to be a remnant of the rim of the South Pole–Aitken basin.',
+      source: {
+        title: 'Malapert Massif (NASA, LROC image)',
+        url: 'https://www.nasa.gov/image-detail/malapert-massif-m1432398306-lroc',
+      },
+    },
+  },
+  plain: {
+    name: 'Plain',
+    meaning: 'A broad, fairly level area with gentle slopes and little change in height.',
+    source: { title: 'Plain (Britannica)', url: 'https://www.britannica.com/science/plain' },
+    onMarsOrMoon: {
+      text: 'Plains near the lunar south pole are mostly material thrown out by large impact basins, not lava.',
+      source: {
+        title: 'Qiao, Head et al. (2024), Nature Communications',
+        url: 'https://www.nature.com/articles/s41467-024-50155-w',
+      },
+    },
+  },
   dunes: {
     name: 'Sand dunes',
     meaning: 'Ever-changing hills of loose sand piled up by wind and water against a barrier.',
