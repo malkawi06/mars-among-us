@@ -79,7 +79,12 @@ export default function Compare() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
-      <PageHeader title={page.title} intro={page.intro} />
+      <PageHeader
+        eyebrow="02 · Compare"
+        title={page.title}
+        intro={page.intro}
+        photo={siteConfig.photos.compare}
+      />
 
       <section className="rounded-2xl border border-border bg-surface p-4 sm:p-5">
         <div className="grid gap-5 lg:grid-cols-[minmax(0,20rem)_1fr]">

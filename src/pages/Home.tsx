@@ -6,10 +6,10 @@ import { useAsync } from '../hooks/useAsync'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { useReveal } from '../hooks/useReveal'
 import { EARTH_URL, TARGETS_URL, loadOrbitalImages } from '../lib/orbitalImages'
+import { PhotoCredit, PhotoFill } from '../components/Photo'
 
 const stats = __HOME_STATS__
 const example = stats.example
-const PHOTOS = `${import.meta.env.BASE_URL}photos/`
 const exampleLink = `/compare?target=${example.targetId}&purpose=${example.purposeId}&site=${example.siteId}`
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
       <Hero />
 
       <Panel
-        photo={home.photos.analyze}
+        photo={site.photos.analyze}
         eyebrow="01 · Analyze"
         title={analyze.title}
         body={analyze.intro}
@@ -41,7 +41,7 @@ export default function Home() {
       </Panel>
 
       <Panel
-        photo={home.photos.compare}
+        photo={site.photos.compare}
         eyebrow="02 · Compare"
         title={compare.title}
         body={compare.intro}
@@ -60,7 +60,7 @@ export default function Home() {
       <Example />
 
       <Panel
-        photo={home.photos.analogs}
+        photo={site.photos.analogs}
         eyebrow="03 · Earth Analogs"
         title={analogs.title}
         body={analogs.intro}
@@ -87,7 +87,7 @@ export default function Home() {
       </Panel>
 
       <Panel
-        photo={home.photos.method}
+        photo={site.photos.method}
         eyebrow="How it is scored"
         title={home.promises[0]}
         body={home.scoring}
@@ -105,17 +105,10 @@ export default function Home() {
 function Hero() {
   const { home, event, pitch, name } = site
   const [first, ...rest] = name.split(' ')
-  const photo = home.photos.hero
+  const photo = site.photos.hero
   return (
     <section className="relative flex h-svh min-h-[40rem] items-end overflow-hidden">
-      <img
-        src={`${PHOTOS}${photo.file}-2560.jpg`}
-        srcSet={`${PHOTOS}${photo.file}-1280.jpg 1280w, ${PHOTOS}${photo.file}-2560.jpg 2560w`}
-        sizes="100vw"
-        alt={photo.alt}
-        fetchPriority="high"
-        className="kenburns absolute inset-0 size-full object-cover"
-      />
+      <PhotoFill photo={photo} priority className="kenburns" />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-black/20" />
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
 
@@ -142,7 +135,7 @@ function Hero() {
         </div>
       </div>
 
-      <Credit photo={photo} />
+      <PhotoCredit photo={photo} />
       <ChevronDown
         className="absolute bottom-6 left-1/2 size-7 -translate-x-1/2 animate-bounce text-white/70 motion-reduce:animate-none"
         aria-hidden
@@ -178,14 +171,7 @@ function Panel({
       ref={ref}
       className="relative flex min-h-svh items-end overflow-hidden lg:items-center"
     >
-      <img
-        src={`${PHOTOS}${photo.file}-2560.jpg`}
-        srcSet={`${PHOTOS}${photo.file}-1280.jpg 1280w, ${PHOTOS}${photo.file}-2560.jpg 2560w`}
-        sizes="100vw"
-        alt={photo.alt}
-        loading="lazy"
-        className="settle absolute inset-0 size-full object-cover"
-      />
+      <PhotoFill photo={photo} className="settle" />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10 lg:hidden" />
       <div
         className={`absolute inset-0 hidden lg:block ${
@@ -224,7 +210,7 @@ function Panel({
         </div>
       </div>
 
-      <Credit photo={photo} />
+      <PhotoCredit photo={photo} />
     </section>
   )
 }
@@ -367,17 +353,5 @@ function Sources() {
         </ul>
       </div>
     </section>
-  )
-}
-
-function Credit({ photo }: { photo: Photo }) {
-  return (
-    <p className="absolute right-5 bottom-3 z-10 max-w-[70vw] truncate text-right text-[11px] text-white/45 sm:right-8">
-      Photo:{' '}
-      <a href={photo.page} target="_blank" rel="noreferrer" className="hover:text-white">
-        {photo.title}
-      </a>{' '}
-      · {photo.credit}
-    </p>
   )
 }

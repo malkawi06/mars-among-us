@@ -36,21 +36,21 @@
 
 .dark {
   color-scheme: dark;
-  --bg: #070818;
-  --surface: #0e1130;
-  --surface-2: #171b45;
-  --fg: #f2f3ff;
-  --fg-2: #b9bde6;
-  --muted: #8b90c0;
-  --border: #262a5c;
+  --bg: #000000;
+  --surface: #0c0c0e;
+  --surface-2: #18181b;
+  --fg: #f5f5f5;
+  --fg-2: #c2c2c7;
+  --muted: #8e8e95;
+  --border: #2a2a2e;
   --accent: #ff8a4c;
   --accent-fg: #14081a;
   --earth: #6fb7ff;
   --danger: #f07a7a;
   --warning: #f5b94a;
 
-  --chart-grid: #1f2350;
-  --chart-axis: #343a72;
+  --chart-grid: #222226;
+  --chart-axis: #3a3a40;
 }
 
 @theme inline {
@@ -69,9 +69,10 @@
 
   --font-sans: 'Barlow', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Barlow Condensed', 'Barlow', ui-sans-serif, system-ui, sans-serif;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1.125rem;
-  --radius-2xl: 1.5rem;
+  /* Square corners throughout, as in the full-screen photo design. */
+  --radius-lg: 0.125rem;
+  --radius-xl: 0.125rem;
+  --radius-2xl: 0.125rem;
 }
 
 @layer base {
@@ -85,15 +86,10 @@
     font-family: var(--font-display);
   }
 
-  .dark body {
-    background-image: radial-gradient(80% 50% at 50% 0%, rgb(80 70 200 / 0.18), transparent 70%);
-    background-attachment: fixed;
-  }
-
-  .dark h1 {
-    background: linear-gradient(90deg, #ffb07a, #ff8a4c 40%, #8fc4ff);
-    background-clip: text;
-    color: transparent;
+  h1,
+  h2 {
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
   }
 
   :focus-visible {
@@ -136,44 +132,6 @@
 
 .dark .leaflet-control-layers-toggle {
   filter: invert(1);
-}
-
-/* ---- Home hero backdrop --------------------------------------------------- */
-
-.hero-sky {
-  background-image:
-    radial-gradient(
-      55% 70% at 88% 5%,
-      color-mix(in oklab, var(--accent) 30%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      45% 60% at 5% 95%,
-      color-mix(in oklab, var(--earth) 26%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(40% 40% at 50% 50%, rgb(140 80 220 / 0.12), transparent 70%);
-}
-
-/* Glow around the example card and the main buttons in the dark theme. */
-.dark .glow {
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--accent) 25%, transparent),
-    0 20px 60px -20px color-mix(in oklab, var(--accent) 35%, transparent);
-}
-
-.dark .hero-sky::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.55;
-  background-image:
-    radial-gradient(1px 1px at 25px 35px, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 90px 140px, #fff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 160px 60px, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 210px 190px, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 275px 100px, #fff 50%, transparent 51%);
-  background-size: 300px 220px;
 }
 
 /* ---- Cinematic sections (Home) --------------------------------------------- */

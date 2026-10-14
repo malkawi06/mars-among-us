@@ -135,46 +135,46 @@ export const site = {
     },
   ] satisfies NavItem[],
 
+  /** Full-screen NASA photos: behind each Home section and at the top of each page. */
+  photos: {
+    hero: {
+      file: 'mars-mount-sharp',
+      alt: 'Layered slopes of Mount Sharp on Mars, seen by the Curiosity rover',
+      title: "A Dramatic View of Mars' Mount Sharp",
+      credit: 'NASA/JPL-Caltech/MSSS',
+      page: 'https://images.nasa.gov/details/PIA23898',
+    },
+    analyze: {
+      file: 'mars-jezero',
+      alt: 'Rocks on the floor of Jezero Crater on Mars, seen by the Perseverance rover',
+      title: "Perseverance's Mastcam-Z First High-Resolution Panorama",
+      credit: 'NASA/JPL-Caltech/ASU/MSSS',
+      page: 'https://images.nasa.gov/details/PIA23727',
+    },
+    compare: {
+      file: 'moon-hadley',
+      alt: 'Astronaut David Scott at the lunar rover on the edge of Hadley Rille, Apollo 15',
+      title: 'Apollo 15 lunar panorama',
+      credit: 'NASA',
+      page: 'https://images.nasa.gov/details/jsc2011e118359',
+    },
+    analogs: {
+      file: 'earth-haughton',
+      alt: 'Two NASA K10 rovers surveying Haughton Crater on Devon Island, Canada',
+      title: 'K10 rovers surveying Haughton Crater, Devon Island (Haughton-Mars Project, 2007)',
+      credit: 'NASA/Matt Deans',
+      page: 'https://images.nasa.gov/details/ARC-2007-ACD07-0170-005',
+    },
+    method: {
+      file: 'earth-haughton-camp',
+      alt: 'A NASA K10 rover above the Haughton-Mars Project base camp on Devon Island, Canada',
+      title: 'K10 rover descending toward base camp, Haughton Crater (Haughton-Mars Project, 2007)',
+      credit: 'NASA/Lorenzo Flueckiger (CMU West)',
+      page: 'https://images.nasa.gov/details/ARC-2007-ACD07-0170-006',
+    },
+  } satisfies Record<string, Photo>,
+
   home: {
-    /** Full-screen NASA photos behind each Home section. */
-    photos: {
-      hero: {
-        file: 'mars-mount-sharp',
-        alt: 'Layered slopes of Mount Sharp on Mars, seen by the Curiosity rover',
-        title: "A Dramatic View of Mars' Mount Sharp",
-        credit: 'NASA/JPL-Caltech/MSSS',
-        page: 'https://images.nasa.gov/details/PIA23898',
-      },
-      analyze: {
-        file: 'mars-jezero',
-        alt: 'Rocks on the floor of Jezero Crater on Mars, seen by the Perseverance rover',
-        title: "Perseverance's Mastcam-Z First High-Resolution Panorama",
-        credit: 'NASA/JPL-Caltech/ASU/MSSS',
-        page: 'https://images.nasa.gov/details/PIA23727',
-      },
-      compare: {
-        file: 'moon-hadley',
-        alt: 'Astronaut David Scott at the lunar rover on the edge of Hadley Rille, Apollo 15',
-        title: 'Apollo 15 lunar panorama',
-        credit: 'NASA',
-        page: 'https://images.nasa.gov/details/jsc2011e118359',
-      },
-      analogs: {
-        file: 'earth-haughton',
-        alt: 'Two NASA K10 rovers surveying Haughton Crater on Devon Island, Canada',
-        title: 'K10 rovers surveying Haughton Crater, Devon Island (Haughton-Mars Project, 2007)',
-        credit: 'NASA/Matt Deans',
-        page: 'https://images.nasa.gov/details/ARC-2007-ACD07-0170-005',
-      },
-      method: {
-        file: 'earth-haughton-camp',
-        alt: 'A NASA K10 rover above the Haughton-Mars Project base camp on Devon Island, Canada',
-        title:
-          'K10 rover descending toward base camp, Haughton Crater (Haughton-Mars Project, 2007)',
-        credit: 'NASA/Lorenzo Flueckiger (CMU West)',
-        page: 'https://images.nasa.gov/details/ARC-2007-ACD07-0170-006',
-      },
-    } satisfies Record<string, Photo>,
     primaryCta: { label: 'Analyze a Moon or Mars image', to: '/analyze' },
     secondaryCta: { label: 'Compare with the Moon and Mars', to: '/compare' },
     /** Short promises under the buttons. */

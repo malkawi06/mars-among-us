@@ -10,7 +10,12 @@ export default function About() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      <PageHeader title={`About ${site.name}`} intro={site.pitch} />
+      <PageHeader
+        eyebrow="About"
+        title={`About ${site.name}`}
+        intro={site.pitch}
+        photo={site.photos.method}
+      />
 
       <Section id="challenge" title="The Challenge">
         <p className="text-sm text-muted">

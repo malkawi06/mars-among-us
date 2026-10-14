@@ -56,7 +56,12 @@ export default function Analogs() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
-      <PageHeader title={page.title} intro={page.intro}>
+      <PageHeader
+        eyebrow="03 · Earth Analogs"
+        title={page.title}
+        intro={page.intro}
+        photo={siteConfig.photos.analogs}
+      >
         <ol className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-fg-2">
           {GUIDE.map(({ icon: Icon, text }, i) => (
             <li key={text} className="flex items-center gap-2">

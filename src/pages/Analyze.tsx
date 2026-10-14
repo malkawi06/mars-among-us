@@ -92,7 +92,12 @@ export default function Analyze() {
         </form>
       </dialog>
 
-      <PageHeader title={page.title} intro={page.intro} />
+      <PageHeader
+        eyebrow="01 · Analyze"
+        title={page.title}
+        intro={page.intro}
+        photo={siteConfig.photos.analyze}
+      />
 
       <div className="grid gap-6 lg:grid-cols-5">
         <div className="space-y-4 lg:col-span-2">

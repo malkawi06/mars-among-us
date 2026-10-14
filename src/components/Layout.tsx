@@ -15,8 +15,8 @@ export function Layout() {
         Skip to content
       </a>
       <Navbar />
-      <main id="main" className="flex-1">
-        <Suspense fallback={<LoadingState label="Loading page…" className="py-24" />}>
+      <main id="main" className="flex-1 overflow-x-clip">
+        <Suspense fallback={<LoadingState label="Loading page…" className="pt-32 pb-24" />}>
           <Outlet />
         </Suspense>
       </main>

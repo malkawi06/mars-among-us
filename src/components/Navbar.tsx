@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router'
+import { Link, NavLink } from 'react-router'
 import { Menu, X } from 'lucide-react'
 import { site } from '../config/site'
 import { ThemeToggle } from './ThemeToggle'
 
 /**
- * Top bar. On Home it floats over the full-screen photos and turns solid once the page scrolls;
- * on other pages it stays solid. On phones the links open in a panel from the right.
+ * Top bar. It floats over the photo at the top of every page and turns solid once the page
+ * scrolls; the `dark` class keeps it light-on-dark in both themes. On phones the links open in a
+ * panel from the right.
  */
 export function Navbar() {
-  const { pathname } = useLocation()
-  const overPhoto = pathname === '/'
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -29,19 +28,15 @@ export function Navbar() {
     return () => window.removeEventListener('keydown', onKey)
   }, [open])
 
-  const clear = overPhoto && !scrolled && !open
+  const clear = !scrolled && !open
   const links = site.nav.filter((item) => item.to !== '/')
 
   return (
     <>
       {/* The phone menu sits outside the header: the header's backdrop blur would trap a fixed child. */}
       <header
-        className={`${overPhoto ? 'fixed' : 'sticky'} inset-x-0 top-0 z-50 transition-colors duration-500 ${
-          clear
-            ? 'bg-gradient-to-b from-black/70 to-transparent text-white'
-            : overPhoto
-              ? 'bg-black/90 text-white backdrop-blur'
-              : 'border-b border-border bg-bg/90 text-fg backdrop-blur'
+        className={`dark fixed inset-x-0 top-0 z-50 text-white transition-colors duration-500 ${
+          clear ? 'bg-gradient-to-b from-black/70 to-transparent' : 'bg-black/90 backdrop-blur'
         }`}
       >
         <nav
