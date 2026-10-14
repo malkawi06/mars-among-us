@@ -1,6 +1,10 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/space-grotesk';
-@import '@fontsource-variable/inter';
+@import '@fontsource/barlow/400.css';
+@import '@fontsource/barlow/500.css';
+@import '@fontsource/barlow/600.css';
+@import '@fontsource/barlow-condensed/500.css';
+@import '@fontsource/barlow-condensed/600.css';
+@import '@fontsource/barlow-condensed/700.css';
 
 /* `dark:` utilities follow the .dark class on <html> (toggled in the navbar). */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -63,7 +67,8 @@
   --color-danger: var(--danger);
   --color-warning: var(--warning);
 
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Barlow', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Barlow Condensed', 'Barlow', ui-sans-serif, system-ui, sans-serif;
   --radius-lg: 0.75rem;
   --radius-xl: 1.125rem;
   --radius-2xl: 1.5rem;
@@ -77,7 +82,7 @@
   h1,
   h2,
   h3 {
-    font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-display);
   }
 
   .dark body {
@@ -169,4 +174,121 @@
     radial-gradient(1px 1px at 210px 190px, #fff 50%, transparent 51%),
     radial-gradient(1px 1px at 275px 100px, #fff 50%, transparent 51%);
   background-size: 300px 220px;
+}
+
+/* ---- Cinematic sections (Home) --------------------------------------------- */
+
+/* Outlined button that fills on hover. */
+.btn-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.25rem;
+  padding: 0 1.75rem;
+  border: 2px solid currentColor;
+  font: 600 0.875rem/1 var(--font-display);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+.btn-line:hover {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+.btn-line.solid {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+.btn-line.solid:hover {
+  background: transparent;
+  color: #fff;
+}
+
+/* Text that rises into place when its section scrolls into view (useReveal marks the section). */
+.reveal > * {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 1s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+[data-shown] .reveal > * {
+  opacity: 1;
+  transform: none;
+}
+[data-shown] .reveal > :nth-child(2) {
+  transition-delay: 0.12s;
+}
+[data-shown] .reveal > :nth-child(3) {
+  transition-delay: 0.24s;
+}
+[data-shown] .reveal > :nth-child(4) {
+  transition-delay: 0.36s;
+}
+[data-shown] .reveal > :nth-child(5) {
+  transition-delay: 0.48s;
+}
+
+/* Photos settle from a slight zoom as their section comes in. */
+.settle {
+  transform: scale(1.12);
+  transition: transform 2.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+[data-shown] .settle {
+  transform: scale(1);
+}
+
+/* Slow push-in on the hero photo. */
+.kenburns {
+  animation: kenburns 18s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes kenburns {
+  from {
+    transform: scale(1.15);
+  }
+}
+
+/* Hero title: each line slides up from behind a mask on load. */
+.rise {
+  display: block;
+  overflow: hidden;
+}
+.rise > span {
+  display: block;
+  animation: rise 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.rise:nth-child(2) > span {
+  animation-delay: 0.15s;
+}
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+}
+.fade-in {
+  animation: fade-in 1.4s ease 0.5s both;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal > *,
+  .settle,
+  .rise > span,
+  .kenburns,
+  .fade-in {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
 }

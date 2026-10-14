@@ -9,19 +9,15 @@ export function Footer() {
   ].filter((link) => link.href)
 
   return (
-    <footer className="border-t border-border">
-      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <p className="font-medium text-fg-2">{site.footer.tagline}</p>
-          <p className="mt-1">
-            {site.team.name && `${site.team.name} · `}
-            {site.footer.disclaimer}
-          </p>
-        </div>
-        <ul className="flex flex-wrap gap-x-4 gap-y-1">
+    <footer className="bg-black text-white/60">
+      <div className="mx-auto flex max-w-[90rem] flex-col gap-4 px-5 py-10 font-display text-xs font-semibold tracking-[0.18em] uppercase sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <p>
+          {site.footer.tagline} · {site.footer.disclaimer}
+        </p>
+        <ul className="flex flex-wrap gap-x-6 gap-y-2">
           {links.map((link) => (
             <li key={link.label}>
-              <a href={link.href} target="_blank" rel="noreferrer" className="hover:text-fg">
+              <a href={link.href} target="_blank" rel="noreferrer" className="hover:text-white">
                 {link.label}
               </a>
             </li>
