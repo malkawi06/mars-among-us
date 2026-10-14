@@ -1,9 +1,11 @@
-import { BookOpenText, ListFilter, MapPin, MousePointerClick } from 'lucide-react'
+import { BookOpenText, ChevronDown, ListFilter, MapPin, MousePointerClick } from 'lucide-react'
+import { useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { AnalogMap } from '../components/AnalogMap'
 import { AnalogSiteDetails } from '../components/AnalogSiteDetails'
 import { ConfidenceBadge } from '../components/ConfidenceBadge'
 import { PageHeader } from '../components/PageHeader'
+import { SheetOnPhone } from '../components/SheetOnPhone'
 import { site as siteConfig } from '../config/site'
 import {
   ANALOG_SITES,
@@ -12,6 +14,7 @@ import {
   analogsFor,
   type LandformCode,
 } from '../data/analogs'
+import { DESKTOP, useMediaQuery } from '../hooks/useMediaQuery'
 import { usePageTitle } from '../hooks/usePageTitle'
 
 const GUIDE = [
@@ -47,8 +50,13 @@ export default function Analogs() {
 
   const sites = landform === 'all' ? ANALOG_SITES : analogsFor(landform).map(({ site }) => site)
   const selected = sites.find((s) => s.id === selectedId)
+  const desktop = useMediaQuery(DESKTOP)
+  // Phones show the site in a sheet; keep the last one in it while the sheet slides away.
+  const [sheetSite, setSheetSite] = useState(selected)
+  if (selected && selected !== sheetSite) setSheetSite(selected)
+  const close = () => setSelectedId(undefined)
   const chip = (active: boolean) =>
-    `rounded-full border px-3 py-1.5 text-sm transition-colors ${
+    `shrink-0 rounded-full border px-3 py-1.5 text-sm transition-colors ${
       active
         ? 'border-accent bg-accent text-accent-fg'
         : 'border-border bg-surface text-fg-2 hover:border-accent hover:text-fg'
@@ -62,7 +70,7 @@ export default function Analogs() {
         intro={page.intro}
         photo={siteConfig.photos.analogs}
       >
-        <ol className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-fg-2">
+        <ol className="mt-4 hidden flex-wrap gap-x-6 gap-y-2 text-sm text-fg-2 sm:flex">
           {GUIDE.map(({ icon: Icon, text }, i) => (
             <li key={text} className="flex items-center gap-2">
               <span className="grid size-7 place-items-center rounded-lg bg-accent/15 text-accent">
@@ -74,12 +82,16 @@ export default function Analogs() {
         </ol>
       </PageHeader>
 
-      <section aria-label="Landform" className="mb-5">
-        <h2 className="mb-2 flex items-center gap-2 text-sm font-medium">
+      {/* Phones: one sideways row that stays under the top bar while the page scrolls. */}
+      <section
+        aria-label="Landform"
+        className="sticky top-16 z-20 -mx-4 mb-4 bg-bg/95 py-3 backdrop-blur lg:static lg:mx-0 lg:mb-5 lg:bg-transparent lg:py-0 lg:backdrop-blur-none"
+      >
+        <h2 className="mb-2 hidden items-center gap-2 text-sm font-medium lg:flex">
           <ListFilter className="size-4 text-accent" aria-hidden />
           Landform
         </h2>
-        <div className="flex flex-wrap gap-2">
+        <div className="no-scrollbar flex gap-2 overflow-x-auto px-4 lg:flex-wrap lg:overflow-visible lg:px-0">
           <button
             type="button"
             aria-pressed={landform === 'all'}
@@ -103,30 +115,51 @@ export default function Analogs() {
       </section>
 
       <div className="grid gap-6 lg:grid-cols-5">
-        <div className="lg:col-span-3">
+        <div className="-mx-4 lg:col-span-3 lg:mx-0">
           <AnalogMap
             sites={sites}
             selectedId={selectedId}
             onSelect={setSelectedId}
-            className="h-[50vh] min-h-80 lg:h-[640px]"
+            className="h-[58svh] min-h-80 lg:h-[640px]"
           />
         </div>
 
         <div className="space-y-4 lg:col-span-2">
-          <dl className="space-y-1.5 rounded-xl border border-border bg-surface p-3 text-xs">
-            {CONFIDENCE_MEANING.map(([confidence, meaning]) => (
-              <div key={confidence} className="flex items-start gap-2">
-                <dt className="w-24 shrink-0">
-                  <ConfidenceBadge confidence={confidence} />
-                </dt>
-                <dd className="text-fg-2">{meaning}</dd>
-              </div>
-            ))}
-          </dl>
+          <details
+            open={desktop}
+            className="group rounded-xl border border-border bg-surface p-3 text-xs"
+          >
+            <summary className="flex cursor-pointer list-none items-center justify-between font-medium text-fg-2 [&::-webkit-details-marker]:hidden">
+              What strong, moderate and weak mean
+              <ChevronDown
+                className="size-3.5 transition-transform group-open:rotate-180"
+                aria-hidden
+              />
+            </summary>
+            <dl className="mt-2 space-y-1.5">
+              {CONFIDENCE_MEANING.map(([confidence, meaning]) => (
+                <div key={confidence} className="flex items-start gap-2">
+                  <dt className="w-24 shrink-0">
+                    <ConfidenceBadge confidence={confidence} />
+                  </dt>
+                  <dd className="text-fg-2">{meaning}</dd>
+                </div>
+              ))}
+            </dl>
+          </details>
 
-          {selected ? (
-            <AnalogSiteDetails site={selected} onBack={() => setSelectedId(undefined)} />
-          ) : (
+          {/* Desktop: the selected site replaces the list. Phones: the list stays, the site opens in a sheet. */}
+          {sheetSite && (
+            <SheetOnPhone
+              open={!!selected}
+              onClose={close}
+              label={sheetSite.name}
+              className={selected ? 'lg:static' : 'lg:hidden'}
+            >
+              <AnalogSiteDetails site={sheetSite} onBack={close} />
+            </SheetOnPhone>
+          )}
+          {(!selected || !desktop) && (
             <>
               <p className="text-sm text-muted">
                 {sites.length} {sites.length === 1 ? 'site' : 'sites'}
@@ -134,7 +167,7 @@ export default function Analogs() {
                   <> for {LANDFORM_NAMES[landform].toLowerCase()}, strongest evidence first</>
                 )}
               </p>
-              <ul className="max-h-[520px] space-y-2 overflow-y-auto pr-1">
+              <ul className="space-y-2 lg:max-h-[520px] lg:overflow-y-auto lg:pr-1">
                 {sites.map((s) => (
                   <li key={s.id}>
                     <button

@@ -26,10 +26,18 @@ export function PhotoFill({
   )
 }
 
-/** Title and credit of a photo, linked to its NASA page, in the bottom-right corner of its section. */
-export function PhotoCredit({ photo }: { photo: Photo }) {
+/** Title and credit of a photo, linked to its NASA page; bottom-right of its section unless `className` moves it. */
+export function PhotoCredit({
+  photo,
+  className = 'bottom-3',
+}: {
+  photo: Photo
+  className?: string
+}) {
   return (
-    <p className="absolute right-5 bottom-3 z-10 max-w-[70vw] truncate text-right text-[11px] text-white/45 sm:right-8">
+    <p
+      className={`absolute right-5 z-10 max-w-[70vw] truncate text-right text-[11px] text-white/45 sm:right-8 ${className}`}
+    >
       Photo:{' '}
       <a href={photo.page} target="_blank" rel="noreferrer" className="hover:text-white">
         {photo.title}

@@ -72,9 +72,9 @@ export default function Home() {
             { value: stats.landforms.length, label: 'Landforms' },
           ]}
         />
-        <ul className="flex flex-wrap gap-2">
+        <ul className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
           {stats.landforms.map(([code, name]) => (
-            <li key={code}>
+            <li key={code} className="shrink-0">
               <Link
                 to={`/analogs?landform=${code}`}
                 className="block border border-white/40 px-3 py-1.5 font-display text-xs font-semibold tracking-[0.14em] uppercase transition-colors hover:border-white hover:bg-white hover:text-black"
@@ -167,32 +167,34 @@ function Panel({
   const ref = useReveal<HTMLElement>()
   const right = side === 'right'
   return (
-    <section
-      ref={ref}
-      className="relative flex min-h-svh items-end overflow-hidden lg:items-center"
-    >
-      <PhotoFill photo={photo} className="settle" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10 lg:hidden" />
-      <div
-        className={`absolute inset-0 hidden lg:block ${
-          right
-            ? 'bg-gradient-to-l from-black/90 via-black/50 to-transparent'
-            : 'bg-gradient-to-r from-black/90 via-black/50 to-transparent'
-        }`}
-      />
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black to-transparent" />
+    // Phones: the photo on top, clear, and the text below it. Desktop: text over a full-screen photo.
+    <section ref={ref} className="relative overflow-hidden lg:flex lg:min-h-svh lg:items-center">
+      <div className="relative h-[48svh] overflow-hidden lg:absolute lg:inset-0 lg:h-auto">
+        <PhotoFill photo={photo} className="settle" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black to-transparent lg:hidden" />
+        <div
+          className={`absolute inset-0 hidden lg:block ${
+            right
+              ? 'bg-gradient-to-l from-black/90 via-black/50 to-transparent'
+              : 'bg-gradient-to-r from-black/90 via-black/50 to-transparent'
+          }`}
+        />
+        <div className="absolute inset-x-0 bottom-0 hidden h-40 bg-gradient-to-t from-black to-transparent lg:block" />
+        {/* Phones: under the top bar, clear of the heading that overlaps the photo's foot. */}
+        <PhotoCredit photo={photo} className="top-[4.5rem] lg:top-auto lg:bottom-3" />
+      </div>
 
       <div
-        className={`relative mx-auto flex w-full max-w-[90rem] px-5 py-24 sm:px-8 ${right ? 'lg:justify-end' : ''}`}
+        className={`relative mx-auto -mt-20 flex w-full max-w-[90rem] px-5 pb-20 sm:px-8 lg:mt-0 lg:py-24 ${right ? 'lg:justify-end' : ''}`}
       >
-        <div className="reveal flex max-w-xl flex-col gap-6">
+        <div className="reveal flex min-w-0 max-w-xl flex-col gap-6">
           <p className="font-display text-sm font-semibold tracking-[0.3em] text-white/70 uppercase">
             {eyebrow}
           </p>
-          <h2 className="font-display text-5xl leading-[0.95] font-bold uppercase sm:text-6xl">
+          <h2 className="font-display text-[2.75rem] leading-[0.95] font-bold uppercase sm:text-6xl">
             {title}
           </h2>
-          <p className="text-lg text-white/85">{body}</p>
+          <p className="text-base text-white/85 sm:text-lg">{body}</p>
           {children}
           <div>
             {'to' in cta ? (
@@ -209,19 +211,17 @@ function Panel({
           </div>
         </div>
       </div>
-
-      <PhotoCredit photo={photo} />
     </section>
   )
 }
 
 function Stats({ items }: { items: { value: number; label: string }[] }) {
   return (
-    <dl className="flex flex-wrap gap-x-10 gap-y-4">
+    <dl className="grid grid-cols-3 gap-4 sm:flex sm:flex-wrap sm:gap-x-10 sm:gap-y-4">
       {items.map((item) => (
         <div key={item.label}>
           <dt className="sr-only">{item.label}</dt>
-          <dd className="font-display text-6xl leading-none font-bold tabular-nums">
+          <dd className="font-display text-5xl leading-none font-bold tabular-nums sm:text-6xl">
             {item.value}
           </dd>
           <dd className="mt-2 max-w-[11rem] font-display text-xs font-semibold tracking-[0.18em] text-white/70 uppercase">
@@ -243,7 +243,7 @@ function Example() {
   return (
     <section ref={ref} className="border-y border-white/10 bg-black">
       <div
-        className={`mx-auto grid gap-12 px-5 py-24 sm:px-8 lg:items-center lg:py-32 ${
+        className={`mx-auto grid gap-12 px-5 py-16 sm:px-8 sm:py-24 lg:items-center lg:py-32 ${
           targetImage && siteImage ? 'max-w-[90rem] lg:grid-cols-2' : 'max-w-4xl'
         }`}
       >
@@ -251,7 +251,7 @@ function Example() {
           <p className="font-display text-sm font-semibold tracking-[0.3em] text-white/70 uppercase">
             One real result · {example.purposeLabel}
           </p>
-          <h2 className="font-display text-4xl leading-tight font-bold uppercase sm:text-5xl">
+          <h2 className="font-display text-3xl leading-tight font-bold uppercase sm:text-5xl">
             {example.targetName}
             <span className="block text-white/50">
               on Earth: {example.siteName}, {example.siteCountry}
