@@ -85,9 +85,10 @@ src/
 ├── lib/
 │   ├── orbitalImages.ts ← reads the deploy-time orbital images
 │   └── similarity.ts    ← Compare scoring
-├── components/          ← shared UI (TargetImages, AnalogMap, …)
+├── components/          ← shared UI (PageHeader, Photo, TargetImages, AnalogMap, …)
 ├── pages/               ← Home, Analogs, Compare, Analyze, About
-└── index.css            ← Tailwind + light/dark color tokens
+└── index.css            ← Tailwind, light/dark color tokens, scroll and photo animations
+public/photos/           ← NASA photos behind Home and the page headers (credits in site.ts)
 analysis/                ← sourced data and method for Compare
 scripts/                 ← deploy-time image download
 ```
@@ -103,5 +104,8 @@ scripts/                 ← deploy-time image download
 - **Elevation and slope:** ASTER GDEM (NASA/METI).
 - **Earth satellite images:** Sentinel-2 cloudless 2024 by EOX IT Services GmbH (contains modified Copernicus Sentinel data 2024).
 - **Maps:** Sentinel-2 cloudless 2024 (EOX) and OpenStreetMap.
+- **Page photos:** NASA Image and Video Library: Curiosity (PIA23898, NASA/JPL-Caltech/MSSS), Perseverance
+  (PIA23727, NASA/JPL-Caltech/ASU/MSSS), Apollo 15 (jsc2011e118359, NASA) and the Haughton-Mars Project
+  (ARC-2007-ACD07-0170-005 and -006, NASA). Each page links its photo's NASA page.
 
 This project is not affiliated with or endorsed by NASA.

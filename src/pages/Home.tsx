@@ -89,7 +89,7 @@ export default function Home() {
       <Panel
         photo={site.photos.method}
         eyebrow="How it is scored"
-        title={home.promises[0]}
+        title={home.methodTitle}
         body={home.scoring}
         cta={{ label: 'Read the method', href: compare.methodSource }}
         side="right"

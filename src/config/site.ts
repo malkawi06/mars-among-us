@@ -35,8 +35,6 @@ export interface Photo {
 export interface NavItem {
   to: string
   label: string
-  /** Shorter label for the phone tab bar. */
-  shortLabel?: string
   /** One sentence on what the page does. */
   description: string
 }
@@ -124,7 +122,6 @@ export const site = {
     {
       to: '/analogs',
       label: 'Earth Analogs',
-      shortLabel: 'Analogs',
       description:
         'A map of places on Earth that look like Moon and Mars landforms, each with its published source.',
     },
@@ -177,30 +174,12 @@ export const site = {
   home: {
     primaryCta: { label: 'Analyze a Moon or Mars image', to: '/analyze' },
     secondaryCta: { label: 'Compare with the Moon and Mars', to: '/compare' },
-    /** Short promises under the buttons. */
-    promises: [
-      'A source for every number',
-      'Orbital images at the same scale',
-      'Scoring after a NASA-led method',
-    ],
+    /** Title of the Home section on how scores are worked out. */
+    methodTitle: 'A source for every number',
     scoring:
       'Each factor scores 3 (strong), 2 (partial) or 1 (weak), and all factors count the same. The match is the average turned into a percentage: all 3s give 100%, all 1s give 0%. The method follows the NASA-led analog framework of Stern et al. (2025).',
     noData:
       'Some values are not published yet, such as the mean temperature at most Mars sites. Those factors are left out of the score instead of guessed, and the page says so. When fewer than two factors can be scored, the page warns that the result is rough.',
-    steps: [
-      {
-        title: 'Pick a place on the Moon or Mars',
-        body: 'One of the nine Artemis landing regions near the lunar south pole, or a landing site on Mars.',
-      },
-      {
-        title: 'Say what the analog is for',
-        body: 'Rover testing, a base, local resources, the search for life or astronaut training: each purpose compares its own factors.',
-      },
-      {
-        title: 'See the closest places on Earth',
-        body: 'Earth sites are scored factor by factor, with a source for every number, next to real orbital images at the same scale.',
-      },
-    ],
   },
 
   analyze: {
