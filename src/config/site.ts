@@ -35,6 +35,8 @@ export interface Photo {
 export interface NavItem {
   to: string
   label: string
+  /** Shorter label for the phone tab bar. */
+  shortLabel?: string
   /** One sentence on what the page does. */
   description: string
 }
@@ -122,6 +124,7 @@ export const site = {
     {
       to: '/analogs',
       label: 'Earth Analogs',
+      shortLabel: 'Analogs',
       description:
         'A map of places on Earth that look like Moon and Mars landforms, each with its published source.',
     },

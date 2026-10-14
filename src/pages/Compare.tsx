@@ -1,13 +1,15 @@
-import { useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { ChevronDown, MapPin } from 'lucide-react'
 import { FactorEvidence, SourceLink } from '../components/FactorEvidence'
 import { PageHeader } from '../components/PageHeader'
+import { SheetOnPhone } from '../components/SheetOnPhone'
 import { TargetImages } from '../components/TargetImages'
 import { site as siteConfig } from '../config/site'
 import { ANALOG_SITES, type AnalogSite } from '../data/analogs'
 import { EARTH_SITES, TARGETS } from '../data/compare'
 import { useAsync } from '../hooks/useAsync'
+import { DESKTOP } from '../hooks/useMediaQuery'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { FACTOR_ICONS, ListChecks, PURPOSE_ICONS, Satellite } from '../lib/icons'
 import { loadOrbitalImages } from '../lib/orbitalImages'
@@ -59,7 +61,11 @@ export default function Compare() {
   const selected = matches.find((m) => m.site.id === params.get('site')) ?? matches[0]
   const { data: images, error: imagesError } = useAsync('orbital-images', loadOrbitalImages)
   const [showAll, setShowAll] = useState(false)
-  const details = useRef<HTMLDivElement>(null)
+  // Phones: the details open as a sheet over the list. A shared link that names a site opens it.
+  const [sheetOpen, setSheetOpen] = useState(
+    () => params.has('site') && !window.matchMedia(DESKTOP).matches,
+  )
+  const closeSheet = useCallback(() => setSheetOpen(false), [])
 
   const update = (changes: Record<string, string | undefined>) => {
     const next = new URLSearchParams(params)
@@ -72,9 +78,7 @@ export default function Compare() {
 
   const select = (id: string) => {
     update({ site: id })
-    // On narrow screens the details sit above the list: bring them into view.
-    if (window.matchMedia('(max-width: 1023px)').matches)
-      details.current?.scrollIntoView({ behavior: 'smooth' })
+    setSheetOpen(true)
   }
 
   return (
@@ -112,12 +116,13 @@ export default function Compare() {
               ))}
             </select>
           </label>
-          <div>
+          {/* min-w-0 keeps the sideways-scrolling row of purposes inside the card on phones. */}
+          <div className="min-w-0">
             <StepLabel number={2}>What will the Earth site be used for?</StepLabel>
             <div
               role="group"
               aria-label="What will the Earth site be used for?"
-              className="mt-2 flex flex-wrap gap-2"
+              className="no-scrollbar -mx-4 mt-2 flex snap-x gap-2 overflow-x-auto px-4 sm:-mx-5 sm:px-5 lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0"
             >
               {purposes.map((p) => {
                 const Icon = PURPOSE_ICONS[p.id]
@@ -136,7 +141,7 @@ export default function Compare() {
                       setShowAll(false)
                     }}
                     title={`Compares ${factors}`}
-                    className={`flex w-24 flex-col items-center gap-1.5 rounded-xl border px-2 py-3 text-center text-xs font-medium transition-colors ${
+                    className={`flex w-24 shrink-0 snap-start flex-col items-center gap-1.5 rounded-xl border px-2 py-3 text-center text-xs font-medium transition-colors ${
                       active
                         ? 'border-accent bg-accent text-accent-fg'
                         : 'border-border bg-bg text-fg-2 hover:border-accent hover:text-fg'
@@ -177,7 +182,10 @@ export default function Compare() {
 
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-5">
         <div className="lg:col-span-2">
-          <h2 className="mb-3 text-sm font-medium text-muted">Earth sites, best match first</h2>
+          <h2 className="mb-1">
+            <StepLabel number={3}>Earth sites, best match first</StepLabel>
+          </h2>
+          <p className="mb-3 text-xs text-muted lg:hidden">Tap a site to see why it matches.</p>
           <ol className="space-y-2">
             {matches.map(
               (match, i) =>
@@ -205,11 +213,13 @@ export default function Compare() {
           )}
         </div>
 
-        <div
-          ref={details}
-          className="order-first scroll-mt-20 lg:order-none lg:sticky lg:top-20 lg:col-span-3 lg:self-start"
+        <SheetOnPhone
+          open={sheetOpen}
+          onClose={closeSheet}
+          label={`${selected.site.name}: why it matches`}
+          className="lg:sticky lg:top-24 lg:col-span-3 lg:self-start"
         >
-          <section className="rounded-2xl border border-border bg-surface">
+          <section className="border-border bg-surface lg:rounded-2xl lg:border">
             <header className="flex items-start justify-between gap-4 p-5">
               <div className="min-w-0">
                 <p className="text-xs font-medium tracking-wide text-accent uppercase">
@@ -290,7 +300,7 @@ export default function Compare() {
               </p>
             </footer>
           </section>
-        </div>
+        </SheetOnPhone>
       </div>
     </div>
   )
@@ -323,10 +333,14 @@ function TargetSummary({ target }: { target: Target }) {
       </span>
       {target.setting && <p className="w-full text-fg">{target.setting}</p>}
       <p className="w-full text-fg-2">{target.note}</p>
-      <div className="w-full">
-        <p className="mt-2 text-xs font-medium tracking-wide text-muted uppercase">
-          Where the values for {target.name} come from
-        </p>
+      <details className="group w-full" open={window.matchMedia(DESKTOP).matches}>
+        <summary className="mt-2 flex cursor-pointer list-none items-center gap-1 text-xs font-medium tracking-wide text-muted uppercase [&::-webkit-details-marker]:hidden">
+          Where the values for {target.name} come from ({target.sources.length})
+          <ChevronDown
+            className="size-3.5 transition-transform group-open:rotate-180"
+            aria-hidden
+          />
+        </summary>
         <ul className="mt-1 space-y-2">
           {target.sources.map((s) => (
             <li key={s.url}>
@@ -340,7 +354,7 @@ function TargetSummary({ target }: { target: Target }) {
             </li>
           ))}
         </ul>
-      </div>
+      </details>
     </div>
   )
 }

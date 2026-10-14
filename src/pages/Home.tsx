@@ -137,7 +137,7 @@ function Hero() {
 
       <PhotoCredit photo={photo} />
       <ChevronDown
-        className="absolute bottom-6 left-1/2 size-7 -translate-x-1/2 animate-bounce text-white/70 motion-reduce:animate-none"
+        className="absolute bottom-6 left-1/2 hidden size-7 -translate-x-1/2 animate-bounce lg:block text-white/70 motion-reduce:animate-none"
         aria-hidden
       />
     </section>
