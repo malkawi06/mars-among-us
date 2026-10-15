@@ -72,7 +72,11 @@ export const site = {
         github: 'https://github.com/malkawi06',
         linkedin: 'https://www.linkedin.com/in/mohammad-h-malkawi/',
       },
-      { name: 'Nour Oqaily', role: 'Website testing' },
+      {
+        name: 'Nour Oqaily',
+        role: 'Website testing',
+        linkedin: 'https://www.linkedin.com/in/nour-oqaily-4310b6440/',
+      },
       {
         name: 'Mohammad Kilany',
         role: 'Presentation',
