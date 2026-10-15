@@ -6,6 +6,8 @@ declare const __HOME_STATS__: {
   earthSites: number
   purposes: number
   analogSites: number
+  /** Distinct sources cited across the Moon/Mars targets and the Earth sites. */
+  sources: number
   landforms: [string, string][]
   /** The best Earth match for one Moon region and purpose, computed from the data at build time. */
   example: {

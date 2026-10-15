@@ -11,6 +11,13 @@ const exampleTarget = TARGETS.find((t) => t.id === 'moon-2')!
 const examplePurpose = PURPOSES.find((p) => p.id === 'training')!
 const exampleMatch = rank(exampleTarget, examplePurpose, EARTH_SITES)[0]
 
+// Every distinct paper or page the data cites: Moon/Mars targets, Earth analogs and scored Earth sites.
+const sourceCount = new Set([
+  ...TARGETS.flatMap((t) => t.sources.map((s) => s.url)),
+  ...ANALOG_SITES.flatMap((a) => a.sources.map((s) => s.url)),
+  ...EARTH_SITES.map((s) => s.source),
+]).size
+
 // Fills %SITE_NAME%, %SITE_DESCRIPTION% and %SITE_URL% in index.html from src/config/site.ts,
 // so the browser tab and link previews stay in sync with the rest of the app.
 function siteMeta(): Plugin {
@@ -38,6 +45,7 @@ export default defineConfig({
       earthSites: EARTH_SITES.length,
       purposes: PURPOSES.length,
       analogSites: ANALOG_SITES.length,
+      sources: sourceCount,
       landforms: Object.entries(LANDFORM_NAMES),
       example: {
         targetId: exampleTarget.id,
