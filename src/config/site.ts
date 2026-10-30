@@ -120,6 +120,12 @@ export const site = {
         'Upload a Moon or Mars image. The landform model is being retrained, so this page does not analyze images yet.',
     },
     {
+      to: '/discover',
+      label: 'Discover',
+      description:
+        'Pick a known Moon or Mars analog site and find the places anywhere on Earth whose environment matches it, including ones nobody has studied as analogs.',
+    },
+    {
       to: '/compare',
       label: 'Compare',
       description:
@@ -212,6 +218,28 @@ export const site = {
       {
         title: 'Find it on Earth',
         body: 'See the places on Earth with the same landform, next to their satellite images and the research behind them.',
+      },
+    ],
+  },
+
+  discover: {
+    title: 'Discover new analogs',
+    intro:
+      'Pick a place already used to study the Moon or Mars. Every 0.5° patch of land on Earth is compared with it on the same NASA data, and the closest matches light up, including places nobody has studied as analogs yet.',
+    method:
+      'Each patch of land is about 50 km across. Climate is the NASA POWER annual average (MERRA-2): mean temperature, day–night swing, rain and snow, and wind at 10 m. Elevation and relief come from SRTM-based terrain tiles at about 1 km; slope is left out because small slopes vanish at this scale. Rock type is the dominant class of the GLiM global lithological map. The known site is compared through its own patch, so both sides are measured the same way. For each trait, similarity falls in a straight line from 100% (equal) to 0% at a gap we chose, shown next to it; the match is the average. Landform, ground ice and fine slope are not in global data, so check them on the satellite image and in Compare.',
+    sources: [
+      {
+        title: 'NASA POWER climatology (MERRA-2), on the AWS Open Data registry',
+        url: 'https://power.larc.nasa.gov',
+      },
+      {
+        title: 'Terrain Tiles (SRTM and other elevation data), AWS Open Data',
+        url: 'https://registry.opendata.aws/terrain-tiles/',
+      },
+      {
+        title: 'Hartmann & Moosdorf (2012), GLiM Global Lithological Map, 0.5° grid (CC BY 3.0)',
+        url: 'https://doi.pangaea.de/10.1594/PANGAEA.788537',
       },
     ],
   },

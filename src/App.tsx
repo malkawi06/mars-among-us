@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound'
 const Analyze = lazy(() => import('./pages/Analyze'))
 const Analogs = lazy(() => import('./pages/Analogs'))
 const Compare = lazy(() => import('./pages/Compare'))
+const Discover = lazy(() => import('./pages/Discover'))
 const About = lazy(() => import('./pages/About'))
 
 // To add a page: create it in src/pages, add a route here, and add a link to `nav` in src/config/site.ts.
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
             { index: true, element: <Home /> },
             { path: 'analyze', element: <Analyze /> },
             { path: 'analogs', element: <Analogs /> },
+            { path: 'discover', element: <Discover /> },
             { path: 'compare', element: <Compare /> },
             { path: 'about', element: <About /> },
             { path: '*', element: <NotFound /> },

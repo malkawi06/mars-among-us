@@ -78,7 +78,7 @@ export function Navbar() {
         aria-label="Pages"
         className="dark fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-black/95 pb-[env(safe-area-inset-bottom)] text-white backdrop-blur lg:hidden"
       >
-        <ul className="mx-auto grid max-w-lg grid-cols-5">
+        <ul className="mx-auto grid max-w-xl grid-cols-6">
           {site.nav.map((item) => {
             const Icon = PAGE_ICONS[item.to]
             return (
