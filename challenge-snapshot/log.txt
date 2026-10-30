@@ -1,0 +1,21 @@
+https://www.spaceappschallenge.org/2026/challenges/: 54 links, match: https://www.spaceappschallenge.org/2026/challenges/permanent-moon-base-locations-and-mars/
+https://www.spaceappschallenge.org/challenges/: 1 links, match: none
+tabs: ["Details","Resources","Teams"]
+Resources: locator.click: Timeout 60000ms exceeded.
+Call log:
+  - waiting for getByText('Resources', { exact: true }).first()
+    - locator resolved to <a rel="" target="" title="Resources" href="/resources/" aria-hidden="false" class="menu-item-module-scss-module__jG9c2G__link">…</a>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    116 × waiting for element to be visible, enabled and stable
+        - element is not visible
+      - retrying click action
+        - waiting 500ms
+
