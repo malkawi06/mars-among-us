@@ -1,0 +1,26 @@
+site | grid cell vs measured: mean temp, day-night, rain mm/yr, elevation, slope | rock
+Pampa de La Joya barchan field         T 16.1 vs 16.08 | R 10.9 vs 10.91 | P 99.0 vs 99 | E 1484.0 vs 1190 | S 2.2 vs 1.7 | su ['sand']
+White Sands gypsum dune field          T 16.3 vs 16.33 | R 14.5 vs 14.44 | P 274.0 vs 274 | E 1232.0 vs 1220 | S 0.2 vs 0.5 | su ['sand', 'sulfate']
+Namib Sand Sea linear dunes            T 21.0 vs 22.42 | R 14.6 vs 16.07 | P 55.0 vs 80 | E 641.0 vs 768 | S 0.8 vs 14.7 | su ['sand']
+Mars Desert Research Station area, Han T 11.8 vs 11.75 | R 13.7 vs 13.64 | P 241.0 vs 241 | E 1637.0 vs 1375 | S 1.8 vs 3.5 | su ['clay', 'sandstone']
+Wadi Rum                               T 20.2 vs 18.12 | R 15.1 vs 16.16 | P 84.0 vs 40 | E 772.0 vs 944 | S 2.8 vs 5.6 | su ['sandstone', 'sand']
+Exhumed paleochannels near Green River T 11.7 vs 11.7 | R 13.8 vs 13.73 | P 234.0 vs 234 | E 1399.0 vs 1280 | S 1.2 vs 0.4 | ss ['sandstone']
+Western Qaidam Basin (yardangs, Dalang T 4.2 vs 4.17 | R 13.6 vs 13.49 | P 33.0 vs 33 | E 2726.0 vs 2733 | S 0.2 vs 3.4 | ss ['salt']
+Channeled Scablands (Dry Falls): no land cell
+Tuktoyaktuk pingos (Ibyuk)             T -8.4 vs -8.36 | R 5.4 vs 5.24 | P 307.0 vs 307 | E 19.0 vs 14 | S 0.2 vs None | sm ['ice']
+Garwood Valley gullies, McMurdo Dry Va T -25.1 vs -25.14 | R 5.1 vs 5.18 | P 88.0 vs 88 | E 361.0 vs 78 | S 4.2 vs 6.5 | vb ['ice']
+Taylor Valley water tracks, McMurdo Dr T -21.9 vs -21.88 | R 5.1 vs 5.07 | P 66.0 vs 66 | E 478.0 vs 198 | S 3.2 vs 5 | mt ['ice']
+Blackhawk Landslide, Lucerne Valley    T 16.1 vs 16.14 | R 15.0 vs 15 | P 164.0 vs 164 | E 1559.0 vs 1361 | S 4.2 vs 12.2 | mt []
+Meteor Crater (Barringer)              T 13.8 vs 11.36 | R 15.5 vs 14.49 | P 340.0 vs 416 | E 1725.0 vs 1561 | S 0.8 vs 1.7 | vb []
+Haughton impact crater, Devon Island   T -14.8 vs -14.42 | R 4.9 vs 4.64 | P 321.0 vs 310 | E 273.0 vs 140 | S 1.2 vs 0.9 | sm []
+Lonar crater                           T 26.3 vs 25.96 | R 13.2 vs 13.12 | P 877.0 vs 843 | E 486.0 vs 477 | S 0.2 vs None | vb ['basalt']
+Henbury crater field                   T 22.5 vs 22.54 | R 15.6 vs 15.72 | P 237.0 vs 237 | E 428.0 vs 462 | S 0.2 vs 2.4 | su []
+Yungay, Atacama Desert hyperarid core  T 17.1 vs 17.07 | R 14.7 vs 14.74 | P 7.0 vs 7 | E 1609.0 vs 1061 | S 4.2 vs 2.5 | pi ['salt']
+Salar de Uyuni                         T 7.5 vs 7.48 | R 16.5 vs 16.59 | P 329.0 vs 332 | E 3664.0 vs 3660 | S 0.2 vs 0.8 | ev ['salt']
+Holuhraun lava flow-field              T -2.8 vs -2.84 | R 4.1 vs 4.1 | P 862.0 vs 861 | E 1103.0 vs 734 | S 1.2 vs 1.1 | vb ['basalt']
+Beacon Valley sublimation polygons     T -31.7 vs -33.67 | R 5.7 vs 5.72 | P 88.0 vs 142 | E 1353.0 vs 1332 | S 3.2 vs 22.5 | ss ['ice']
+Mistastin Lake impact structure        T -5.9 vs -5.86 | R 8.1 vs 8.39 | P 950.0 vs 949 | E 467.0 vs 326 | S 1.2 vs None | pa ['anorthosite']
+Nördlinger Ries crater                 T 8.7 vs 8.74 | R 9.1 vs 9 | P 749.0 vs 748 | E 462.0 vs 416 | S 0.8 vs 0.6 | ss []
+Lofoten anorthosite: no land cell
+Craters of the Moon lava field         T 5.7 vs 5.69 | R 12.1 vs 12.35 | P 416.0 vs 416 | E 1545.0 vs 1736 | S 0.8 vs 1.6 | vb ['basalt']
+La Corona lava tube, Lanzarote: no land cell
