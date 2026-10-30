@@ -1,0 +1,21 @@
+## merra2/spatial/power_merra2_climatology_spatial_utc.zarr: 601 arrays
+  PRECTOTCORR shape [13, 361, 576] chunks [1, 361, 576] dtype <f4 units mm/day long Precipitation Corrected
+  RH2M shape [13, 361, 576] chunks [1, 361, 576] dtype <f4 units % long Relative Humidity at 2 Meters
+  T2M shape [13, 361, 576] chunks [1, 361, 576] dtype <f4 units C long Temperature at 2 Meters
+  T2M_MAX shape [13, 361, 576] chunks [1, 361, 576] dtype <f4 units C long Temperature at 2 Meters Maximum
+  T2M_MIN shape [13, 361, 576] chunks [1, 361, 576] dtype <f4 units C long Temperature at 2 Meters Minimum
+  T2M_RANGE shape [13, 361, 576] chunks [1, 361, 576] dtype <f4 units C long Temperature at 2 Meters Range
+  TS shape [13, 361, 576] chunks [1, 361, 576] dtype <f4 units C long Earth Skin Temperature
+  WS10M shape [13, 361, 576] chunks [1, 361, 576] dtype <f4 units m/s long Wind Speed at 10 Meters
+  WS2M shape [13, 361, 576] chunks [1, 361, 576] dtype <f4 units m/s long Wind Speed at 2 Meters
+  lat shape [361] chunks [361] dtype <f8 units degrees_north long Latitude
+  lon shape [576] chunks [576] dtype <f8 units degrees_east long Longitude
+  time shape [13] chunks [13] dtype <i8 units None long Time
+  first 60 names: ['CDD0', 'CDD10', 'CDD18_3', 'CD_CDD10', 'CD_CDD10_SUM', 'CD_CDD18', 'CD_CDD18_SUM', 'CD_CDH23', 'CD_CDH23_SUM', 'CD_CDH26', 'CD_CDH26_SUM', 'CD_CM', 'CD_DB_004', 'CD_DB_010', 'CD_DB_020', 'CD_DB_990', 'CD_DB_996', 'CD_DB_AVG', 'CD_DB_EXTREME_MAX_05', 'CD_DB_EXTREME_MAX_10', 'CD_DB_EXTREME_MAX_20', 'CD_DB_EXTREME_MAX_50', 'CD_DB_EXTREME_MIN_05', 'CD_DB_EXTREME_MIN_10', 'CD_DB_EXTREME_MIN_20', 'CD_DB_EXTREME_MIN_50', 'CD_DB_MAX_AVG', 'CD_DB_MAX_STD', 'CD_DB_MIN_AVG', 'CD_DB_MIN_STD', 'CD_DB_RANGE', 'CD_DB_RANGE_MONTH', 'CD_DB_STD', 'CD_DB_TEMP_004', 'CD_DB_TEMP_020', 'CD_DB_TEMP_050', 'CD_DB_TEMP_100', 'CD_DP_004', 'CD_DP_010', 'CD_DP_020', 'CD_DP_990', 'CD_DP_996', 'CD_EN_004', 'CD_EN_010', 'CD_EN_020', 'CD_EXT_WS_010', 'CD_EXT_WS_025', 'CD_EXT_WS_050', 'CD_HDD10', 'CD_HDD10_SUM', 'CD_HDD18', 'CD_HDD18_SUM', 'CD_MCDBR_DB', 'CD_MCDBR_WB', 'CD_MCDB_990', 'CD_MCDB_996', 'CD_MCDB_CM_004', 'CD_MCDB_CM_010', 'CD_MCDB_DP_004', 'CD_MCDB_DP_010']
+## imerg/spatial/power_imerg_climatology_spatial_utc.zarr: 4 arrays
+  IMERG_PRECTOT shape [13, 1800, 3600] chunks [1, 1800, 3600] dtype <f4 units mm/day long Total Precipitation
+  lat shape [1800] chunks [1800] dtype <f8 units degrees_north long Latitude
+  lon shape [3600] chunks [3600] dtype <f8 units degrees_east long Longitude
+  time shape [13] chunks [13] dtype <i8 units None long Time
+  first 60 names: ['IMERG_PRECTOT', 'lat', 'lon', 'time']
+## GLiM download status 200 application/zip 38670 got bytes 38670 starts b'PK\x03\x04'
