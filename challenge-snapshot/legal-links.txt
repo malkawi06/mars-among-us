@@ -1,0 +1,44 @@
+challenge statements | https://www.spaceappschallenge.org/2026/challenges/
+team | https://www.spaceappschallenge.org/2026/find-a-team/
+ | https://www.spaceappschallenge.org/
+About Us | https://www.spaceappschallenge.org/about/
+ | https://www.spaceappschallenge.org/about/results-and-metrics/
+ | https://www.spaceappschallenge.org/meet-the-team/
+ | https://www.spaceappschallenge.org/brand/
+ | https://www.spaceappschallenge.org/blog/
+ | https://www.spaceappschallenge.org/2025/
+ | https://www.spaceappschallenge.org/nasa-space-apps-2024/
+ | https://www.spaceappschallenge.org/2023/
+ | https://www.spaceappschallenge.org/contact-us/
+Awards | https://www.spaceappschallenge.org/awards/
+ | https://www.spaceappschallenge.org/awards/
+ | https://www.spaceappschallenge.org/2025/awards/global-winners/
+ | https://www.spaceappschallenge.org/2025/awards/global-finalists/
+ | https://www.spaceappschallenge.org/2025/awards/honorable-mentions/
+ | https://www.spaceappschallenge.org/2025/awards/global-nominees/
+ | https://www.spaceappschallenge.org/2026/
+ | https://www.spaceappschallenge.org/2026/local-events/
+ | https://www.spaceappschallenge.org/2026/challenges/
+ | https://www.spaceappschallenge.org/2026/find-a-team/
+ | https://www.spaceappschallenge.org/resources/
+ | https://www.spaceappschallenge.org/resources/participant-faqs/
+ | https://www.spaceappschallenge.org/2026/space-agency-partners/
+Home | https://www.spaceappschallenge.org/
+https://spaceappschallenge.org | https://www.spaceappschallenge.org/
+https://spaceappschallenge.org/ | https://www.spaceappschallenge.org/
+https://www.opensource.org/docs/osd | https://www.opensource.org/docs/osd
+https://www.opensource.org/licenses/Apache-2.0 | https://www.opensource.org/licenses/Apache-2.0
+http://www.opensource.org/docs/osd | http://www.opensource.org/docs/osd
+http://www.opensource.org/licenses | http://www.opensource.org/licenses
+Science Mission Directorate | https://science.nasa.gov/
+Booz Allen Hamilton | https://www.boozallen.com/
+Mindgrub | https://www.mindgrub.com/
+SecondMuse | https://www.secondmuse.com/
+Privacy Policy | https://www.nasa.gov/about/highlights/HP_Privacy.html
+Legal | https://www.spaceappschallenge.org/legal/
+Contact | https://www.spaceappschallenge.org/contact-us/
+Resources | https://www.spaceappschallenge.org/resources/
+ | https://www.facebook.com/spaceappschallenge
+ | https://www.twitter.com/spaceapps
+ | https://www.instagram.com/nasa_spaceapps
+ | https://www.youtube.com/nasaspaceappschallenge

@@ -1,0 +1,89 @@
+URL: https://www.spaceappschallenge.org/legal/
+
+📝Challenge Statements are now live!
+
+Review the full challenge statements and join a team today.
+Reminder: Do not begin work on your projects until the hackathon begins.
+
+About Us
+Awards
+Explore the Hackathon
+Login
+or
+Sign Up
+Home
+2026 NASA Space Apps Participant Terms and Conditions
+2026 NASA Space Apps Participant Terms and Conditions
+
+Updated August 7, 2026
+
+BY PARTICIPATING IN THE NASA SPACE APPS CHALLENGE, THE PARTICIPANT (YOU) AGREES TO THE FOLLOWING TERMS AND CONDITIONS:
+
+"Participant" or "you" means an individual who registers for the NASA Space Apps Challenge.
+
+"NASA" or "Agency," as used herein, means the National Aeronautics and Space Administration, and includes its support contractors (at any tier) that are assisting NASA with the planning and execution of the NASA Space Apps Challenge.
+
+PARTICIPATION
+Participation in the NASA Space Apps Challenge (or "Space Apps," or "the event") or the Winners Celebration (a visit by global winners to a NASA Center or Facility for an award presentation) is fully voluntary, and participants are not entitled to compensation, nor will they be considered employees, agents, independent contractors, or consultants of NASA or of the United States (U.S.) Federal Government. Individuals who participate in the event shall engage in their personal capacity only, including identifying themselves by their own names. If a Participant works for a U.S. Federal Government support contractor, that individual shall not reference the fact that they are a U.S. Federal Government support contractor, nor shall any work performed for or in support of the event be performed pursuant to or charged under such contract. All U.S. Federal Government contractor employee participation shall be done on a voluntary basis outside of the participant’s working hours, and these participants shall not receive or be entitled to any compensation for the time that they spend preparing for or participating in the event. U.S. Federal Government civil servant employees are not eligible to register as Participants.
+
+The NASA Space Apps Challenge will be held at each NASA Space Apps Challenge location starting on November 14, 2026 (or a different day during the same week previously expressly approved in writing by the NASA Space Apps Global Organizing Team). Prior to the start time, you must be registered to participate in the NASA Space Apps Challenge online at https://spaceappschallenge.org (a list of locations will be provided in August 2026). Participants who are under the age of 18 are required to be registered for the event by a parent or legal guardian and must be accompanied during the event at all times by a parent or legal guardian. By signing up for an account and/or registering for an event, you permit the NASA Space Apps Challenge to send information about the event and future events, as well as notification messages, to your registered email address.
+
+NASA welcomes broad participation in NASA Space Apps. Please note that NASA policy limits NASA’s ability to participate, collaborate, or coordinate with China, including Hong Kong and Macau. Participation is based on affiliation with a China or a Chinese-owned entities, including universities, not based on Chinese nationality. Space Apps participants may not participate in Space Apps in connection with an affiliation with China or a Chinese-owned entity, and participants may not participate, collaborate, or coordinate with China or any Chinese-owned entity in relation to their participation in the NASA International Space Apps Challenge.
+
+SUBMISSIONS:
+All submitted solutions ("Solutions") shall directly address one or more of the NASA Space Apps Challenge statements ("Challenges") as described at https://spaceappschallenge.org/ to be eligible for posting on the NASA Space Apps website. Solutions that do not address a specific Challenge may be posted publicly at NASA’s sole discretion. By submitting a Solution, you grant NASA permission to display, copy, combine, compile, distribute, and disseminate your Solution to support the NASA Space Apps Challenge. All Solutions will be posted at NASA's sole discretion. Solutions will not be accepted or posted if they include:
+
+Threatening, slanderous, or obscene language;
+Personal attacks;
+Discriminatory language (including hate speech) based on race, national origin, age, gender, sexual orientation, religion, or disability;
+Sexually explicit material or other material that would violate the law;
+Material that promotes commercial services or products;
+Proprietary or business sensitive information that you do not have the right to make public;
+Solutions submitted for which you do not hold the copyright or other intellectual property rights; or
+Personally Identifiable Information (e.g., birthdays, social security numbers, home addresses, home phone numbers). Recognizable names, voices, and likenesses of persons under the age of 18 should not be included in any submission. In the event any individual 18 years or older is featured in any submission, by submitting such material you represent and warrant that such individual agrees that NASA may use such individual’s name and likeness in connection with NASA’s use of the material hereunder.
+
+INTELLECTUAL PROPERTY RIGHTS IN SOLUTIONS:
+All posted Solutions will be available for others to download or use. You agree that any original content (that is, content that you have created for the NASA Space Apps Challenge) is freely available without restriction or is licensed as open source as defined by the Open Source Initiative (OSI): https://www.opensource.org/docs/osd
+. If you do not specify a specific OSI compliant license, NASA will distribute your original content under an Apache 2.0 license. See https://www.opensource.org/licenses/Apache-2.0
+.
+
+USE OF THIRD-PARTY MATERIALS:
+If your Solution requires the use of non-NASA materials (such as a dataset or code that does not originate from NASA or other space agency partners) (your "Solution Materials"), you are responsible for ensuring that your Solution Materials are freely and publicly available without restriction or, at a minimum, are also licensed as open source as defined by the Open Source Initiative: http://www.opensource.org/docs/osd
+. Examples of appropriate licenses can be found at: http://www.opensource.org/licenses
+. You are solely responsible for all required verification or investigation of the requisite public availability of your Solution Materials prior to submitting your Solution. You are also solely responsible for ensuring that your Solution and Solution Materials do not contain any export-controlled information pursuant to the International Traffic in Arms Regulations or the Export Administration Regulations. Any licenses applicable to your Solution Materials must be identified in the documentation that you submit with your Solution. NASA will not accept or post any Solutions that do not include appropriate license documentation for your Solution Materials. You must cite every source that is used in the creation of your project, even if it is open source or freely available. NASA reserves the right to remove Solution Materials that do not cite references and resources appropriately (you will be prompted to submit references on the Project Submission form). NASA also reserves the right to remove nominations, awards, or winner status from teams that do not cite resources used in their Solution; all resources, even open source resources, must be cited.
+
+WARRANTIES:
+You represent and warrant that you have sufficient rights to: (1) authorize the publication and dissemination of your Solution to support the NASA Space Apps Challenge; and (2) use and authorize others to use your Solution Materials, regardless of whether you or someone else owns those materials (as specified in the "Use of Third Party Materials" section of this Agreement). You are entirely responsible for your Solution. This means that you are responsible if your Solution: (1) is determined by NASA to be defamatory, abusive, derogatory, offensive, or otherwise inappropriate; (2) violates any laws, rules, or regulations; or (3) infringes on, or constitutes a misappropriation of, any intellectual property rights or confidential information of any third party. NASA, at its sole discretion, reserves the right to remove you as a participant and your Solution from the NASA Space Apps Challenge website for a violation of the NASA Space Apps Challenge rules at any time.
+
+PUBLICITY:
+Except where prohibited, submission of a Solution constitutes your consent for NASA to use your name, place of residence and country information, photo or likeness, and/or information about your Solution for informational purposes in connection with the NASA Space Apps Challenge through any form of media, worldwide, without further permission, payment, or consideration. This consent also includes any participation in the Winners Celebration.
+
+LIABILITY:
+The 2026 NASA Space Apps is a virtual and in-person event. Meeting in person is at the participant’s own risk. Your local NASA Space Apps Challenge location is solely responsible for compliance with any laws, rules, or regulations applicable to prizes or contests in its jurisdiction. NASA is not responsible for the conduct of any local NASA Space Apps Challenge events or for any breach or violation of any agreement between you and any Space Apps Collaborator. You agree to release NASA from and hold NASA harmless against any and all claims against the Agency resulting from any breach of any of the representations, warranties, or obligations contained in this Agreement, committed by you or by any other participant, including but not limited to claims related to the use of your Solution Materials.
+You acknowledge that participation in the 2026 NASA’s Space Apps Challenge brings some risk, and you do hereby assume responsibility for your own well-being. You assume any and all risks to you associated with the submission of your Solution to the NASA Space Apps Challenge and your participation in the event. Therefore, you also waive and release any and all claims or causes of action against NASA, the U.S. Government, and its officers, employees, and agents for any and all injury and damage of any nature whatsoever (whether existing or thereafter arising, whether direct, indirect, or consequential, and whether foreseeable or not), arising from the submission of your Solution to the NASA Space Apps Challenge and your participation in the event, this includes any participation in the Winners Celebration.
+
+MEDIA RELEASE:
+Participants in the NASA Space Apps Challenge (each a “Participant”) or the Winners Celebration agree to give permission to be recorded, photographed and/or videotaped by or for NASA, the NASA Space Apps Local Lead organizations/individuals (“Local Lead”), or their representatives or designees for the purpose of announcements and other outreach or informational purposes, including public announcements, concerning the Challenge.
+
+The Participant further gives permission to NASA, the NASA Space Apps Local Lead or their representatives or designees to use, reproduce, prepare derivative works, publish, distribute to the public, perform publicly, and/or publicly display all deliverables, including excerpts and any ancillary material, which may include Participant’s name, affiliation, image, voice, and/or likeness. NASA or the NASA Space Apps Local Lead may distribute the materials, including excerpts therefrom, and any ancillary material through a variety of media in existence now or in the future, including but not limited to print, television, websites, radio, or any other means. NASA may also permit a third party to exercise NASA’s rights, including but not limited to the right to display or distribute the recording, including excerpts therefrom, and any ancillary material, in any manner NASA deems appropriate.
+
+The Participant also understands that this permission to use Participant’s name, image, voice and/or likeness in such materials is not limited in time and Participant will not receive compensation for granting this permission.
+
+Participant acknowledges that NASA has no obligation to use any Participant’s name, affiliation, image, voice, and/or likeness in any materials produced by NASA, but if NASA so decides to use them, each Participant waives the right to inspect or approve any such use.
+
+Participant hereby unconditionally releases NASA and its representatives from any and all claims and demands arising out of the activities authorized under this Media Release.
+
+When submitting and/or editing video(s) for NASA Space Apps, you do represent and warrant to NASA that the video was produced and/or edited by you the undersigned (i.e. your original work), the contents of the video (including documents, photographs, audio recordings, video recordings, or other shown) do not infringe the copyright or any other right of any third party, the contents of additional edited elements to these videos (including documents, photographs, audio recordings, video recordings, or other shown) do not infringe the copyright or any other right of any third party, and in the event any individual is featured in any submitted images, by submitting such image you represent and warrant that you have obtained the written consent of each such individual allowing NASA to use such individual’s name and likeness in connection with NASA’s use of the video hereunder, and will provide evidence of such consent promptly upon request.
+
+By submitting and/or editing your video you agree to grant and unconditionally gift the U.S. government a royalty-free, worldwide, perpetual, non-exclusive license, but not obligation, to reproduce, display, prepare derivative works, and distribute the submitted video(s), in whole or in part, in any media now existing or subsequently developed, for any educational, informational, publicity, exhibition, archival, scholarly and all other governmental purposes, and to have or permit others to do so on the government’s behalf.
+
+Recognizable names, voices, and likenesses of persons under the age of 18 should not be included in any video submissions. In the event any individual 18 years or older is featured in any submission, by submitting such material you represent and warrant that such individual agrees that NASA may use such individual’s name and likeness in connection with NASA’s use of the material hereunder.
+
+NASA Space Apps is funded by NASA's Science Mission Directorate through a contract with Booz Allen Hamilton
+, Mindgrub
+, and SecondMuse
+.
+
+Copyright ©2026 NASA | Privacy Policy | Legal | Contact | Resources
+
+Connect with #SpaceApps
