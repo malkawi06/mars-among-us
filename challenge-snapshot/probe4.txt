@@ -1,0 +1,38 @@
+GLiM file Classnames.txt 452
+GLiM file glim_wgs84_0point5deg.txt.asc 1235039
+--- Classnames.txt head ---
+"OBJECTID";"Value_";"Count_";"xx"
+1;1;35356728.000000;"su"
+2;2;6329752.000000;"vb"
+3;3;28570923.000000;"ss"
+4;4;1601483.000000;"pb"
+5;5;28732659.000000;"sm"
+6;6;12488621.000000;"sc"
+7;7;1692419.000000;"va"
+8;8;22056333.000000;"mt"
+9;9;10398877.000000;"pa"
+10;10;3121157.000000;"vi"
+11;11;1419152.000000;"wb"
+12;12;962991.000000;"py"
+13;13;689039.000000;"pi"
+14;14;388790.000000;"ev"
+15;15;112415.000000;"nd"
+16;16;61757030.000000;"ig"
+
+
+--- glim_wgs84_0point5deg.txt.asc head ---
+ncols         720
+nrows         360
+xllcorner     -180
+yllcorner     -90
+cellsize      0.5
+NODATA_value  -9999
+-9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -9999 -99
+
+POWER time [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+POWER lat -90.0 90.0 lon -180.0 179.375
+Amman T2M [11.34000015258789, 12.8100004196167, 16.0, 19.690000534057617, 24.31999969482422, 27.700000762939453, 29.670000076293945, 29.68000030517578, 27.690000534057617, 24.40999984741211, 18.3799991607666, 13.460000038146973, 21.299999237060547]
+Amman T2M_RANGE [11.6899995803833, 12.670000076293945, 14.210000038146973, 15.65999984741211, 16.889999389648438, 17.600000381469727, 17.309999465942383, 16.549999237060547, 15.65999984741211, 13.859999656677246, 12.289999961853027, 11.739999771118164, 14.6899995803833]
+Amman PRECTOTCORR [2.0399999618530273, 2.049999952316284, 1.0, 0.5, 0.18000000715255737, 0.019999999552965164, 0.009999999776482582, 0.029999999329447746, 0.03999999910593033, 0.27000001072883606, 0.9700000286102295, 1.6699999570846558, 0.7300000190734863]
+Amman WS10M [3.2100000381469727, 3.259999990463257, 3.0999999046325684, 3.0199999809265137, 3.069999933242798, 3.1600000858306885, 3.190000057220459, 3.0999999046325684, 2.859999895095825, 2.6700000762939453, 3.009999990463257, 3.1500000953674316, 3.069999933242798]
+attrs {'acknowledgement': 'The Prediction Of Worldwide Energy Resources (POWER) Project is funded through the NASA Applied Sciences Program within the Earth Science Division of the Science Mission Directorate.', 'comment': 'POWER data version 10.0.0 uses the source data resolution.', 'conventions': 'CF-1.8, ACDD-1.3', 'creator_email': 'bradley.macpherson@nasa.gov', 'creator_name': 'Bradley Macpherson', 'derived_from': 'The data products are derived from data partners and the POWER science team.', 'derived_info': 'The data products are derived from data partners.', 'derived_link': 'https://power.larc.nasa.gov', 'history': 'The POWER project was established in the early 2000s to support distribution of NASA research products.', 'institution': 'NASA Langley Research Center (LaRC)', 'keywords': 'Earth Science', 'keywords_vocabulary': 'NASA Global Change Master Directory (GCMD) Science Keyword Version 9.1.5', 'naming_authority': 'gov.nasa.larc.power', 'processing_level': '4', 'project': 'Prediction Of Worldwide Energy Resource (POWER)', 'publisher_email': 'paul.w.stackhouse@nasa.gov', 'publisher_name': 'Paul Stackhouse', 'references': 'https://power.larc.nasa.gov', 'source': 'Prediction Of Worldwide Energy Resource (POWER)', 'standard_name_vocabulary': 'CF Standard Name Table v72', 'summary': 'The POWER project provides solar and meteorological datasets from NASA research for support of renewable energy, building energy efficiency, agricultural, and hydrological needs.', 'version': 'POWER Version 10.0.0', 'date_created': '2026-09-14T16:01:33Z', 'geospatial_bounds': 'POLYGON((-180.0 90.0, -180.0 -90.0, 180.0 -90.0, 180.0 90.0, -180.0 90.0))', 'geospatial_lat_max': '90.0', 'geospatial_lat_min': '-90.0', 'geospatial_lat_resolution': '0.5', 'geospatial_lon_max': '179.375', 'geospatial_lon_min': '-180.0', 'geospatial_lon_resolution': '0.625', 'time_coverage_end': '2020-12-31T23:00:00', 'time_coverage_start': '2001-01-01T00:00:00', 'time_standard': 'Universal Time Coordinated (UTC)', 'title': 'POWER Universal Time Coordinated (UTC) Time Series', 'id': 'power_merra2_climatology_spatial_utc.zarr'}
