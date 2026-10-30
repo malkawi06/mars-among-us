@@ -23,11 +23,13 @@ jobs:
         with:
           node-version: 22
       - run: pip install --quiet numpy xarray zarr fsspec aiohttp requests
-      - run: python3 scripts/probe_data.py
+      - run: pip install --quiet pillow
+      - run: python3 scripts/build_discover.py
+      - run: python3 scripts/check_discover.py
       - name: Commit the snapshot to this branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add challenge-snapshot
-          git commit -m "Data probe" || echo "nothing to commit"
+          git add challenge-snapshot public/discover
+          git commit -m "Discover grid" || echo "nothing to commit"
           git push
