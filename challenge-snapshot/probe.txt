@@ -1,0 +1,58 @@
+## NEO MOD_NDVI_M page
+URL https://neo.gsfc.nasa.gov/view.php?datasetId=MOD_NDVI_M
+status 200 type text/html; charset=UTF-8 length None
+
+
+   si ids []  renderdata []
+## NEO MOD_LSTD_M page
+URL https://neo.gsfc.nasa.gov/view.php?datasetId=MOD_LSTD_M
+status 200 type text/html; charset=UTF-8 length None
+
+
+   si ids []  renderdata []
+## NEO MOD_LSTN_M page
+URL https://neo.gsfc.nasa.gov/view.php?datasetId=MOD_LSTN_M
+status 200 type text/html; charset=UTF-8 length None
+
+
+   si ids []  renderdata []
+## NEO MODAL2_M_AER_OD page
+URL https://neo.gsfc.nasa.gov/view.php?datasetId=MODAL2_M_AER_OD
+status 200 type text/html; charset=UTF-8 length None
+
+
+   si ids []  renderdata []
+## NEO MOD10C1_M_SNOW page
+URL https://neo.gsfc.nasa.gov/view.php?datasetId=MOD10C1_M_SNOW
+status 200 type text/html; charset=UTF-8 length None
+
+
+   si ids []  renderdata []
+## NEO GPM_3IMERGM page
+URL https://neo.gsfc.nasa.gov/view.php?datasetId=GPM_3IMERGM
+status 200 type text/html; charset=UTF-8 length None
+
+
+   si ids []  renderdata []
+## POWER regional climatology
+URL https://power.larc.nasa.gov/api/temporal/climatology/regional?parameters=T2M,T2M_RANGE,PRECTOTCORR&community=RE&longitude-min=30&longitude-max=40&latitude-min=20&latitude-max=30&format=JSON
+ERROR HTTP Error 422: 
+
+## POWER S3 listing
+URL https://nasa-power.s3.amazonaws.com/?list-type=2&max-keys=40&delimiter=/
+status 200 type application/xml length None
+<?xml version="1.0" encoding="UTF-8"?>
+<ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"><Name>nasa-power</Name><Prefix></Prefix><KeyCount>11</KeyCount><MaxKeys>40</MaxKeys><Delimiter>/</Delimiter><IsTruncated>false</IsTruncated><Contents><Key>CITATION.cff</Key><LastModified>2024-12-16T18:38:32.000Z</LastModified><ETag>&quot;924d616bcb47a839afb6f8b4c6ae088b&quot;</ETag><ChecksumAlgorithm>CRC64NVME</ChecksumAlgorithm><ChecksumType>FULL_OBJECT</ChecksumType><Size>2179</Size><StorageClass>STANDARD</StorageClass></Contents><Contents><Key>LICENSE.txt</Key><LastModified>2024-12-16T18:38:32.000Z</LastModified><ETag>&quot;2ab724713fdaf49e4523c4503bfd068d&quot;</ETag><ChecksumAlgorithm>CRC64NVME</ChecksumAlgorithm><ChecksumType>FULL_OBJECT</ChecksumType><Size>18657</Size><StorageClass>STANDARD</StorageClass></Contents><Contents><Key>index.html</Key><LastModified>2024-04-24T17:25:03.000Z</LastModified><ETag>&quot;12a279f006097a615d5ddeaac2536de7&quot;</ETag><Size>147235</Size><StorageClass>STANDARD</StorageClass></Contents><Contents><Key>last_available.json</Key><LastModified>2026-10-30T13:00:27.000Z</LastModified><ETag>&quot;630ad36a9fb512aea6544ef3d61e3680&quot;</ETag><ChecksumAlgorithm>CRC32</ChecksumAlgorithm><ChecksumType>FULL_OBJECT</ChecksumType><Size>4741</Size><StorageClass>STANDARD</StorageClass></Contents><CommonPrefixes><Prefix>flashflux/</Prefix></CommonPrefixes><CommonPrefixes><Prefix>geosit/</Prefix></CommonPrefixes><CommonPrefixes><Prefix>gwm/</Prefix></CommonPrefixes><CommonPrefixes><Prefix>imerg/</Prefix></CommonPrefixes><CommonPrefixes><Prefix>merra2/</Prefix></CommonPrefixes><CommonPrefixes><Prefix>srb/</Prefix></CommonPrefixes><CommonPrefixes><Prefix>syn1deg/</Prefix></CommonPrefixes></ListBucketResult>
+
+## Terrain tiles z6
+status 200 type image/png length 88326
+
+## GLiM PANGAEA
+URL https://doi.pangaea.de/10.1594/PANGAEA.788537
+status 200 type text/html;charset=utf-8 length 27662
+
+
+## GLiM PANGAEA metadata
+URL https://doi.pangaea.de/10.1594/PANGAEA.788537?format=metadata_jsonld
+status 200 type application/ld+json; charset=UTF-8 length 5513
+{"@type":"Dataset","@context":{"@language":"en","@vocab":"https://schema.org/","column":"cr:column","conformsTo":"dct:conformsTo","cr":"http://mlcommons.org/croissant/","dataType":{"@id":"cr:dataType","@type":"@vocab"},"dct":"http://purl.org/dc/terms/","extract":"cr:extract","field":"cr:field","fileProperty":"cr:fileProperty","fileObject":"cr:fileObject","format":"cr:format","includes":"cr:includes","recordSet":"cr:recordSet","sc":"https://schema.org/","separator":"cr:separator","source":"cr:source","transform":"cr:transform"},"conformsTo":"http://mlcommons.org/croissant/1.0","identifier":"https://doi.org/10.1594/PANGAEA.788537","url":"https://doi.pangaea.de/10.1594/PANGAEA.788537","creator":[{"@id":"https://orcid.org/0000-0003-1878-9321","@type":"Person","name":"Jens Hartmann","familyName":"Hartmann","givenName":"Jens","identifier":"https://orcid.org/0000-0003-1878-9321","email":"geo@hattes.de"},{"@id":"https://orcid.org/0000-0003-2822-8261","@type":"Person","name":"Nils Moosdorf","familyName":"Moosdorf","givenName":"Nils","identifier":"https://orcid.org/0000-0003-2822-8261","email":"nils.moosdorf@leibniz-zmt.de"}],"name":"Global Lithological Map Database v1.0 (gridded to 0.5° spatial resolution)","publisher":{"@type":"Organization","name":"PANGAEA","disambiguatingDescription":"Data Publisher for Earth & Environmental Science","url":"https://www.pangaea.de/"},"includedInDataCatalog":{"@type":"DataCatalog","name":"PANGAEA","disambiguatingDescription":"Data Publisher for Earth & Environmental Science","url":"https://www.pangaea.de/"},"datePublished":"2012-09-12","additionalType":"dataset","description":"Lithology describes the geochemical, mineralogical, and physical properties of rocks. It plays a key role in many processes at the Earth surface, especially the fluxes of matter to soils, ecosystems, rivers, and oceans. Understanding these processes at the global scale requires a high resolution description of lithology. A new high resolution global lithological map (GLiM) was assembled from existing regional geological maps translated into lithological information with the help of regional literature. The GLiM represents the rock types of the Earth surface using 1,235,400 polygons. The lithological classification consists of three levels. The first level contains 16 lithological classes comparable to previously applied definitions in global lithological maps. The additional two levels contain 12 and 14 subclasses, respectively, which describe more specific
