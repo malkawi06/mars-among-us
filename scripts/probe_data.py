@@ -1,26 +1,34 @@
-"""Temporary: what is inside the GLiM 0.5 degree zip, and the POWER climatology time axis."""
-import io, json, zipfile, urllib.request
-import numpy as np
-OUT = 'challenge-snapshot/probe4.txt'
+"""Temporary: fetch Table A1 of Wueller et al. (JGR Planets, doi 10.1029/2025JE009434) to count landing sites per region."""
+import json, re, urllib.request
+OUT = 'challenge-snapshot/jgr.txt'
 lines = []
 def say(*a): lines.append(' '.join(str(x) for x in a))
+UA = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36', 'Accept': 'text/html,application/pdf,*/*'}
 def get(url):
-    req = urllib.request.Request(url, headers={'User-Agent': 'mars-among-us data check'})
-    with urllib.request.urlopen(req, timeout=180) as r:
-        return r.read()
-z = zipfile.ZipFile(io.BytesIO(get('https://hdl.handle.net/10013/epic.39939.d001')))
-for info in z.infolist():
-    say('GLiM file', info.filename, info.file_size)
-for info in z.infolist():
-    data = z.read(info.filename)
-    head = data[:1500].decode('latin-1', 'replace')
-    say(f'--- {info.filename} head ---\n{head}\n')
-# POWER: time axis and one value at a known place (Amman, 31.95N 35.93E).
-import xarray as xr
-ds = xr.open_zarr('https://nasa-power.s3.amazonaws.com/merra2/spatial/power_merra2_climatology_spatial_utc.zarr', consolidated=True)
-say('POWER time', ds['time'].values.tolist())
-say('POWER lat', float(ds.lat.min()), float(ds.lat.max()), 'lon', float(ds.lon.min()), float(ds.lon.max()))
-p = ds[['T2M', 'T2M_RANGE', 'PRECTOTCORR', 'WS10M']].sel(lat=31.95, lon=35.93, method='nearest').load()
-for v in p: say('Amman', v, p[v].values.round(2).tolist())
-say('attrs', {k: str(v)[:200] for k, v in ds.attrs.items()})
+    with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=90) as r:
+        return r.status, r.headers.get('Content-Type'), r.read()
+# Open-access copies and links from Crossref.
+try:
+    st, ct, b = get('https://api.crossref.org/works/10.1029/2025JE009434')
+    m = json.loads(b)['message']
+    say('title', m.get('title'), 'license', [l.get('URL') for l in m.get('license', [])])
+    for l in m.get('link', []): say('link', l.get('URL'), l.get('content-type'))
+except Exception as e: say('crossref', e)
+for url in ['https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2025JE009434',
+            'https://agupubs.onlinelibrary.wiley.com/doi/pdfdirect/10.1029/2025JE009434',
+            'https://onlinelibrary.wiley.com/doi/pdf/10.1029/2025JE009434',
+            'https://www.ncbi.nlm.nih.gov/pmc/?term=10.1029%2F2025JE009434']:
+    try:
+        st, ct, b = get(url)
+        say('##', url, st, ct, len(b))
+        if 'pdf' in (ct or ''):
+            open('challenge-snapshot/jgr.pdf', 'wb').write(b)
+        else:
+            t = b.decode('utf-8', 'replace')
+            i = t.find('Table A1')
+            say('Table A1 at', i)
+            if i > 0:
+                open('challenge-snapshot/jgr.html', 'w').write(t)
+    except Exception as e:
+        say('##', url, 'ERROR', e)
 open(OUT, 'w').write('\n'.join(lines))
