@@ -452,7 +452,7 @@ export const TARGETS: Target[] = [
     iceAccess: false,
     setting:
       'A peak on a ~6 km high massif between the Cabeus and Drygalski craters, about 35 km southwest of Cabeus B crater.',
-    note: 'Artemis candidate landing region. Centre = mean of 5 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of the 5 candidate landing sites of Wueller et al. (Table A1), not counting sites proposed earlier by Kring et al. (2023); most landing sites have slopes under 5°.',
     sources: [
       {
         title:
@@ -488,7 +488,7 @@ export const TARGETS: Target[] = [
     precipMmYr: 0,
     iceAccess: true,
     setting: 'Near the rims of the ancient Haworth and Cabeus impact craters.',
-    note: 'Artemis candidate landing region. Centre = mean of 10 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of the 10 candidate landing sites of Wueller et al. (Table A1), not counting sites proposed earlier by Kring et al. (2023); most landing sites have slopes under 5°.',
     sources: [
       {
         title:
@@ -525,7 +525,7 @@ export const TARGETS: Target[] = [
     iceAccess: false,
     setting:
       'A massif thought to be a remnant of the rim of the South Pole–Aitken basin, which formed more than 4 billion years ago.',
-    note: 'Artemis candidate landing region. Centre = mean of 4 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of the 4 candidate landing sites of Wueller et al. (Table A1), not counting sites proposed earlier by Kring et al. (2023); most landing sites have slopes under 5°.',
     sources: [
       {
         title:
@@ -575,7 +575,7 @@ export const TARGETS: Target[] = [
     iceAccess: true,
     setting:
       'The largest Artemis region, a plateau on Mons Mouton, a massif interpreted as part of the South Pole–Aitken basin rim.',
-    note: 'Artemis candidate landing region. Centre = mean of 11 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of the 11 candidate landing sites of Wueller et al. (Table A1), not counting sites proposed earlier by Kring et al. (2023); most landing sites have slopes under 5°.',
     sources: [
       {
         title:
@@ -619,7 +619,7 @@ export const TARGETS: Target[] = [
     iceAccess: true,
     setting:
       'Near the southern edge of the ~8 km high Mons Mouton, a massif interpreted as part of the South Pole–Aitken basin rim.',
-    note: 'Artemis candidate landing region. Centre = mean of 10 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of the 10 candidate landing sites of Wueller et al. (Table A1), not counting sites proposed earlier by Kring et al. (2023); most landing sites have slopes under 5°.',
     sources: [
       {
         title:
@@ -662,7 +662,7 @@ export const TARGETS: Target[] = [
     precipMmYr: 0,
     iceAccess: false,
     setting: 'On Mons Mouton, near the western rim of Nobile, an impact crater.',
-    note: 'Artemis candidate landing region. Centre = mean of 9 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of the 9 candidate landing sites of Wueller et al. (Table A1), not counting sites proposed earlier by Kring et al. (2023); most landing sites have slopes under 5°.',
     sources: [
       {
         title:
@@ -704,7 +704,7 @@ export const TARGETS: Target[] = [
     precipMmYr: 0,
     iceAccess: false,
     setting: 'On the northeastern rim of Nobile, an impact crater.',
-    note: 'Artemis candidate landing region. Centre = mean of 8 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of the 8 candidate landing sites of Wueller et al. (Table A1), not counting sites proposed earlier by Kring et al. (2023); most landing sites have slopes under 5°.',
     sources: [
       {
         title:
@@ -752,7 +752,7 @@ export const TARGETS: Target[] = [
     precipMmYr: 0,
     iceAccess: false,
     setting: 'Just north of de Gerlache Rim 1, on the rim of de Gerlache, an impact crater.',
-    note: 'Artemis candidate landing region. Centre = mean of 6 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of the 6 candidate landing sites of Wueller et al. (Table A1), not counting sites proposed earlier by Kring et al. (2023); most landing sites have slopes under 5°.',
     sources: [
       {
         title:
@@ -794,7 +794,7 @@ export const TARGETS: Target[] = [
     precipMmYr: 0,
     iceAccess: true,
     setting: 'A plain about 20 km northeast of Slater crater, on the far side of the Moon.',
-    note: 'Artemis candidate landing region. Centre = mean of 11 published landing sites; most landing sites have slopes under 5°.',
+    note: 'Artemis candidate landing region. Centre = mean of the 11 candidate landing sites of Wueller et al. (Table A1), not counting sites proposed earlier by Kring et al. (2023); most landing sites have slopes under 5°.',
     sources: [
       {
         title:

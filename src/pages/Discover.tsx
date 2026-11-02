@@ -20,6 +20,10 @@ import {
   distanceKm,
   similarity,
   topRegions,
+  FILTERS,
+  passes,
+  type ClimateFilter,
+  type RockFilter,
   traitScores,
   type Cells,
 } from '../lib/discover'
@@ -78,11 +82,17 @@ function Explorer({ cells }: { cells: Cells }) {
   const seed =
     seeds.find((s) => s.site.id === params.get('from')) ??
     seeds.find((s) => s.site.id === DEFAULT_SEED)!
+  const rock = (FILTERS.rock.options.find((o) => o.id === params.get('rock'))?.id ??
+    'any') as RockFilter
+  const climate = (FILTERS.climate.options.find((o) => o.id === params.get('climate'))?.id ??
+    'any') as ClimateFilter
+  // Places outside the chosen limits score 0, so they drop off the map and the list.
   const scores = useMemo(() => {
     const out = new Float32Array(cells.row.length)
-    for (let i = 0; i < out.length; i++) out[i] = similarity(cells, seed.cell, i)
+    for (let i = 0; i < out.length; i++)
+      out[i] = passes(cells, i, rock, climate) ? similarity(cells, seed.cell, i) : 0
     return out
-  }, [cells, seed.cell])
+  }, [cells, seed.cell, rock, climate])
   const picks = useMemo(() => topRegions(cells, scores, seed.cell, 10), [cells, scores, seed.cell])
   const knownName = useCallback(
     (i: number) =>
@@ -138,9 +148,34 @@ function Explorer({ cells }: { cells: Cells }) {
             ))}
           </select>
         </label>
+        <div className="mt-4 flex flex-wrap gap-4">
+          {(['rock', 'climate'] as const).map((key) => (
+            <label key={key} className="block min-w-48 flex-1 sm:flex-none">
+              <span className="text-sm font-medium">
+                Only look at: {FILTERS[key].label.toLowerCase()}
+              </span>
+              <select
+                value={key === 'rock' ? rock : climate}
+                onChange={(e) =>
+                  update({
+                    [key]: e.target.value === 'any' ? undefined : e.target.value,
+                    region: undefined,
+                  })
+                }
+                className="mt-2 block h-10 w-full rounded-lg border border-border bg-bg px-3 text-sm text-fg"
+              >
+                {FILTERS[key].options.map((o) => (
+                  <option key={o.id} value={o.id}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ))}
+        </div>
         <p className="mt-3 text-sm text-fg-2">
-          The map lights up every patch of land at least {SHOW_FROM}% like {seed.site.name}. Of the
-          10 closest regions,{' '}
+          The map lights up every patch of land at least {SHOW_FROM}% like {seed.site.name}. Of the{' '}
+          {picks.length} closest regions,{' '}
           <span className="font-medium text-accent">
             {newCount} {newCount === 1 ? 'is' : 'are'} not on our list of known analogs
           </span>

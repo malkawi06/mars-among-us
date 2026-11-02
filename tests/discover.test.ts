@@ -3,6 +3,7 @@ import { test } from 'node:test'
 import {
   cellAt,
   distanceKm,
+  passes,
   similarity,
   topRegions,
   traitScores,
@@ -57,4 +58,15 @@ test('cellAt finds the cell containing a point', () => {
   assert.equal(cellAt(cells, 39.75, 20.25), 0)
   assert.equal(cellAt(cells, 0, 0), -1)
   assert.ok(Math.abs(distanceKm(0, 0, 0, 1) - 111.2) < 0.5)
+})
+
+test('filters keep only the chosen rock kind and climate', () => {
+  assert.equal(passes(cells, 0, 'sedimentary', 'desert'), true)
+  assert.equal(passes(cells, 0, 'igneous', 'any'), false)
+  assert.equal(passes(cells, 0, 'any', 'hyperArid'), false)
+  assert.equal(passes(cells, 2, 'ice', 'cold'), true)
+})
+
+test('top regions stop at places filtered out (score 0)', () => {
+  assert.deepEqual(topRegions(cells, new Float32Array([100, 0, 0]), 0, 5, 400), [])
 })

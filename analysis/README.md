@@ -7,12 +7,12 @@ python3 analysis/build_compare_data.py
 npx prettier --write src/data/compare.ts   # the script output is not Prettier-formatted
 ```
 
-| File                             | What it is                                                                             | How it was made                                                                                        |
-| -------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `data/power.csv`                 | Mean temperature, day–night range, precipitation and grid elevation per Earth site     | NASA POWER climatology API v2.10 (MERRA-2, 2001–2020), one request per site's coordinates              |
-| `data/dem.csv`                   | Site elevation, slope and local relief per Earth site                                  | ASTER GDEM 30 m via OpenTopoData: 3×3 samples 300 m apart, slope by Horn's method, relief = max − min  |
-| `data/moon_centroids.json`       | Centre of each Artemis candidate region                                                | Mean of the candidate landing sites published in JGR Planets 2025 (doi 10.1029/2025JE009434, Table A1) |
-| `mars-among-us-analog-data.xlsx` | Everything above in one workbook, with sources, method and a review of rejected claims | Built from the same data                                                                               |
+| File                             | What it is                                                                             | How it was made                                                                                                                                                                        |
+| -------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data/power.csv`                 | Mean temperature, day–night range, precipitation and grid elevation per Earth site     | NASA POWER climatology API v2.10 (MERRA-2, 2001–2020), one request per site's coordinates                                                                                              |
+| `data/dem.csv`                   | Site elevation, slope and local relief per Earth site                                  | ASTER GDEM 30 m via OpenTopoData: 3×3 samples 300 m apart, slope by Horn's method, relief = max − min                                                                                  |
+| `data/moon_centroids.json`       | Centre of each Artemis candidate region                                                | Mean of the candidate landing sites published in JGR Planets 2025 (doi 10.1029/2025JE009434, Table A1), not counting the sites labelled _K2023 (proposed earlier by Kring et al. 2023) |
+| `mars-among-us-analog-data.xlsx` | Everything above in one workbook, with sources, method and a review of rejected claims | Built from the same data                                                                                                                                                               |
 
 ## Scoring method
 

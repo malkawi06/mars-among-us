@@ -253,7 +253,7 @@ for i, (name, cold_trap, landform, setting, setting_sources) in enumerate(MOON, 
         'id': f'moon-{i}', 'name': name, 'body': 'Moon', 'lat': lat, 'lon': lon,
         'materials': ['anorthosite'], 'landforms': [landform], 'slopeMaxDeg': 5, 'precipMmYr': 0, 'iceAccess': cold_trap,
         'setting': setting,
-        'note': f'Artemis candidate landing region. Centre = mean of {n} published landing sites; most landing sites have slopes under 5°.',
+        'note': f'Artemis candidate landing region. Centre = mean of the {n} candidate landing sites of Wueller et al. (Table A1), not counting sites proposed earlier by Kring et al. (2023); most landing sites have slopes under 5°.',
         'sources': sources,
     })
 for sid, name, lat, lon, materials, landforms, ice, note, sources, measured in MARS:

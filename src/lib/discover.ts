@@ -53,6 +53,43 @@ export const ROCK: Record<string, { name: string; kind: string }> = {
   ig: { name: 'Ice and glaciers', kind: 'ice' },
 }
 
+/** Optional limits on where to look. Rain thresholds match the Compare page's dryness factor. */
+export const FILTERS = {
+  rock: {
+    label: 'Rock',
+    options: [
+      { id: 'any', label: 'Any rock' },
+      { id: 'igneous', label: 'Volcanic or igneous' },
+      { id: 'sedimentary', label: 'Sedimentary' },
+      { id: 'metamorphic', label: 'Metamorphic' },
+      { id: 'ice', label: 'Ice' },
+    ],
+  },
+  climate: {
+    label: 'Climate',
+    options: [
+      { id: 'any', label: 'Any climate' },
+      { id: 'desert', label: 'Desert (250 mm/yr or less)' },
+      { id: 'hyperArid', label: 'Hyper-arid (25 mm/yr or less)' },
+      { id: 'cold', label: 'Cold (mean 0 °C or below)' },
+    ],
+  },
+} as const
+
+export type RockFilter = (typeof FILTERS.rock.options)[number]['id']
+export type ClimateFilter = (typeof FILTERS.climate.options)[number]['id']
+
+/** Whether cell i meets the chosen limits. A cell without the needed value does not pass. */
+export function passes(cells: Cells, i: number, rock: RockFilter, climate: ClimateFilter): boolean {
+  if (rock !== 'any' && ROCK[cells.rock[i]]?.kind !== rock) return false
+  const rain = cells.precipMmYr[i]
+  const temp = cells.meanTempC10[i]
+  if (climate === 'desert') return rain !== null && rain <= 250
+  if (climate === 'hyperArid') return rain !== null && rain <= 25
+  if (climate === 'cold') return temp !== null && temp <= 0
+  return true
+}
+
 export type TraitId =
   'meanTemp' | 'dailyRange' | 'precip' | 'wind' | 'elevation' | 'relief' | 'rock'
 
@@ -182,7 +219,8 @@ export function topRegions(
   const seedLat = cellLat(cells, seed)
   const seedLon = cellLon(cells, seed)
   for (const i of order) {
-    if (picks.length >= count) break
+    // Sorted best first, so a 0 means every place left was filtered out.
+    if (picks.length >= count || scores[i] <= 0) break
     const lat = cellLat(cells, i)
     const lon = cellLon(cells, i)
     if (distanceKm(lat, lon, seedLat, seedLon) < spacingKm) continue
