@@ -1,0 +1,4 @@
+oa {'is_oa': True, 'oa_status': 'hybrid', 'oa_url': 'https://doi.org/10.1029/2025je009434', 'any_repository_has_fulltext': True}
+loc None https://doi.org/10.1029/2025je009434 Journal of Geophysical Research Planets publishedVersion
+loc None http://hdl.handle.net/20.500.11850/797022 None submittedVersion
+loc None https://www.zora.uzh.ch/handle/20.500.14742/246335 Zurich Open Repository and Archive (University of Zurich) submittedVersion
