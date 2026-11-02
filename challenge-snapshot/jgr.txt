@@ -1,0 +1,10 @@
+title ['Assessing Potential Landing Sites With Favorable Illumination and Accessible, Potentially Volatile‐Rich Permanently Shadowed Regions Within Artemis Candidate Landing Regions'] license ['http://creativecommons.org/licenses/by/4.0/', 'http://doi.wiley.com/10.1002/tdm_license_1.1']
+link https://agupubs.onlinelibrary.wiley.com/doi/pdf/10.1029/2025JE009434 application/pdf
+link https://agupubs.onlinelibrary.wiley.com/doi/full-xml/10.1029/2025JE009434 application/xml
+link https://agupubs.onlinelibrary.wiley.com/doi/pdf/10.1029/2025JE009434 application/pdf
+link https://agupubs.onlinelibrary.wiley.com/doi/pdf/10.1029/2025JE009434 unspecified
+## https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2025JE009434 ERROR HTTP Error 403: Forbidden
+## https://agupubs.onlinelibrary.wiley.com/doi/pdfdirect/10.1029/2025JE009434 ERROR HTTP Error 403: Forbidden
+## https://onlinelibrary.wiley.com/doi/pdf/10.1029/2025JE009434 ERROR HTTP Error 403: Forbidden
+## https://www.ncbi.nlm.nih.gov/pmc/?term=10.1029%2F2025JE009434 200 text/html; charset=utf-8 82725
+Table A1 at -1
