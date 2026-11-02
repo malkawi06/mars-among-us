@@ -1,0 +1,3 @@
+## http://hdl.handle.net/20.500.11850/797022 -> https://www.research-collection.ethz.ch/entities/publication/828482bf-3641-40d8-a6b3-86378841d4e2 text/html; charset=utf-8 pdf links ['/bitstreams/fdbbd74d-ec07-4adc-9869-51a416cce9f1/download', 'https://www.research-collection.ethz.ch/bitstreams/fdbbd74d-ec07-4adc-9869-51a416cce9f1/download']
+  try https://www.research-collection.ethz.ch/bitstreams/fdbbd74d-ec07-4adc-9869-51a416cce9f1/download application/pdf;charset=UTF-8 6498128
+saved pdf 6498128
