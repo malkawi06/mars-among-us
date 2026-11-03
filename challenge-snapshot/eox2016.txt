@@ -1,0 +1,8 @@
+s2cloudless_3857 z2: 200 image/jpeg 19266 bytes
+s2cloudless_3857 z8: 200 image/jpeg 12058 bytes
+s2cloudless_3857 z12: 200 image/jpeg 12669 bytes
+s2cloudless_3857 z14: 200 image/jpeg 9955 bytes
+s2cloudless-2016_3857 z2: ERROR HTTP Error 404: Not Found
+s2cloudless-2016_3857 z8: ERROR HTTP Error 404: Not Found
+s2cloudless-2016_3857 z12: ERROR HTTP Error 404: Not Found
+s2cloudless-2016_3857 z14: ERROR HTTP Error 404: Not Found
